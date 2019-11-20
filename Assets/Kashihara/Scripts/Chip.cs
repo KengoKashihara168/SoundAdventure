@@ -4,8 +4,9 @@ using UnityEngine;
 
 public enum ChipType
 {
-    None,
-    jizo,
+    Close,
+    Open,
+    Jizo,
     Exit,
     Hassyaku,
 }
