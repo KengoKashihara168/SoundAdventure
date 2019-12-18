@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClickButton : MonoBehaviour
+public class ClickSettingPlayerButton : MonoBehaviour
 {
+    
     //ボタンが押されたかのFlag
     bool IsClickButton;
     // Start is called before the first frame update
@@ -15,7 +16,7 @@ public class ClickButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        IsClickButton = false;
+      //  IsClickButton = false;
 
 
     }
@@ -23,7 +24,7 @@ public class ClickButton : MonoBehaviour
     public void OnClickButton()
     {
         IsClickButton = true;
-       // Debug.Log("aaaa");
+       //S Debug.Log("aaaa");
     }
 
     public bool GetClickButton()

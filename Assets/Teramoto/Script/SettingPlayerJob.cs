@@ -137,7 +137,9 @@ public class SettingPlayerJob : MonoBehaviour
                 //プレイヤーを憑人に変更
                 RoleScold();
                 break;
-
+            case 2:
+                print("値がおかしいです");
+                break;
             default:
                 print("値がおかしいです");
                 break;

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClickSettingPlayerButton : MonoBehaviour
+public class ClickButton : MonoBehaviour
 {
     //ボタンが押されたかのFlag
     bool IsClickButton;
@@ -16,7 +16,7 @@ public class ClickSettingPlayerButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        IsClickButton = false;
+       // IsClickButton = false;
 
 
     }
