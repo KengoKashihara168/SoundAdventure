@@ -38,7 +38,28 @@ public class AngleButtton : MonoBehaviour
     }
     public void NextScene()
     {
-        // シーン遷移
-
+        if (master.GetComponent<AudioScene>().GetActive())
+        {
+            // UIを非表示に
+            master.GetComponent<AudioScene>().SetActive(false);
+            // 音が流れていたら止める
+            if (!master.GetComponent<AudioScene>().GetAudio().mute)
+            {
+                Audio();
+            }
+        }
+        else if (!master.GetComponent<AudioScene>().GetActive())
+        {
+            // カメラをプレイヤーのポジションに移動させる
+            master.GetComponent<AudioScene>().CameraPlayer();
+            // 一番近い音の判別関数
+            master.GetComponent<AudioScene>().AudioClose();
+            // カメラの回転リセット
+            master.GetComponent<AudioScene>().CameraResetAngle();
+            // カメラの向きで方角を変える
+            master.GetComponent<AudioScene>().Direction();
+            // UIを表示する
+            master.GetComponent<AudioScene>().SetActive(true);
+        }
     }
 }
