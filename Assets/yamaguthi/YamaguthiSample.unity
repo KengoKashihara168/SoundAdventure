@@ -557,7 +557,7 @@ GameObject:
   - component: {fileID: 1277595416}
   - component: {fileID: 1277595415}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: MainCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -740,7 +740,6 @@ GameObject:
   - component: {fileID: 1414784631}
   - component: {fileID: 1414784630}
   - component: {fileID: 1414784633}
-  - component: {fileID: 1414784634}
   m_Layer: 5
   m_Name: DirectionButton3
   m_TagString: Untagged
@@ -871,18 +870,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   master: {fileID: 1908526259}
---- !u!114 &1414784634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1414784628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd0473832923f65478e3eb2bd58a29c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1437337160
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,7 +881,6 @@ GameObject:
   - component: {fileID: 1437337161}
   - component: {fileID: 1437337163}
   - component: {fileID: 1437337162}
-  - component: {fileID: 1437337164}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -961,18 +947,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1437337160}
   m_CullTransparentMesh: 0
---- !u!114 &1437337164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1437337160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd0473832923f65478e3eb2bd58a29c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1518541167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,7 +1103,6 @@ GameObject:
   - component: {fileID: 1529436907}
   - component: {fileID: 1529436906}
   - component: {fileID: 1529436909}
-  - component: {fileID: 1529436910}
   m_Layer: 5
   m_Name: DirectionButton2
   m_TagString: Untagged
@@ -1260,18 +1233,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   master: {fileID: 1908526259}
---- !u!114 &1529436910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1529436904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd0473832923f65478e3eb2bd58a29c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1558497075
 GameObject:
   m_ObjectHideFlags: 0
@@ -1285,7 +1246,6 @@ GameObject:
   - component: {fileID: 1558497078}
   - component: {fileID: 1558497077}
   - component: {fileID: 1558497080}
-  - component: {fileID: 1558497081}
   m_Layer: 5
   m_Name: DirectionButton4
   m_TagString: Untagged
@@ -1416,18 +1376,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   master: {fileID: 1908526259}
---- !u!114 &1558497081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1558497075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd0473832923f65478e3eb2bd58a29c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1651408564
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,6 +1529,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1908526261}
   - component: {fileID: 1908526260}
+  - component: {fileID: 1908526262}
   m_Layer: 0
   m_Name: SceneMaster
   m_TagString: Untagged
@@ -1616,6 +1565,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1908526262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908526259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd0473832923f65478e3eb2bd58a29c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 1277595417}
 --- !u!1 &1969469685
 GameObject:
   m_ObjectHideFlags: 0
