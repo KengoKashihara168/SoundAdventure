@@ -16,9 +16,9 @@ public class AudioScene : MonoBehaviour
         player = GameObject.Find("PlayerCamera");
         dire.text = "北";
         // カメラをプレイヤーのポジションに移動させる
-        
-        // どれが一番近いか判別して保存する
-
+        player.transform.position=new Vector3( Control.Instance.GetPlayerPosition(0)%5,0, (Control.Instance.GetPlayerPosition(0) - 1) / 5);
+        //// どれが一番近いか判別して保存する
+        //audio = MapControl.Instance.GetAudio(15);
     }
 
     // Update is called once per frame

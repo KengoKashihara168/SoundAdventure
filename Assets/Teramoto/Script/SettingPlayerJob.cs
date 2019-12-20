@@ -48,28 +48,31 @@ public class SettingPlayerJob : MonoBehaviour
     bool IsDecision;
     //役職が決まったかのFlag
     bool IsDecisionPost;
+
+    public AudioSource[] audio;
     // Start is called before the first frame update
     void Start()
     {
 
-    csbpScript = buttonObj.GetComponent<ClickSettingPlayerButton>();
+        csbpScript = buttonObj.GetComponent<ClickSettingPlayerButton>();
         cbScript = buttonObj2.GetComponent<ClickButton>();
         ISClickButtonFlag = false;
         IsDecision = false;
         IsDecisionPost = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-            if (csbpScript.GetClickButton())
-            {
-                buttonObj.SetActive(false);
+        if (csbpScript.GetClickButton())
+        {
+            buttonObj.SetActive(false);
 
-                ISClickButtonFlag = true;
-            }
+            ISClickButtonFlag = true;
+        }
 
-        if(!IsDecision)
+        if (!IsDecision)
         {
             if (ISClickButtonFlag)
             {
@@ -88,7 +91,7 @@ public class SettingPlayerJob : MonoBehaviour
 
             }
         }
-
+        MapControl.Instance.SetAudio(15, audio[5]);
         //もしそのひとが青年なら青年の画像を表示
         if (IsYouth)
         {
@@ -110,7 +113,7 @@ public class SettingPlayerJob : MonoBehaviour
         }
 
 
-        if(IsDecisionPost)
+        if (IsDecisionPost)
         {
             //ボタンを表示させる
             buttonObj2.SetActive(true);
@@ -149,16 +152,15 @@ public class SettingPlayerJob : MonoBehaviour
     //青年用
     private void RoleYouth()
     {
-      // print("青年です");
+        // print("青年です");
         IsYouth = true;
         IsScold = false;
     }
     //憑人用
     private void RoleScold()
     {
-      //  print("憑人です");
+        //  print("憑人です");
         IsScold = true;
         IsYouth = false;
     }
-
 }

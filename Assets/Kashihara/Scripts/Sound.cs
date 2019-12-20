@@ -6,8 +6,7 @@ public class Sound : MonoBehaviour
 {
     [SerializeField] private AudioSource source;
     [SerializeField] private AudioClip   sound;
-    public Direction direction { get; set; }
-    public float     distance { get; set; }
+
 
     // Start is called before the first frame update
     void Start()

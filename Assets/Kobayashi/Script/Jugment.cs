@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class Jugment : MonoBehaviour
 {
     //アイテムの獲得---
@@ -32,7 +32,11 @@ public class Jugment : MonoBehaviour
     [SerializeField]
     //プレイヤーの今の状態を表示
     private Text state;
+    [SerializeField]
+    //Scene用ボタン
+    private Button button;
     //-----------------
+
 
     // Use this for initialization
     void Start()
@@ -47,6 +51,7 @@ public class Jugment : MonoBehaviour
         //画像とテキストを非表示
         playerText.gameObject.SetActive(false);
         state.gameObject.SetActive(false);
+        button.gameObject.SetActive(false);
         //最初は生存
         nowState = "生存";
         playerNum = "1";
@@ -89,11 +94,11 @@ public class Jugment : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            itemImage.sprite = itemSprite[1];
+            itemImage.sprite = itemSprite[2];
         }
         else if (Input.GetKeyDown(KeyCode.W))
         {
-            itemImage.sprite = itemSprite[1];
+            itemImage.sprite = itemSprite[3];
         }
     }
 
@@ -160,6 +165,7 @@ public class Jugment : MonoBehaviour
         text.gameObject.SetActive(false);
         yesButton.gameObject.SetActive(false);
         noButton.gameObject.SetActive(false);
+        button.gameObject.SetActive(true);
         Judgment();
     }
 
@@ -173,6 +179,11 @@ public class Jugment : MonoBehaviour
         text.gameObject.SetActive(false);
         yesButton.gameObject.SetActive(false);
         noButton.gameObject.SetActive(false);
+        button.gameObject.SetActive(true);
         Judgment();
+    }
+    public void SceneChange()
+    {
+        SceneManager.LoadScene("Sound");
     }
 }

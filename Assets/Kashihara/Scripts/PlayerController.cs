@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private static  PlayerController instance;
-    private static  Player[]         players;               // プレイヤーたち
-    private static  int              TurnCount{ get; set; } // 現在のターン数
-    private static Vector2           position { get; set; } // 座標
-    private static Chip[]            nextChips;             // 次に移動できるマス
-    private static Chip              currentChip;
+    private static PlayerController instance;
+    private static Player[] players;               // プレイヤーたち
+    private static int TurnCount { get; set; } // 現在のターン数
+    public static Vector2 position;              // 座標
+    private static Chip[] nextChips;             // 次に移動できるマス
+    private static Chip currentChip;
 
     /// <summary>
     /// インスタンス
@@ -40,8 +40,8 @@ public class PlayerController : MonoBehaviour
         DontDestroyOnLoad(instance);
         // プレイヤーの初期化
         InitializePlayer();
-        position    = new Vector2(); // 座標の初期化
-        nextChips   = new Chip[4];   // 移動できるマスの初期化
+        position = new Vector2(); // 座標の初期化
+        nextChips = new Chip[4];   // 移動できるマスの初期化
         currentChip = new Chip();    // 現在のマスの初期化
     }
 
@@ -78,24 +78,7 @@ public class PlayerController : MonoBehaviour
         return players[(int)num].playerType;
     }
 
-    /// <summary>
-    /// プレイヤーの方角を取得
-    /// </summary>
-    /// <param name="num">プレイヤーの添え字</param>
-    /// <returns>方角</returns>
-    public Direction GetDirection(int num)
-    {
-        return players[num].direction;
-    }
-    /// <summary>
-    /// プレイヤーの方角を取得
-    /// </summary>
-    /// <param name="num">プレイヤー番号</param>
-    /// <returns>方角</returns>
-    public Direction GetDirection(PlayerNum num)
-    {
-        return players[(int)num].direction;
-    }
+
 
 
     /// <summary>
@@ -121,5 +104,13 @@ public class PlayerController : MonoBehaviour
     private void InitializeTurn()
     {
         TurnCount = 0;
+    }
+
+    /// <summary>
+    /// ターン数の初期化
+    /// </summary>
+    public Vector2 GetPosition()
+    {
+        return position;
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class AngleButtton : MonoBehaviour
 {
     [SerializeField]
@@ -39,6 +39,6 @@ public class AngleButtton : MonoBehaviour
     public void NextScene()
     {
         // シーン遷移
-
+        SceneManager.LoadScene("Move");
     }
 }

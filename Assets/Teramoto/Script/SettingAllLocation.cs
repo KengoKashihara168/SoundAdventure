@@ -79,7 +79,8 @@ public class SettingAllLocation : MonoBehaviour
 
         x = w;
         y = h;
-        posListX.Add(w);
+      
+        Control.Instance.SetPosition(0, x + y * 5);// a posListX.Add(w);
         posListY.Add(h);
         print("Playerの場所は" + ((w + (h * 5)) + 1));
     }
