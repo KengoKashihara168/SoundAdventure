@@ -11,6 +11,9 @@ using UnityEngine;
 public class SettingPlayerJob : MonoBehaviour
 {
 
+    //ボタンクリックスクリプト
+    ClickSettingPlayerButton csbpScript;
+
     //ボタンのオブジェの取得
     [SerializeField]
     private GameObject buttonObj;
@@ -21,9 +24,6 @@ public class SettingPlayerJob : MonoBehaviour
 
     //ボタンクリックスクリプト
     ClickButton cbScript;
-
-    //ボタンクリックスクリプト
-    ClickSettingPlayerButton csbpScript;
 
     //青年のイメージ
     [SerializeField]
