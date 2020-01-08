@@ -16,12 +16,6 @@ public class ClickSettingPlayerButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-<<<<<<< HEAD
-      //  IsClickButton = false;
-
-=======
->>>>>>> 7ac25e5d7cb54caa41700c4abd16c7c2ac05b743
-
     }
 
     public void OnClickButton()
