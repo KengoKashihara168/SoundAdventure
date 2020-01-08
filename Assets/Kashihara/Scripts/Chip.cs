@@ -14,7 +14,6 @@ public enum ChipType
 public class Chip : MonoBehaviour
 {
     public ChipType type { get; set; }
-    private Sound sound;
     private int row;
     private string column;
 
@@ -28,11 +27,6 @@ public class Chip : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public Sound GetSound()
-    {
-        return sound;
     }
 
     public void SetIndex(int row,string column)
