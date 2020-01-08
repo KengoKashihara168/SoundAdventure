@@ -15,6 +15,8 @@ public class Chip : MonoBehaviour
 {
     public ChipType type { get; set; }
     private Sound sound;
+    private int row;
+    private string column;
 
     // Start is called before the first frame update
     void Start()
@@ -31,5 +33,12 @@ public class Chip : MonoBehaviour
     public Sound GetSound()
     {
         return sound;
+    }
+
+    public void SetIndex(int row,string column)
+    {
+        this.row = row;
+        this.column = column;
+
     }
 }
