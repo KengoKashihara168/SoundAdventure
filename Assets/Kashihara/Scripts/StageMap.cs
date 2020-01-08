@@ -30,7 +30,9 @@ public class StageMap : MonoBehaviour
     private readonly int      MapSize = 5;                          // マップの大きさ
 
     // メンバ変数
-    private Dictionary<string, Chip>[] map; // マップの2次元配列
+    private Dictionary<string, Chip>[]  map;          // マップの2次元配列
+    [SerializeField] private GameObject chip;         // チップ
+    [SerializeField] private float      chipDistance; // 各チップの距離
 
     // Start is called before the first frame update
     void Start()
@@ -45,12 +47,18 @@ public class StageMap : MonoBehaviour
 
         for (int i = 0; i < MapSize; i++)
         {
+            
             for (int j = 0; j < MapSize; j++)
             {
                 // 列の生成
                 var key = Column[j];
-                var value = new Chip(); // ※プレハブから取得するように変更予定
+                Vector3 pos = new Vector3(chipDistance * j, -chipDistance * i, 0.0f);
+                GameObject obj = Instantiate(chip,pos,Quaternion.identity);
+                var value = obj.GetComponent<Chip>();
                 map[i].Add(key, value);
+
+                // 生成したチップを子に追加
+                obj.transform.SetParent(transform);
 
                 // 各チップに値を設定
                 map[i][key].SetIndex(i, key);

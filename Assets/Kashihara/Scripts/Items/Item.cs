@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public readonly string name;
+    public readonly string name = "アイテム";
 
     // Start is called before the first frame update
     void Start()

@@ -149,6 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96685930c024034db795f62f8cca1a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chip: {fileID: 1239896234454550293, guid: 7e96492b6604ae64c886e34551b6d083, type: 3}
+  chipDistance: 2
 --- !u!4 &171632214
 Transform:
   m_ObjectHideFlags: 0

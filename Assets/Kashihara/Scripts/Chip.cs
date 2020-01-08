@@ -34,5 +34,12 @@ public class Chip : MonoBehaviour
         this.row = row;
         this.column = column;
 
+        string name = row.ToString() + column.ToString();
+        ChangeName(name);
+    }
+
+    private void ChangeName(string name)
+    {
+        this.gameObject.name = name;
     }
 }
