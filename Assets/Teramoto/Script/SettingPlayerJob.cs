@@ -103,6 +103,8 @@ public class SettingPlayerJob : MonoBehaviour
         if (IsScold)
         {
             //表示を凝る
+            //血のエフェクトを出す
+
 
             //画像の表示
             IsDecisionPost = true;
