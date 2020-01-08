@@ -45,31 +45,40 @@ public class StageMap : MonoBehaviour
             map[i] = new Dictionary<string, Chip>();
         }
 
+        // 列の生成
         for (int i = 0; i < MapSize; i++)
         {
-            
             for (int j = 0; j < MapSize; j++)
             {
-                // 列の生成
+                // マップへチップを登録
                 var key = Column[j];
-                Vector3 pos = new Vector3(chipDistance * j, -chipDistance * i, 0.0f);
-                GameObject obj = Instantiate(chip,pos,Quaternion.identity);
-                var value = obj.GetComponent<Chip>();
+                var value = ChipCreate();
                 map[i].Add(key, value);
 
-                // 生成したチップを子に追加
-                obj.transform.SetParent(transform);
-
                 // 各チップに値を設定
-                map[i][key].SetIndex(i, key);
+                map[i][key].SetName(i, key);
+                Vector3 pos = new Vector3(chipDistance * j, -chipDistance * i, 0.0f);
+                value.SetPosition(pos);
             }
         }
+    }
+
+    private Chip ChipCreate()
+    {
+        // チップの生成
+        GameObject obj = Instantiate(chip, Vector3.zero, Quaternion.identity);
+
+        // 生成したチップを子に追加
+        obj.transform.SetParent(transform);
+
+        return obj.GetComponent<Chip>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //map[1]["A"].GetSound();
+
     }
 
     public MapIndex GetPosition()

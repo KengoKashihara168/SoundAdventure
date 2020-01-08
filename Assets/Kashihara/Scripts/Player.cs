@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private StageMap map;
-
     // メンバ変数
     private int    row;       // マップの行番号(Y座標)
     private string column;    // マップの列番号(X座標)
@@ -19,9 +17,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         // メンバ変数の初期化
-        MapIndex index = map.GetPosition();
-        row            = index.row;
-        column         = index.column;
+        row            = 0;
+        column         = "A";
         item           = null;
         isGoal         = false;
         isDead         = false;

@@ -14,8 +14,6 @@ public enum ChipType
 public class Chip : MonoBehaviour
 {
     public ChipType type { get; set; }
-    private int row;
-    private string column;
 
     // Start is called before the first frame update
     void Start()
@@ -29,17 +27,26 @@ public class Chip : MonoBehaviour
         
     }
 
-    public void SetIndex(int row,string column)
+    /// <summary>
+    /// オブジェクト名の設定
+    /// </summary>
+    /// <param name="row">行番号</param>
+    /// <param name="column">列番号</param>
+    public void SetName(int row, string column)
     {
-        this.row = row;
-        this.column = column;
-
+        // オブジェクト名は行番号 + 列番号
         string name = row.ToString() + column.ToString();
-        ChangeName(name);
+        gameObject.name = name;
     }
 
-    private void ChangeName(string name)
+    /// <summary>
+    /// 座標の設定
+    /// </summary>
+    /// <param name="pos">座標</param>
+    public void SetPosition(Vector3 pos)
     {
-        this.gameObject.name = name;
+        transform.localPosition = pos;
     }
+
+
 }
