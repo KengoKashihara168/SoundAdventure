@@ -21,6 +21,12 @@ public struct MapIndex
 {
     public int    row;    // 行
     public string column; // 列
+
+    public void SetIndex(int r,string c)
+    {
+        row = r;
+        column = c;
+    }
 }
 
 public class StageMap : MonoBehaviour
@@ -33,6 +39,7 @@ public class StageMap : MonoBehaviour
     private Dictionary<string, Chip>[]  map;          // マップの2次元配列
     [SerializeField] private GameObject chip;         // チップ
     [SerializeField] private float      chipDistance; // 各チップの距離
+    private MapIndex[] playerPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +68,8 @@ public class StageMap : MonoBehaviour
                 value.SetPosition(pos);
             }
         }
+
+        playerPosition = new MapIndex[4];
     }
 
     private Chip ChipCreate()
@@ -91,5 +100,21 @@ public class StageMap : MonoBehaviour
         // ------- 初期配置 ------- //
 
         return index;
+    }
+
+    public ItemInfo GetItemInfo(int playerNum)
+    {
+        ItemInfo info = new ItemInfo();
+        info.position.SetIndex(6, "MapItem");
+        return info;
+    }
+
+    public void GetNextChip(int playerNum,Direction dir)
+    {
+        MapIndex pos = playerPosition[playerNum];
+        MapIndex chip = pos;
+
+
+
     }
 }

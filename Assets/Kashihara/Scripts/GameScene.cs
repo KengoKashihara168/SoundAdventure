@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct ItemInfo
+public class GameScene : MonoBehaviour
 {
-    public MapIndex position; // 座標
-                              // 音
-}
-
-public class Item : MonoBehaviour
-{
-    public readonly string name = "アイテム";
+    [SerializeField] private Map map;
+    [SerializeField] private Player[] players;
+    [SerializeField] private GameObject network;
 
     // Start is called before the first frame update
     void Start()
@@ -22,5 +18,10 @@ public class Item : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void InitializeGame()
+    {
+
     }
 }
