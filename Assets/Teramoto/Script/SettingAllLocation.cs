@@ -42,9 +42,6 @@ public class SettingAllLocation : MonoBehaviour
         {
             if (cbScript.GetClickButton())
             {
-                //Playerの場所決め
-                SetPlayerPos();
-
                 //ゴールの場所決め
                 SetGoalPos();
                 //八尺の場所決め
@@ -52,38 +49,13 @@ public class SettingAllLocation : MonoBehaviour
 
                 //決定FlagをOn
                 IsDicision = true;
+
+                //サーバーにデータを送る
+
             }
 
         }
     }
-
-
-
-    //Playerの設定
-    void SetPlayerPos()
-    {
-        //w,hにランダム数を代入する
-        int w = Random.Range(0, MAP_WIDTH);
-        int h = Random.Range(0, MAP_HEIGHT);
-
-            for (int j = 0; j < posListX.Count; j++)
-            {
-                if (w == posListX[j] && h == posListY[j])
-                {
-                    w = Random.Range(0, MAP_WIDTH);
-                    h = Random.Range(0, MAP_HEIGHT);
-                    j = -1;
-                    continue;
-                }
-            }
-
-        x = w;
-        y = h;
-        posListX.Add(w);
-        posListY.Add(h);
-        print("Playerの場所は" + ((w + (h * 5)) + 1));
-    }
-
 
     void SetGoalPos()
     {
