@@ -71,10 +71,8 @@ public class OneTimeResult : MonoBehaviour
         if (itemGetManager.GetPushButtonFlag() == true)
         {
             //個人の結果を表示
-            //privateResultManager.gameObject.SetActive(true);
-            //itemGetManager.Initialize();
-            winnerResultManager.gameObject.SetActive(true);
-            winnerResultManager.Initialize();
+            privateResultManager.gameObject.SetActive(true);
+            itemGetManager.Initialize();
         }
         //個人の結果を確認したら
         if (privateResultManager.GetCheckButtonFlag() == true)
@@ -94,7 +92,7 @@ public class OneTimeResult : MonoBehaviour
                     allStatesManager.ActivePlayerName(false, wholeResult.GoalPlayers()[i]);
                 }
             }
-           // allStatesManager.ActivePlayerName(true, "T");
+            allStatesManager.ActivePlayerName(true, "T");
             //------------------------------
         }
         //全体の結果を確認したら
@@ -110,5 +108,11 @@ public class OneTimeResult : MonoBehaviour
         //   winnerResultManager.Initialize();
         //}
 
+        //勝者を確認したら
+        if (winnerResultManager.GetsEndButtonFlag() == true)
+        {
+            //Titleへ
+            winnerResultManager.Initialize();
+        }
     }
 }

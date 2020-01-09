@@ -13,7 +13,11 @@ public class WinnerResultManager : MonoBehaviour
     private Text winner;
     [SerializeField]
     private Text hauntedText;
+    //勝者側の名前を入れる
     string winnerSide;
+
+    //ボタンが押されたかのフラグ
+    bool endButtonFlag;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +30,7 @@ public class WinnerResultManager : MonoBehaviour
         winnerSide = "無し";
         youthVictory.enabled = false;
         hauntedText.enabled = false;
+        endButtonFlag = false;
     }
 
     // Update is called once per frame
@@ -65,5 +70,18 @@ public class WinnerResultManager : MonoBehaviour
         {
             youthVictory.text = "村から脱出";
         }
+    }
+
+    //全体の様子を確認するボタンを押した時
+    public void SituationButton()
+    {
+        this.gameObject.SetActive(false);
+        endButtonFlag = true;
+        Debug.Log("aa");
+    }
+
+    public bool GetsEndButtonFlag()
+    {
+        return endButtonFlag;
     }
 }
