@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class text : MonoBehaviour
 {
     public Image image;
+    public Text  textname;
     int count;
     int a;
     // Start is called before the first frame update
@@ -25,6 +26,6 @@ public class text : MonoBehaviour
         }
         image.material.color = new Vector4(130, 130, 130,(float)count/255);
 
-
+        textname.color = new Vector4(255, 255, 255, (float)count/255);
     }
 }
