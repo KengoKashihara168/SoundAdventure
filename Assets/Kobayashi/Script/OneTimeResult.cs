@@ -3,6 +3,12 @@
 public class OneTimeResult : MonoBehaviour
 {
     [SerializeField]
+    Player player;
+
+    [SerializeField]
+    WholeResult wholeResult;
+
+    [SerializeField]
     ItemGetManager itemGetManager;
 
     [SerializeField]
@@ -60,7 +66,7 @@ public class OneTimeResult : MonoBehaviour
         {
             //個人の結果を表示
             privateResultManager.gameObject.SetActive(true);
-            //itemGetManager.Initialize();
+            itemGetManager.Initialize();
         }
         //個人の結果を確認したら
         if (privateResultManager.GetCheckButtonFlag() == true)
@@ -69,12 +75,18 @@ public class OneTimeResult : MonoBehaviour
             allStatesManager.gameObject.SetActive(true);
             privateResultManager.Initialize();
             //--ここで誰がどの状態かをもらう
-            allStatesManager.ActivePlayerName(true, "Masakado");
-            allStatesManager.ActivePlayerName(false, "T");
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    allStatesManager.ActivePlayerName(playerData[i].GetAliveFlag(), playerData[i].GetName());
-            //}
+            for (int i = 0; i < 4; i++)
+            {
+                if (player.IdDead() == true)
+                {
+                    allStatesManager.ActivePlayerName(true, wholeResult.DeadPlayers()[i]);
+                }
+                if (player.IsGoal() == true)
+                {
+                    allStatesManager.ActivePlayerName(false, wholeResult.GoalPlayers()[i]);
+                }
+            }
+           // allStatesManager.ActivePlayerName(true, "T");
             //------------------------------
         }
         //全体の結果を確認したら

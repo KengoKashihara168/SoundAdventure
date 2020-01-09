@@ -5,6 +5,9 @@ using UnityEngine.UI;
 public class AllStatesManager : MonoBehaviour
 {
     [SerializeField]
+    private WholeResult WholeResult;
+    
+    [SerializeField]
     private PlayerNameManager playerGoalManager;
     [SerializeField]
     private PlayerNameManager playerDeathManager;
@@ -23,6 +26,7 @@ public class AllStatesManager : MonoBehaviour
     {
         //初期化
         nextButtonFlag = false;
+        whoItemGetText.enabled = false;
         playerGoalManager.AllUnActive();
         playerDeathManager.AllUnActive();
     }
@@ -46,14 +50,18 @@ public class AllStatesManager : MonoBehaviour
             //ゴール欄に表示
             playerGoalManager.ActivePlayerName(name);
         }
-        //if ()
+        //アイテムを獲得した人がいたら
+        if (WholeResult.IsGetItem() == true)
+        {
+            //アイテムを獲得と表示
+            whoItemGetText.enabled = true;
+        }
     }
 
     //次に行くボタンを押した時
     public void NextButton()
     {
         this.gameObject.SetActive(false);
-        Debug.Log("aa");
         nextButtonFlag = true;
     }
 

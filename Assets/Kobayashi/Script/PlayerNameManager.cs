@@ -16,7 +16,7 @@ public class PlayerNameManager : MonoBehaviour
     {
 
     }
-
+    //何らかの状態になったプレイヤー名を取得
     public void ActivePlayerName(string name)
     {
         if (index >= player.Length)
@@ -27,7 +27,7 @@ public class PlayerNameManager : MonoBehaviour
         player[index].SetName(name);
         index++;
     }
-
+    //まだ死亡もゴールもしていない状態
     public void AllUnActive()
     {
         for (int i = 0; i < player.Length; i++)

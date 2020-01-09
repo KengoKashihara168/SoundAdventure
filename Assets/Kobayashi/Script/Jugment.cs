@@ -8,7 +8,7 @@ public class Jugment : MonoBehaviour
    
     // プレイヤーの参加人数
     [SerializeField]
-    private int playerNum = 4;
+   // private int playerNum = 4;
     
     // Use this for initialization
     void Start()

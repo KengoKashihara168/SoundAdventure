@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class ItemGetManager : MonoBehaviour
 {
+    [SerializeField]
+    private Player player;
     //アイテムの獲得---
     //画像の表示
     [SerializeField]
@@ -34,7 +36,8 @@ public class ItemGetManager : MonoBehaviour
     public void Initialize()
     {
         //初期化
-        itemText = "ネコ";
+        //プレイヤーの獲得したアイテム名の取得
+        itemText = player.GetItemName();
         itemGetFlag = false;
         pushButtonFlag = false;
     }

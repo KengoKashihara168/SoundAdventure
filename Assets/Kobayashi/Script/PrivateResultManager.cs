@@ -5,6 +5,8 @@ public class PrivateResultManager : MonoBehaviour
 {
     [SerializeField]
     ItemGetManager itemGetManager;
+    [SerializeField]
+    Player player;
     //個人の結果表示---
     [SerializeField]
     private Text youMoveText;
@@ -54,12 +56,12 @@ public class PrivateResultManager : MonoBehaviour
     void PlayerNewInformation()
     {
         //ゴールがあるマスに止まって鍵が開いていたら
-        if (goalArriveFlag == true && goalUnlockFlag == true)
+        if (player.IsGoal() == true)
         {
             nowInformation = "ゴール";
         }
         //死亡していたら
-        if (deathFlag == true)
+        if (player.IdDead() == true)
         {
             nowInformation = "死亡";
         }
