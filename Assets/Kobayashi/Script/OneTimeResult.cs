@@ -17,6 +17,9 @@ public class OneTimeResult : MonoBehaviour
     [SerializeField]
     AllStatesManager allStatesManager;
 
+    [SerializeField]
+    WinnerResultManager winnerResultManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +36,9 @@ public class OneTimeResult : MonoBehaviour
 
         allStatesManager.Initialize();
         allStatesManager.gameObject.SetActive(false);
+
+        winnerResultManager.Initialize();
+        winnerResultManager.gameObject.SetActive(false);
     }
     //移動先にアイテムがあった用
     public void InitializeItem()
@@ -65,8 +71,10 @@ public class OneTimeResult : MonoBehaviour
         if (itemGetManager.GetPushButtonFlag() == true)
         {
             //個人の結果を表示
-            privateResultManager.gameObject.SetActive(true);
-            itemGetManager.Initialize();
+            //privateResultManager.gameObject.SetActive(true);
+            //itemGetManager.Initialize();
+            winnerResultManager.gameObject.SetActive(true);
+            winnerResultManager.Initialize();
         }
         //個人の結果を確認したら
         if (privateResultManager.GetCheckButtonFlag() == true)
@@ -95,6 +103,12 @@ public class OneTimeResult : MonoBehaviour
             //他の場面へ
             allStatesManager.Initialize();
         }
+
+        //if(ゲームが終了したら)
+        //{
+        //   winnerResultManager.gameObject.SetActive(true);
+        //   winnerResultManager.Initialize();
+        //}
 
     }
 }

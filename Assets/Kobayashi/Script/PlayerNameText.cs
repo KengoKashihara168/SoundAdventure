@@ -19,12 +19,12 @@ public class PlayerNameText : MonoBehaviour
     {
         
     }
-
+    //SetActiveのフラグを設定
     public void SetActive(bool flag)
     {
         gameObject.SetActive(flag);
     }
-
+    //名前の設定
     public void SetName(string name)
     {
         text.text = name;
