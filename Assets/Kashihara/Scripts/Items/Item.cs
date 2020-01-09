@@ -8,9 +8,18 @@ public struct ItemInfo
                               // 音
 }
 
+public enum ItemKind
+{
+    None,
+    Key,
+    Amulet,
+    Cutter,
+    Sword,
+}
+
 public class Item : MonoBehaviour
 {
-    public readonly string name = "アイテム";
+    [SerializeField] private ItemKind kind;
 
     // Start is called before the first frame update
     void Start()
@@ -22,5 +31,10 @@ public class Item : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public ItemKind GetKind()
+    {
+        return kind;
     }
 }
