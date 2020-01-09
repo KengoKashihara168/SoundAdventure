@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// プレイヤーに役職を設定するクラス
@@ -102,10 +103,7 @@ public class SettingPlayerJob : MonoBehaviour
         //もしそのひとが憑人なら憑人の画像を表示
         if (IsScold)
         {
-            //表示を凝る
-            //血のエフェクトを出す
-
-
+            
             //画像の表示
             IsDecisionPost = true;
             scoldImage.SetActive(true);
@@ -122,6 +120,7 @@ public class SettingPlayerJob : MonoBehaviour
         if (cbScript.GetClickButton())
         {
             //Scene移動をさせる。
+            //SceneManager.LoadScene("");
 
         }
     }
