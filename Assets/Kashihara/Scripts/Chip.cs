@@ -14,6 +14,7 @@ public enum ChipType
 public class Chip : MonoBehaviour
 {
     public ChipType type { get; set; }
+    private AudioClip audio;
 
     // Start is called before the first frame update
     void Start()
