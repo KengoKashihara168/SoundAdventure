@@ -55,6 +55,8 @@ public class SettingAllLocation : MonoBehaviour
             }
 
         }
+      
+        Control.Instance.SetPosition(0, x + y * 5);
     }
 
     void SetGoalPos()
