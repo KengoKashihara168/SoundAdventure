@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     private Item     item;      // 所持アイテム
     private bool     isGoal;    // 脱出フラグ
     private bool     isDead;    // 死亡フラグ
-    private bool     isHaunted; // 憑人フラグ
+    [SerializeField] private bool     isHaunted; // 憑人フラグ
     private Action   action;    // プレイヤーの行動
 
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
         item           = null;
         isGoal         = false;
         isDead         = false;
-        isHaunted      = false;
+        //isHaunted      = false;
     }
 
     /// <summary>
@@ -67,6 +67,15 @@ public class Player : MonoBehaviour
     public bool IsGoal()
     {
         return isGoal;
+    }
+
+    /// <summary>
+    /// 憑人フラグの取得
+    /// </summary>
+    /// <returns></returns>
+    public bool IsHaunted()
+    {
+        return isHaunted;
     }
 
     /// <summary>
