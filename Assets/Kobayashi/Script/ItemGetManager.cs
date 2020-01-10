@@ -37,7 +37,7 @@ public class ItemGetManager : MonoBehaviour
     {
         //初期化
         //プレイヤーの獲得したアイテム名の取得
-        itemText = player.GetItemName();
+        //itemText = player.GetItemName();
         itemGetFlag = false;
         pushButtonFlag = false;
     }
