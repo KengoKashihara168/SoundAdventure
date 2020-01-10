@@ -1,74 +1,104 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WholeResult : MonoBehaviour
 {
-    private string[] deadPlayers; // 死亡したプレイヤー配列
-    private string[] goalPlayers; // 脱出したプレイヤー配列
-    private bool     isGetItem;   // アイテム獲得フラグ
-    private bool     youthWin;    // 青年の勝利フラグ
-    private bool     hauntedWin;  // 憑人の勝利フラグ
+    [SerializeField] private List<string> deadPlayers; // 死亡したプレイヤー配列
+    [SerializeField] private List<string> goalPlayers; // 脱出したプレイヤー配列
+    [SerializeField] private bool     isGetItem;   // アイテム獲得フラグ
+    [SerializeField] private bool     youthWinFlag;    // 青年の勝利フラグ
+    [SerializeField] private bool     hauntedWinFlag;  // 憑人の勝利フラグ
+
+    [SerializeField] private Text deadList;
+    [SerializeField] private Text goalList;
+    [SerializeField] private Text itemGet;
+    [SerializeField] private Image youthWin;
+    [SerializeField] private Image HauntedWin;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        // メンバ変数の初期化
-        deadPlayers = new string[4];
-        goalPlayers = new string[4];
-        isGetItem   = false;
-        youthWin    = false;
-        hauntedWin  = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        WriteResult();
     }
 
     /// <summary>
-    /// 死亡したプレイヤーのリスト
+    /// 全体結果の表示
     /// </summary>
-    /// <returns>死亡したプレイヤー達</returns>
-    public string[] DeadPlayers()
+    public void WriteResult()
     {
-        return deadPlayers;
+        // 青年の勝利
+        if(youthWinFlag)
+        {
+            WriteImage(youthWin);
+            return;
+        }
+
+        // 憑人の勝利
+        if(hauntedWinFlag)
+        {
+            WriteImage(HauntedWin);
+            return;
+        }
+
+        // 死亡リストの表示
+        WriteList(deadList, deadPlayers);
+        // 脱出リストの表示
+        WriteList(goalList, goalPlayers);
+        // アイテム獲得の表示
+        if (isGetItem)
+        {
+            VisibleText(itemGet);
+        }
     }
 
     /// <summary>
-    /// 脱出したプレイヤーのリスト
+    /// 画像の表示
     /// </summary>
-    /// <returns>脱出したプレイヤー達</returns>
-    public string[] GoalPlayers()
+    /// <param name="image">表示したい画像</param>
+    private void WriteImage(Image image)
     {
-        return goalPlayers;
+        if (image == null) return;
+
+        image.enabled = true;
     }
 
     /// <summary>
-    /// アイテム獲得者の有無を取得
+    /// 結果リストの表示
     /// </summary>
-    /// <returns>アイテム獲得者の有無</returns>
-    public bool IsGetItem()
+    /// <param name="texts">表示されるテキスト</param>
+    /// <param name="list">表示するリスト</param>
+    private void WriteList(Text texts, List<string> list)
     {
-        return isGetItem;
+        if (list.Count <= 0) return; // リストがなければ何もしない
+        // テキストを表示
+        VisibleText(texts);
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            // テキストにリストを設定
+            Text text = texts.transform.GetChild(i).GetComponent<Text>();
+            Debug.Assert(text != null, "Textがありませんでした。");
+            text.text = list[i];
+        }
     }
 
     /// <summary>
-    /// 青年の勝利か取得
+    /// テキストの表示
     /// </summary>
-    /// <returns>青年の勝利フラグ</returns>
-    public bool IsYouthWin()
+    /// <param name="text">表示させるテキスト</param>
+    private void VisibleText(Text text)
     {
-        return youthWin;
+        if (text == null) return;
+        text.gameObject.SetActive(true);
     }
 
-    /// <summary>
-    /// 憑人の勝利か取得
-    /// </summary>
-    /// <returns>憑人の勝利フラグ</returns>
-    public bool IsHauntedWin()
-    {
-        return hauntedWin;
-    }
+
 }
