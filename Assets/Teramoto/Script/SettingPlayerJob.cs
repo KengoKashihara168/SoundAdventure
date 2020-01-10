@@ -11,6 +11,8 @@ using UnityEngine.SceneManagement;
 
 public class SettingPlayerJob : MonoBehaviour
 {
+    [SerializeField]
+    private Player player; 
 
     //ボタンクリックスクリプト
     ClickSettingPlayerButton csbpScript;
@@ -92,7 +94,7 @@ public class SettingPlayerJob : MonoBehaviour
 
             }
         }
-        //MapControl.Instance.SetAudio(15, audio[5]);
+
         //もしそのひとが青年なら青年の画像を表示
         if (IsYouth)
         {
@@ -123,7 +125,7 @@ public class SettingPlayerJob : MonoBehaviour
         if (cbScript.GetClickButton())
         {
             //Scene移動をさせる。
-            //SceneManager.LoadScene("");
+            SceneManager.LoadScene("Sound");
 
         }
     }
@@ -160,6 +162,7 @@ public class SettingPlayerJob : MonoBehaviour
     //憑人用
     private void RoleScold()
     {
+        player.IsHaunted();
         //  print("憑人です");
         IsScold = true;
         IsYouth = false;

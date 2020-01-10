@@ -45,9 +45,6 @@ public class SettingAllLocation : MonoBehaviour
                 SetPlayerPos();
                 //決定FlagをOn
                 IsDicision = true;
-
-                //サーバーにデータを送る
-
             }
 
         }
