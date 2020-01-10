@@ -94,23 +94,26 @@ public class SettingPlayerJob : MonoBehaviour
             }
         }
 
-        //もしそのひとが青年なら青年の画像を表示
-        if (IsYouth)
+        if(IsDecision)
         {
-            //表示を凝る
 
-            //画像の表示
-            youthImage.SetActive(true);
-            IsDecisionPost = true;
-        }
+            //憑人のflagがfalse
+            if (!player.IsHaunted())
+            {
+                //青年
 
-        //もしそのひとが憑人なら憑人の画像を表示
-        if (IsScold)
-        {
-            
-            //画像の表示
-            IsDecisionPost = true;
-            scoldImage.SetActive(true);
+                youthImage.SetActive(true);
+                scoldImage.SetActive(false);
+
+            }
+            //憑人のflagがtrue
+            if (player.IsHaunted())
+            {
+                //憑人
+                youthImage.SetActive(false);
+
+                scoldImage.SetActive(true);
+            }
         }
 
 
@@ -154,16 +157,20 @@ public class SettingPlayerJob : MonoBehaviour
     //青年用
     private void RoleYouth()
     {
-        // print("青年です");
-        IsYouth = true;
-        IsScold = false;
+        if(IsDecision)
+        {
+            IsYouth = true;
+            IsScold = false;
+            print("青年");
+        }
     }
+
     //憑人用
     private void RoleScold()
     {
-        player.IsHaunted();
-        //  print("憑人です");
-        IsScold = true;
-        IsYouth = false;
+       IsYouth = false;
+       IsScold = true;
+       print("憑人");
+
     }
 }
