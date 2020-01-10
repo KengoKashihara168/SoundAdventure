@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     /// <param name="dir">進行方向</param>
     public void MoveAction(Direction dir)
     {
-
+        Debug.Log(dir);
     }
 
     /// <summary>
@@ -39,7 +39,8 @@ public class Player : MonoBehaviour
     /// <param name="dir">使用する方向</param>
     public void KillAction(bool isKill,Direction dir)
     {
-
+        if (!isKill) return;
+        Debug.Log(dir);
     }
 
     /// <summary>
