@@ -104,7 +104,8 @@ public class SettingPlayerJob : MonoBehaviour
 
                 youthImage.SetActive(true);
                 scoldImage.SetActive(false);
-
+                IsDecisionPost = true;
+               // print("青年");
             }
             //憑人のflagがtrue
             if (player.IsHaunted())
@@ -113,6 +114,8 @@ public class SettingPlayerJob : MonoBehaviour
                 youthImage.SetActive(false);
 
                 scoldImage.SetActive(true);
+                IsDecisionPost = true;
+               // print("憑人");
             }
         }
 
@@ -127,7 +130,7 @@ public class SettingPlayerJob : MonoBehaviour
         if (cbScript.GetClickButton())
         {
             //Scene移動をさせる。
-            SceneManager.LoadScene("Sound");
+            //SceneManager.LoadScene("Sound");
 
         }
     }
@@ -146,10 +149,10 @@ public class SettingPlayerJob : MonoBehaviour
                 RoleScold();
                 break;
             case 2:
-                print("値がおかしいです");
+               // print("値がおかしいです");
                 break;
             default:
-                print("値がおかしいです");
+             //   print("値がおかしいです");
                 break;
         }
     }
@@ -161,7 +164,6 @@ public class SettingPlayerJob : MonoBehaviour
         {
             IsYouth = true;
             IsScold = false;
-            print("青年");
         }
     }
 
@@ -170,7 +172,6 @@ public class SettingPlayerJob : MonoBehaviour
     {
        IsYouth = false;
        IsScold = true;
-       print("憑人");
 
     }
 }
