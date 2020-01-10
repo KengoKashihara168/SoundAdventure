@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class ClickButton : MonoBehaviour
 {
     //ボタンが押されたかのFlag
@@ -16,7 +16,11 @@ public class ClickButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (IsClickButton==true)
+        {
+            /////////////            SceneManager.LoadScene("Sound");
 
+        }
     }
 
     public void OnClickButton()

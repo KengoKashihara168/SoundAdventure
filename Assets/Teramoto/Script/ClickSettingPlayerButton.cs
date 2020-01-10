@@ -16,13 +16,12 @@ public class ClickSettingPlayerButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     public void OnClickButton()
     {
         IsClickButton = true;
-       //S Debug.Log("aaaa");
+        Debug.Log("aaaa");
     }
 
     public bool GetClickButton()

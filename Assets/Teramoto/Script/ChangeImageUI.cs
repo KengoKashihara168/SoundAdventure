@@ -38,19 +38,24 @@ public class ChangeImageUI : MonoBehaviour
         {
             return;
         }
-        if(csbpScript.GetClickButton())
+        if(!IsDecision)
         {
-            IsDecision = true;
+            if (csbpScript.GetClickButton())
+            {
+                IsDecision = true;
 
-            //乱数を回す
-            int index = UnityEngine.Random.Range(0, 3);
+                //乱数を回す
+                int index = UnityEngine.Random.Range(0, 3);
 
-            //配列に乱数を入れる。
-            int ransu = index;
+                //配列に乱数を入れる。
+                int ransu = index;
 
-            //プレイヤーの情報を取得
-            //乱数を回す
-            roulette(ransu);
+                //プレイヤーの情報を取得
+                //乱数を回す
+                roulette(ransu);
+
+            }
+
 
         }
     }
