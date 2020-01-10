@@ -70,56 +70,56 @@ public class SettingAllLocation : MonoBehaviour
         x = w;
         y = h;
 
-        Control.Instance.SetPosition(0, x + y * 5);// a posListX.Add(w);
+        Control.Instance.SetPosition(0, x + y * 5);
         posListY.Add(h);
         print("Playerの場所は" + Control.Instance.GetPlayerPosition(0));
     }
 
-    void SetGoalPos()
-    {
-        //w,hにランダム数を代入する
-        int w = Random.Range(0, MAP_WIDTH);
-        int h = Random.Range(0, MAP_HEIGHT);
+    //void SetGoalPos()
+    //{
+    //    //w,hにランダム数を代入する
+    //    int w = Random.Range(0, MAP_WIDTH);
+    //    int h = Random.Range(0, MAP_HEIGHT);
 
 
-        for (int i = 0; i < posListX.Count; i++)
-        {
-            if (w == posListX[i] && h == posListY[i])
-            {
-                w = Random.Range(0, MAP_WIDTH);
-                h = Random.Range(0, MAP_HEIGHT);
-                i = -1;
-                continue;
-            }
-        }
-        x = w;
-        y = h;
-        posListX.Add(w);
-        posListY.Add(h);
-        print("Goalの場所は" + ((w + (h * 5)) + 1));
-    }
-    void SetHasshakkuPos()
-    {
-        //w,hにランダム数を代入する
-        int w = Random.Range(0, MAP_WIDTH);
-        int h = Random.Range(0, MAP_HEIGHT);
+    //    for (int i = 0; i < posListX.Count; i++)
+    //    {
+    //        if (w == posListX[i] && h == posListY[i])
+    //        {
+    //            w = Random.Range(0, MAP_WIDTH);
+    //            h = Random.Range(0, MAP_HEIGHT);
+    //            i = -1;
+    //            continue;
+    //        }
+    //    }
+    //    x = w;
+    //    y = h;
+    //    posListX.Add(w);
+    //    posListY.Add(h);
+    //    print("Goalの場所は" + ((w + (h * 5)) + 1));
+    //}
+    //void SetHasshakkuPos()
+    //{
+    //    //w,hにランダム数を代入する
+    //    int w = Random.Range(0, MAP_WIDTH);
+    //    int h = Random.Range(0, MAP_HEIGHT);
 
 
-        for (int i = 0; i < posListX.Count; i++)
-        {
-            if (w == posListX[i] && h == posListY[i])
-            {
-                w = Random.Range(0, MAP_WIDTH);
-                h = Random.Range(0, MAP_HEIGHT);
-                i = -1;
-                continue;
-            }
-        }
-        x = w;
-        y = h;
-        posListX.Add(w);
-        posListY.Add(h);
-        print("八尺の場所は" + ((w + (h * 5)) + 1));
-    }
+    //    for (int i = 0; i < posListX.Count; i++)
+    //    {
+    //        if (w == posListX[i] && h == posListY[i])
+    //        {
+    //            w = Random.Range(0, MAP_WIDTH);
+    //            h = Random.Range(0, MAP_HEIGHT);
+    //            i = -1;
+    //            continue;
+    //        }
+    //    }
+    //    x = w;
+    //    y = h;
+    //    posListX.Add(w);
+    //    posListY.Add(h);
+    //    print("八尺の場所は" + ((w + (h * 5)) + 1));
+    //}
 
 }

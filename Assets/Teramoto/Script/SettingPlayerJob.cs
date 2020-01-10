@@ -52,7 +52,6 @@ public class SettingPlayerJob : MonoBehaviour
     //役職が決まったかのFlag
     bool IsDecisionPost;
 
-    public AudioSource[] audio;
     // Start is called before the first frame update
     void Start()
     {
