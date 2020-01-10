@@ -4,16 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Move : MonoBehaviour
 {
-    // MapDate a;
-    int num;
-    int save;
-   
+    bool kill;
+    public Player player;
+    Direction direction;
+
     // Start is called before the first frame update
     void Start()
     {
-        num = Control.Instance.GetPlayerPosition(0);
-        save = num;
-     
+        direction = Direction.None;
+        kill = false;
     }
 
     // Update is called once per frame
@@ -21,58 +20,41 @@ public class Move : MonoBehaviour
     {
 
     }
-    public int GetNum()
-    {
-        return num - 1;
-    }
 
 
     public void MoveNorth()
     {
-
-        if (save > 5)
-        {
-            num = save - 5;
-
-        }
-
+        direction = Direction.North;
     }
 
 
     public void MoveSouth()
     {
 
-        if (save < 21)
-        {
-            num = save + 5;
-
-        }
+        direction = Direction.South;
 
     }
     public void MoveWest()
     {
 
-        if (save > 1 && 1 != save % 5)
-        {
-            num = save - 1;
-
-        }
+        direction = Direction.West;
 
     }
     public void MoveEast()
     {
 
-        if (save < 25 && 0 != save % 5)
-        {
-            num = save + 1;
-
-        }
+        direction = Direction.East;
 
     }
 
-    public void SceneChange()
+    public void MoveDecision()
     {
-        Control.Instance.SetPosition(0,num);
-        SceneManager.LoadScene("Result");
+        player.MoveAction(direction);
+
+    }
+
+    public void SwordDecision()
+    {
+        player.KillAction(kill, direction);
     }
 }

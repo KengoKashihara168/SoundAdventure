@@ -17,18 +17,18 @@ public class MapDate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < num; i++)
-        {
-            if (i == move.GetNum())
-            {
-                image[i].material = material[0];
-            }
-            else
-            {
+        //for (int i = 0; i < num; i++)
+        //{
+        //    if (i == move.GetNum())
+        //    {
+        //        image[i].material = material[0];
+        //    }
+        //    else
+        //    {
 
-                image[i].material = material[1];
-            }
-        }
+        //        image[i].material = material[1];
+        //    }
+        //}
 
 
     }

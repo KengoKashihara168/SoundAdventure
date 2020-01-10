@@ -16,15 +16,10 @@ public class ClickButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        // IsClickButton = false;
-
         if (IsClickButton==true)
         {
             SceneManager.LoadScene("Sound");
         }
-
-
     }
 
     public void OnClickButton()

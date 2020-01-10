@@ -14,7 +14,7 @@ public enum ChipType
 public class Chip : MonoBehaviour
 {
     public ChipType type { get; set; }
-    private Sound sound;
+    private AudioClip audio;
 
     // Start is called before the first frame update
     void Start()
@@ -28,8 +28,26 @@ public class Chip : MonoBehaviour
         
     }
 
-    public Sound GetSound()
+    /// <summary>
+    /// オブジェクト名の設定
+    /// </summary>
+    /// <param name="row">行番号</param>
+    /// <param name="column">列番号</param>
+    public void SetName(int row, string column)
     {
-        return sound;
+        // オブジェクト名は行番号 + 列番号
+        string name = row.ToString() + column.ToString();
+        gameObject.name = name;
     }
+
+    /// <summary>
+    /// 座標の設定
+    /// </summary>
+    /// <param name="pos">座標</param>
+    public void SetPosition(Vector3 pos)
+    {
+        transform.localPosition = pos;
+    }
+
+
 }

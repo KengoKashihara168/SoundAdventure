@@ -2,25 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sound : MonoBehaviour
+public class Sword : Item
 {
-    [SerializeField] private AudioSource source;
-    [SerializeField] private AudioClip   sound;
-
-
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    public void Play()
+    // Update is called once per frame
+    void Update()
     {
         
-    }
-
-    private void SetAudio()
-    {
-
     }
 }
