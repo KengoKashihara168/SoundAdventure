@@ -3,13 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum WinType
+{
+    None,
+    Youth,
+    Haunted,
+}
+
+public struct Result
+{
+    public List<string> deadNames; // 死亡したプレイヤー達
+    public List<string> goalNames; // 脱出したプレイヤー達
+    public bool isGetItem;         // アイテム獲得フラグ
+    public WinType winer;          // 勝利タイプ
+}
+
 public class WholeResult : MonoBehaviour
 {
-    [SerializeField] private List<string> deadPlayers; // 死亡したプレイヤー配列
-    [SerializeField] private List<string> goalPlayers; // 脱出したプレイヤー配列
-    [SerializeField] private bool     isGetItem;   // アイテム獲得フラグ
-    [SerializeField] private bool     youthWinFlag;    // 青年の勝利フラグ
-    [SerializeField] private bool     hauntedWinFlag;  // 憑人の勝利フラグ
+    [SerializeField] private ResultDebug debug;
+
+    private Result result;
 
     [SerializeField] private Text deadList;
     [SerializeField] private Text goalList;
@@ -17,10 +30,10 @@ public class WholeResult : MonoBehaviour
     [SerializeField] private Image youthWin;
     [SerializeField] private Image HauntedWin;
 
-
     // Start is called before the first frame update
     void Start()
     {
+        result = debug.GetResult();
     }
 
     // Update is called once per frame
@@ -34,28 +47,39 @@ public class WholeResult : MonoBehaviour
     /// </summary>
     public void WriteResult()
     {
-        // 青年の勝利
-        if(youthWinFlag)
-        {
-            WriteImage(youthWin);
-            return;
-        }
-
-        // 憑人の勝利
-        if(hauntedWinFlag)
-        {
-            WriteImage(HauntedWin);
-            return;
-        }
+        // 勝者の表示
+        WriteWiner();
 
         // 死亡リストの表示
-        WriteList(deadList, deadPlayers);
+        WriteList(deadList, result.deadNames);
         // 脱出リストの表示
-        WriteList(goalList, goalPlayers);
+        WriteList(goalList, result.goalNames);
         // アイテム獲得の表示
-        if (isGetItem)
+        if (result.isGetItem)
         {
+            // テキストの表示
             VisibleText(itemGet);
+        }
+    }
+
+    /// <summary>
+    /// 勝者の表示
+    /// </summary>
+    private void WriteWiner()
+    {
+        switch (result.winer)
+        {
+            case WinType.None: // 勝者なし
+                // 何も表示しない
+                break;
+            case WinType.Youth: // 青年の勝利
+                // 青年の画像を表示
+                WriteImage(youthWin);
+                break;
+            case WinType.Haunted: // 憑人の勝利
+                // 憑人の表示
+                WriteImage(HauntedWin);
+                break;
         }
     }
 
