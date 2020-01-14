@@ -150,16 +150,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deadPlayers:
-  - aaa
-  - bbb
-  - ccc
-  - ddd
+  - kobayashi
   goalPlayers:
   - eeee
   - ffff
   - gggg
   - hhhhh
-  isGetItem: 1
+  isGetItem: 0
   youthWinFlag: 0
   hauntedWinFlag: 0
 --- !u!4 &6963993
@@ -279,50 +276,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &860929261
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 860929262}
-  - component: {fileID: 860929263}
-  m_Layer: 0
-  m_Name: Item
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &860929262
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860929261}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1479858698}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &860929263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860929261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af98af9814df31d4483519bb3f8ef3a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  kind: 1
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,12 +371,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857b9bd342160d144ab3527990360b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1479858698 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6434618286183539357, guid: 9383300a39a6c19458759a82ded23506,
-    type: 3}
-  m_PrefabInstance: {fileID: 6434618286937722500}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1922455116
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,7 +666,7 @@ PrefabInstance:
         type: 3}
       propertyPath: item
       value: 
-      objectReference: {fileID: 860929263}
+      objectReference: {fileID: 0}
     - target: {fileID: 6434618286183539356, guid: 9383300a39a6c19458759a82ded23506,
         type: 3}
       propertyPath: isGoal
@@ -788,7 +735,7 @@ PrefabInstance:
     - target: {fileID: 8172922029631474236, guid: 9383300a39a6c19458759a82ded23506,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9383300a39a6c19458759a82ded23506, type: 3}
@@ -803,6 +750,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WholeResult
+      objectReference: {fileID: 0}
+    - target: {fileID: 8991179807947938153, guid: 8611e584bf2138e43a7ac13c0f20cb4e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8991179807947938165, guid: 8611e584bf2138e43a7ac13c0f20cb4e,
         type: 3}
