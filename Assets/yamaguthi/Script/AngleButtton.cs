@@ -25,14 +25,14 @@ public class AngleButtton : MonoBehaviour
     public void LeftAngle()
     {
         // カメラを90度回転
-        master.GetComponent<AudioScene>().CameraAddAngle(-90);
+        master.GetComponent<AudioScene>().CameraAddAngle(90);
         // カメラの向きで方角を変える
         master.GetComponent<AudioScene>().Direction();
     }
     public void RightAngle()
     {
         // カメラを90度回転
-        master.GetComponent<AudioScene>().CameraAddAngle(90);
+        master.GetComponent<AudioScene>().CameraAddAngle(-90);
         // カメラの向きで方角を変える
         master.GetComponent<AudioScene>().Direction();
     }

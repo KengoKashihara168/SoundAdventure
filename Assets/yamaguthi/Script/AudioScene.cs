@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AudioScene : MonoBehaviour
 {
-    private GameObject player;
+    public GameObject player;
     // 方角のテキスト
     public Text dire;
     // 音の位置
@@ -23,12 +23,6 @@ public class AudioScene : MonoBehaviour
         AudioClose();
         // UI
         active = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
     // カメラのゲッター
     public GameObject GetCamera()
@@ -63,11 +57,11 @@ public class AudioScene : MonoBehaviour
         }
         else if (_Rotation.y == 90)
         {
-            dire.text = "東";
+            dire.text = "西";
         }
         else if (_Rotation.y ==270)
         {
-            dire.text = "西";
+            dire.text = "東";
         }
         else if (_Rotation.y == 180)
         {
@@ -93,5 +87,6 @@ public class AudioScene : MonoBehaviour
     public void CameraPlayer()
     {
         // カメラをプレイヤーのポジションに移動させる
+        player.GetComponent<Player>();
     }
 }
