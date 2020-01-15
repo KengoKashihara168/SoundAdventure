@@ -6,12 +6,17 @@ using Photon.Realtime;
 
 public class NetworkObject : MonoBehaviourPunCallbacks
 {
-    
+    [SerializeField] private GameObject playerPrefab;
+    private Dictionary<string, Player> players;
 
     // Start is called before the first frame update
     void Start()
     {
-        PhotonNetwork.ConnectUsingSettings();
+        players = new Dictionary<string, Player>();
+        foreach(var player in PhotonNetwork.PlayerList)
+        {
+            AddPlayer(player);
+        }
     }
 
     // Update is called once per frame
@@ -20,21 +25,26 @@ public class NetworkObject : MonoBehaviourPunCallbacks
         
     }
 
-    /// <summary>
-    /// マスターサーバに接続
-    /// </summary>
-    public override void OnConnectedToMaster()
+    public Player GetPlayer(string nickName)
     {
-        RoomOptions options = new RoomOptions() { MaxPlayers = 4 };
-        PhotonNetwork.JoinOrCreateRoom("Room1", options, TypedLobby.Default);
+        Debug.Log("GetPlayer:" + nickName);
+        return players[name];
     }
 
-    /// <summary>
-    /// マッチング
-    /// </summary>
-    public override void OnJoinedRoom()
+    private void AddPlayer(Photon.Realtime.Player player)
     {
-        PhotonNetwork.IsMessageQueueRunning = false;
-
+        // プレイヤーオブジェクトの生成
+        GameObject obj = Instantiate(playerPrefab);
+        // プレイヤーをネットワークオブジェクトの子要素に追加
+        obj.transform.SetParent(transform);
+        // オブジェクト名をプレイヤー名に変更
+        obj.name = player.NickName;
+        // プレイヤースクリプトの取得
+        Player p = obj.GetComponent<Player>();
+        // プレイヤーをディクショナリに登録
+        string nickName = player.NickName;
+        Debug.Log("AddPlayer:" + nickName);
+        players.Add(nickName, p);
+        Debug.Log(players[nickName].IsDead());
     }
 }
