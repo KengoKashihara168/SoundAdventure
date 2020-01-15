@@ -2,28 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class ImageController : MonoBehaviour
+public class ImageAlpfaController : MonoBehaviour
 {
     public Image ImageUI;
-    float a_color;
+    [SerializeField]
+    private float a_color=0.0f;
+
+    //アルファ値
+    [SerializeField,Range(0,1)]
+    private float AlpfaNode = 0.0f;
     bool flag_G;
     // Use this for initialization
     void Start()
     {
-        a_color = 0.5f;
+
     }
     // Update is called once per frame
     void Update()
     {
-        //テキストの透明度を変更する
-        ImageUI.color = new Color(1, 1, 1, a_color);
+       //Imageの透明度を変更する
+       this.ImageUI.color = new Color(1, 1, 1, a_color);
         if (flag_G)
-            a_color -= Time.deltaTime;
-        else
-            a_color += Time.deltaTime;
-        if (a_color < 0.5f)
         {
-            a_color = 0.5f;
+            a_color -= Time.deltaTime;
+
+        }
+        else
+        {
+            a_color += Time.deltaTime;
+        }
+
+        if (a_color < AlpfaNode)
+        {
+            a_color = AlpfaNode;
             flag_G = false;
         }
         else if (a_color > 1)
@@ -32,4 +43,5 @@ public class ImageController : MonoBehaviour
             flag_G = true;
         }
     }
+
 }

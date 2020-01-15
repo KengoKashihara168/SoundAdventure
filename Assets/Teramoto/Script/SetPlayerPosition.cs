@@ -38,43 +38,37 @@ public class SetPlayerPosition : MonoBehaviour
         {
             if (cbScript.GetClickButton())
             {
-                //Playerの場所決め
                 SetPlayerPos();
                 //決定FlagをOn
                 IsDicision = true;
-
-                //サーバーにデータを送る。
-
             }
 
         }
+
     }
-
-
-
-    //Playerの設定
     void SetPlayerPos()
     {
         //w,hにランダム数を代入する
         int w = Random.Range(0, MAP_WIDTH);
         int h = Random.Range(0, MAP_HEIGHT);
 
-        for (int j = 0; j < posListX.Count; j++)
+
+        for (int i = 0; i < posListX.Count; i++)
         {
-            if (w == posListX[j] && h == posListY[j])
+            if (w == posListX[i] && h == posListY[i])
             {
                 w = Random.Range(0, MAP_WIDTH);
                 h = Random.Range(0, MAP_HEIGHT);
-                j = -1;
+                i = -1;
                 continue;
             }
         }
-
         x = w;
         y = h;
-        posListX.Add(w);
+
+        Control.Instance.SetPosition(0, x + y * 5);
         posListY.Add(h);
-        print("Playerの場所は" + ((w + (h * 5)) + 1));
+        print("Playerの場所は" + Control.Instance.GetPlayerPosition(0));
     }
 
 }

@@ -15,6 +15,7 @@ public class ChangeBloodUI : MonoBehaviour
     // ゲーム開始時に実行する処理
     void Start()
     {
+        
         // スプライトオブジェクトを変更するためのフラグを false に設定
         Change = false;
         // Image コンポーネントを取得して変数 m_Image に格納
@@ -30,15 +31,11 @@ public class ChangeBloodUI : MonoBehaviour
         }
         else
         {
-
             Change = true;
-
             //乱数を回す
             int index = UnityEngine.Random.Range(0, 7);
-
             //配列に乱数を入れる。
             int ransu = index;
-
             rurret(ransu);
         }
     }
