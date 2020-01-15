@@ -16,11 +16,25 @@ public class PrivateResult : MonoBehaviour
 
     private Image image;                      // 画像
 
+    //フェードイン--------------
+    float r;
+    float g;
+    float b;
+    float alfa;
+    //アルファ値を変更する
+    float speed = 0.01f;
+    //--------------------------
+
 
     // Start is called before the first frame update
     void Start()
     {
         image = GetComponent<Image>();
+        //フェードイン--------------
+        r = GetComponent<Image>().color.r;
+        g = GetComponent<Image>().color.g;
+        b = GetComponent<Image>().color.b;
+        //--------------------------
         
     }
 
@@ -28,6 +42,10 @@ public class PrivateResult : MonoBehaviour
     void Update()
     {
         ChangeImage(player);
+        //フェードイン--------------
+        GetComponent<Image>().color = new Color(r, g, b, alfa);
+        alfa += speed;
+        //--------------------------
     }
 
     /// <summary>
