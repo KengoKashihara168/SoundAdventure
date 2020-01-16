@@ -15,4 +15,12 @@ public class Sword : Item
     {
         
     }
+
+    static public Sword Create(GameObject obj)
+    {
+        obj.AddComponent<Sword>();
+        Sword sword = obj.GetComponent<Sword>();
+        sword.kind = ItemKind.Sword;
+        return sword;
+    }
 }

@@ -15,4 +15,12 @@ public class Key : Item
     {
         
     }
+
+    static public Key Create(GameObject obj)
+    {
+        obj.AddComponent<Key>();
+        Key key = obj.AddComponent<Key>();
+        key.kind = ItemKind.Key;
+        return key;
+    }
 }

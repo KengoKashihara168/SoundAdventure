@@ -6,10 +6,10 @@ public class Player : MonoBehaviour
 {
     // メンバ変数
     private MapIndex position;  // 座標
-    /*[SerializeField]*/ private Item     item;      // 所持アイテム
-    /*[SerializeField]*/ private bool     isGoal;    // 脱出フラグ
-    /*[SerializeField]*/ private bool     isDead;    // 死亡フラグ
-    /*[SerializeField]*/ private bool     isHaunted; // 憑人フラグ
+    private Item     item;      // 所持アイテム
+    private bool     isGoal;    // 脱出フラグ
+    private bool     isDead;    // 死亡フラグ
+    private bool     isHaunted; // 憑人フラグ
     private Action   action;    // プレイヤーの行動
 
     private void Awake()
@@ -18,14 +18,44 @@ public class Player : MonoBehaviour
         position.SetIndex(1, "A");
         item = null;
         isGoal = false;
-        isDead = true;
+        isDead = false;
         isHaunted = false;
+        CreateItem(ItemKind.Amulet);
     }
 
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    /// <summary>
+    /// アイテムの生成
+    /// </summary>
+    /// <param name="kind">アイテムの種類</param>
+    private void CreateItem(ItemKind kind)
+    {
+        // アイテムオブジェクトを生成
+        GameObject obj = Instantiate(new GameObject(), Vector3.zero, Quaternion.identity);
+        obj.transform.SetParent(transform);
+        switch(kind)
+        {
+            case ItemKind.None:
+                // 何もしない
+                break;
+            case ItemKind.Key:
+                item = Key.Create(obj);    // 鍵
+                break;
+            case ItemKind.Amulet:
+                item = Amulet.Create(obj); // 御札
+                break;
+            case ItemKind.Cutter:
+                item = Cutter.Create(obj); // カッター
+                break;
+            case ItemKind.Sword:
+                item = Sword.Create(obj);  // 刀
+                break;
+        }
     }
 
     /// <summary>
@@ -92,7 +122,7 @@ public class Player : MonoBehaviour
     {
         if (item == null) return ItemKind.None;
 
-        return item.GetKind();
+        return item.kind;
     }
 
     /// <summary>

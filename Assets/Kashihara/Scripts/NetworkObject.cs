@@ -27,8 +27,7 @@ public class NetworkObject : MonoBehaviourPunCallbacks
 
     public Player GetPlayer(string nickName)
     {
-        Debug.Log("GetPlayer:" + nickName);
-        return players[name];
+        return players[nickName];
     }
 
     private void AddPlayer(Photon.Realtime.Player player)
@@ -43,8 +42,6 @@ public class NetworkObject : MonoBehaviourPunCallbacks
         Player p = obj.GetComponent<Player>();
         // プレイヤーをディクショナリに登録
         string nickName = player.NickName;
-        Debug.Log("AddPlayer:" + nickName);
         players.Add(nickName, p);
-        Debug.Log(players[nickName].IsDead());
     }
 }

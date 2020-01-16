@@ -19,7 +19,11 @@ public enum ItemKind
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] private ItemKind kind;
+    public ItemKind kind
+    {
+        get;
+        protected set;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -33,8 +37,8 @@ public class Item : MonoBehaviour
         
     }
 
-    public ItemKind GetKind()
+    public void Check()
     {
-        return kind;
+        Debug.Log(kind);
     }
 }

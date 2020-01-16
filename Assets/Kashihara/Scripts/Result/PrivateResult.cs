@@ -22,11 +22,19 @@ public class PrivateResult : MonoBehaviour
     void Start()
     {
         image = resultImage.GetComponent<Image>();
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+
+    }
+
+    public void OpenScreen()
+    {
+        
+        
     }
 
     public void SetPlayer(Player p)
