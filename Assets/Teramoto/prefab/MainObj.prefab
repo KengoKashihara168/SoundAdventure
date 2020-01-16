@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &873442737076309735
+--- !u!1 &2538782929371488591
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 873442737076309730}
-  - component: {fileID: 873442737076309733}
-  - component: {fileID: 873442737076309732}
+  - component: {fileID: 2538782929371488586}
+  - component: {fileID: 2538782929371488589}
+  - component: {fileID: 2538782930858637834}
   m_Layer: 0
   m_Name: MainObj
   m_TagString: Untagged
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &873442737076309730
+--- !u!4 &2538782929371488586
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 873442737076309735}
+  m_GameObject: {fileID: 2538782929371488591}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,13 +32,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &873442737076309733
+--- !u!114 &2538782929371488589
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 873442737076309735}
+  m_GameObject: {fileID: 2538782929371488591}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65f9936554d3a4644af8a2e427fabb92, type: 3}
@@ -49,16 +49,16 @@ MonoBehaviour:
   buttonObj2: {fileID: 0}
   youthImage: {fileID: 0}
   scoldImage: {fileID: 0}
---- !u!114 &873442737076309732
+--- !u!114 &2538782930858637834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 873442737076309735}
+  m_GameObject: {fileID: 2538782929371488591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5df532f0e71cad440a200823b14c7219, type: 3}
+  m_Script: {fileID: 11500000, guid: 505d5bae4728d944eb7ae86326e7df9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buttonObj2: {fileID: 0}

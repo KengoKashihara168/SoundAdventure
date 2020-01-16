@@ -56,6 +56,10 @@ public class SettingPlayerJob : MonoBehaviour
     void Start()
     {
 
+        youthImage.SetActive(false);
+        scoldImage.SetActive(false);
+        buttonObj.SetActive(true);
+        buttonObj2.SetActive(false);
         csbpScript = buttonObj.GetComponent<ClickSettingPlayerButton>();
         cbScript = buttonObj2.GetComponent<ClickButton>();
         ISClickButtonFlag = false;
