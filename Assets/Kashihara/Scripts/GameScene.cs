@@ -26,7 +26,7 @@ public class GameScene : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject itemUseScreen;
     [SerializeField] private GameObject itemGetScreen;
     [SerializeField] private PrivateResult privateResultScreen;
-    [SerializeField] private GameObject wholeResultScreen;
+    [SerializeField] private WholeResult wholeResultScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -125,10 +125,9 @@ public class GameScene : MonoBehaviourPunCallbacks
     /// </summary>
     private void PrivateResultScreen()
     {
-        privateResultScreen.gameObject.SetActive(true);
         string nickName = PhotonNetwork.NickName;
         Player player = network.GetPlayer(nickName);
-        privateResultScreen.SetPlayer(player);
+        privateResultScreen.OpenScreen(player);
     }
 
     /// <summary>
@@ -136,7 +135,8 @@ public class GameScene : MonoBehaviourPunCallbacks
     /// </summary>
     private void WholeResultScreen()
     {
-
+        Result result = network.GetResult();
+        wholeResultScreen.OpenScreen(result);
     }
 
 

@@ -6,28 +6,19 @@ using Photon.Realtime;
 
 public class NetworkObject : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private GameObject playerPrefab;
+    private GameObject playerPrefab;
     private Dictionary<string, Player> players;
+    private Result result;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerPrefab = (GameObject)Resources.Load("Player");
         players = new Dictionary<string, Player>();
         foreach(var player in PhotonNetwork.PlayerList)
         {
             AddPlayer(player);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public Player GetPlayer(string nickName)
-    {
-        return players[nickName];
     }
 
     private void AddPlayer(Photon.Realtime.Player player)
@@ -44,4 +35,80 @@ public class NetworkObject : MonoBehaviourPunCallbacks
         string nickName = player.NickName;
         players.Add(nickName, p);
     }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    /// <summary>
+    /// 全体の結果を設定
+    /// </summary>
+    private void SetResult()
+    {
+        CheckDeads();
+        CheckGoals();
+        CheckGetItem();
+        CheckWinner();
+    }
+
+    /// <summary>
+    /// 死亡者を調べる
+    /// </summary>
+    private void CheckDeads()
+    {
+        result.deadNames = new List<string>();
+        foreach(var player in players)
+        {
+            if (!player.Value.IsDead()) continue;
+            result.deadNames.Add(player.Key);
+        }
+    }
+
+    /// <summary>
+    /// 脱出者を調べる
+    /// </summary>
+    private void CheckGoals()
+    {
+        result.goalNames = new List<string>();
+        foreach(var player in players)
+        {
+            if (!player.Value.IsGoal()) continue;
+            result.goalNames.Add(player.Key);
+        }
+    }
+
+    /// <summary>
+    /// アイテムを取得したプレイヤーがいるか調べる
+    /// </summary>
+    private void CheckGetItem()
+    {
+        result.isGetItem = false;
+        foreach(var player in players)
+        {
+            if (player.Value.GetItemKind() != ItemKind.None) continue;
+            result.isGetItem = true;
+        }
+    }
+
+    /// <summary>
+    /// 勝者の設定
+    /// </summary>
+    private void CheckWinner()
+    {
+        result.winer = WinType.None;
+    }
+
+    public Player GetPlayer(string nickName)
+    {
+        return players[nickName];
+    }
+
+    public Result GetResult()
+    {
+        SetResult();
+        return result;
+    }
+    
 }

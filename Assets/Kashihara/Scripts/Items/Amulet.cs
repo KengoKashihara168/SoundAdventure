@@ -18,7 +18,6 @@ public class Amulet : Item
 
     static public Amulet Create(GameObject obj)
     {
-        obj.AddComponent<Amulet>();
         Amulet amulet = obj.AddComponent<Amulet>();
         amulet.kind = ItemKind.Amulet;
         return amulet;

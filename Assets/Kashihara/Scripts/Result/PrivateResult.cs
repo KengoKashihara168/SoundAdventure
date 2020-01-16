@@ -31,16 +31,12 @@ public class PrivateResult : MonoBehaviour
 
     }
 
-    public void OpenScreen()
+    public void OpenScreen(Player p)
     {
-        
-        
-    }
-
-    public void SetPlayer(Player p)
-    {
+        gameObject.SetActive(true);
         player = p;
         ChangeImage(player);
+        
     }
 
     /// <summary>

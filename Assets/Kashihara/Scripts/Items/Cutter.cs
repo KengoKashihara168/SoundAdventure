@@ -18,7 +18,6 @@ public class Cutter : Item
 
     static public Cutter Create(GameObject obj)
     {
-        obj.AddComponent<Cutter>();
         Cutter cutter = obj.AddComponent<Cutter>();
         cutter.kind = ItemKind.Cutter;
         return cutter;
