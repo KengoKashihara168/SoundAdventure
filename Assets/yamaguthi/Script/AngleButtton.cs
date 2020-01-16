@@ -42,6 +42,9 @@ public class AngleButtton : MonoBehaviour
         {
             // UIを非表示に
             master.GetComponent<AudioScene>().SetActive(false);
+            // カメラの回転リセット
+            master.GetComponent<AudioScene>().CameraResetAngle();
+            master.GetComponent<AudioScene>().GetCamera().GetComponent<Camera>().enabled = false;
             // 音が流れていたら止める
             if (!master.GetComponent<AudioScene>().GetAudio().mute)
             {
@@ -56,6 +59,7 @@ public class AngleButtton : MonoBehaviour
             master.GetComponent<AudioScene>().AudioClose();
             // カメラの回転リセット
             master.GetComponent<AudioScene>().CameraResetAngle();
+            master.GetComponent<AudioScene>().GetCamera().GetComponent<Camera>().enabled = true;
             // カメラの向きで方角を変える
             master.GetComponent<AudioScene>().Direction();
             // UIを表示する
