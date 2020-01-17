@@ -12,16 +12,10 @@ public class Move : MonoBehaviour
     void Start()
     {
         direction = Direction.None;
-        kill = false;
+        kill = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
+    //方向の設定
     public void MoveNorth()
     {
         direction = Direction.North;
@@ -47,12 +41,13 @@ public class Move : MonoBehaviour
 
     }
 
+    //プレイヤーのポジション設定
     public void MoveDecision()
     {
         player.MoveAction(direction);
 
     }
-
+    //プレイヤーの刀の設定
     public void SwordDecision()
     {
         player.KillAction(kill, direction);
