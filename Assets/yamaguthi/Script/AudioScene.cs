@@ -5,9 +5,13 @@ using UnityEngine.UI;
 
 public class AudioScene : MonoBehaviour
 {
+    // プレイヤー
     public GameObject player;
+    // カメラ
     private GameObject camera;
+    // マップ
     public GameObject map;
+    // カメラのリセット用角度
     Vector3 strcameraRot;
     // 方角のテキスト
     public Text dire;
@@ -26,8 +30,9 @@ public class AudioScene : MonoBehaviour
         AudioClose();
         // UI
         active = false;
+        // リセット用に角度を保存
         strcameraRot = camera.transform.eulerAngles;
-        Debug.Log(strcameraRot);
+        // カメラを外す
         camera.GetComponent<Camera>().enabled = false;
     }
     // カメラのゲッター
@@ -99,7 +104,7 @@ public class AudioScene : MonoBehaviour
                 {
                     // どれが一番近いか判別して保存する
                     Vector2 posA = new Vector2(player.GetComponent<Player>().postion, player.GetComponent<Player>().postion);
-                    Vector2 posB = new Vector2(map[i].Column[j], map[i].Column[j]);
+                    Vector2 posB = new Vector2(map[i][Column[j]].postion, map[i][Column[j]].positon);
 
                     float distance = (posA - posB).magnitude;
                     if (i != 0)
@@ -127,7 +132,9 @@ public class AudioScene : MonoBehaviour
     // カメラをプレイヤーのポジションに移動させる
     public void CameraPlayer()
     {
+        GameObject pl = GameObject.Find( map.GetComponent<StageMap>().GetPosition().row + map.GetComponent<StageMap>().GetPosition().column);
+       // map[0]["A"];
         // カメラをプレイヤーのポジションに移動させる
-      //  camera.transform.position= player.GetComponent<Player>().postion;
+        camera.transform.position= pl.transform.position;
     }
 }
