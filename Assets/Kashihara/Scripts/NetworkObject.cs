@@ -87,7 +87,7 @@ public class NetworkObject : MonoBehaviourPunCallbacks
         result.isGetItem = false;
         foreach(var player in players)
         {
-            if (player.Value.GetItemKind() != ItemKind.None) continue;
+            if (player.Value.GetItemKind() == ItemKind.None) continue;
             result.isGetItem = true;
         }
     }

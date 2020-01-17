@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
         // メンバ変数の初期化
         position.SetIndex(1, "A");
         item = null;
-        isGoal = false;
+        isGoal = true;
         isDead = false;
         isHaunted = false;
         CreateItem(ItemKind.Amulet);
