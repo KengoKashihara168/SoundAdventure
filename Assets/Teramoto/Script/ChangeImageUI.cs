@@ -15,25 +15,20 @@ public class ChangeImageUI : MonoBehaviour
     //Panel
     [SerializeField]
     private Image panel;
-
-    //ボタンのオブジェの取得
-    [SerializeField]
-    private GameObject MainObj;
-
-    SettingPlayerJob script;
     // Start is called before the first frame update
     void Start()
     {
-        script = MainObj.GetComponent<SettingPlayerJob>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        SetImageUI(script.GetYouth());
+        //Iamgeを青年か憑人かをboolで変更
+        SetImageUI(true);
     }
 
+    //Iamgeを青年か憑人かをboolで変更するscript
     public void SetImageUI(bool job)
     {
         //trueの場合青年表示
