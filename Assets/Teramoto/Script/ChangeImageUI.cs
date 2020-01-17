@@ -1,95 +1,56 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class ChangeImageUI : MonoBehaviour
 {
+    //青年のImageセット
+    [SerializeField]
+    private Sprite YouthSprite;
+    //憑人のImageセット
+    [SerializeField]
+    private Sprite ScooldSprite;
 
-    public Sprite SetImage0;
-    public Sprite SetImage1;
-    public Sprite SetImage2;
-    SpriteRenderer MainSpriteRenderer;
-    //子供の画像
-    public Image ImageUIChild;
-    //ボタンクリックスクリプト
-    ClickSettingPlayerButton csbpScript;
+    //Panel
+    [SerializeField]
+    private Image panel;
 
     //ボタンのオブジェの取得
     [SerializeField]
-    private GameObject buttonObj;
+    private GameObject MainObj;
 
-    private bool IsDecision;
-
+    SettingPlayerJob script;
     // Start is called before the first frame update
     void Start()
     {
-        // このobjectのSpriteRendererを取得
-        MainSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        //スクリプトの呼び出し
-        csbpScript = buttonObj.GetComponent<ClickSettingPlayerButton>();
-        IsDecision = false;
+        script = MainObj.GetComponent<SettingPlayerJob>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(IsDecision)
-        {
-            return;
-        }
-        if(!IsDecision)
-        {
-            if (csbpScript.GetClickButton())
-            {
-                IsDecision = true;
-
-                //乱数を回す
-                int index = UnityEngine.Random.Range(0, 3);
-
-                //配列に乱数を入れる。
-                int ransu = index;
-
-                //プレイヤーの情報を取得
-                //乱数を回す
-                roulette(ransu);
-
-            }
-
-
-        }
+        SetImageUI(script.GetYouth());
     }
 
-    void roulette(int rand)
+    public void SetImageUI(bool job)
     {
-        switch (rand)
+        //trueの場合青年表示
+        if (job)
         {
-            case 0:
-                //画像のSet
-                MainSpriteRenderer.sprite = SetImage0;
-                ImageUIChild.sprite = MainSpriteRenderer.sprite;
+            //青年の画像
+            print("青年");
+            panel.sprite = YouthSprite;
 
-                break;
+        }
 
-            case 1:
-                //画像のSet
-                MainSpriteRenderer.sprite = SetImage1;
-
-                ImageUIChild.sprite = MainSpriteRenderer.sprite;
-
-                break;
-            case 2:
-                //画像のSet
-                MainSpriteRenderer.sprite = SetImage2;
-
-                ImageUIChild.sprite = MainSpriteRenderer.sprite;
-
-                break;
-
-            default:
-                print("値がおかしいです");
-                break;
+        //falseの場合青年表示
+        if (!job)
+        {
+            //憑人の画像    
+            print("憑人");
+            panel.sprite = ScooldSprite;
         }
     }
-
 }
