@@ -15,7 +15,7 @@ public class MatchingScene : MonoBehaviourPunCallbacks
 
     private List<Text> names;
 
-    private readonly int MaxPlayer = 1;
+    public static readonly int MaxPlayer = 4;
 
     // Start is called before the first frame update
     void Start()

@@ -57,23 +57,23 @@ public class PrivateResult : MonoBehaviour
             return;
         }
 
-        switch(player.GetItemKind())
-        {
-            case ItemKind.Key:
-                image.sprite = key;
-                break;
-            case ItemKind.Amulet:
-                image.sprite = amulet;
-                break;
-            case ItemKind.Cutter:
-                image.sprite = cutter;
-                break;
-            case ItemKind.Sword:
-                image.sprite = sword;
-                break;
-            case ItemKind.None:
-                image.sprite = none;
-                break;
-        }
+        //switch(player.GetItemKind())
+        //{
+        //    case ItemKind.Key:
+        //        image.sprite = key;
+        //        break;
+        //    case ItemKind.Amulet:
+        //        image.sprite = amulet;
+        //        break;
+        //    case ItemKind.Cutter:
+        //        image.sprite = cutter;
+        //        break;
+        //    case ItemKind.Sword:
+        //        image.sprite = sword;
+        //        break;
+        //    case ItemKind.None:
+        //        image.sprite = none;
+        //        break;
+        //}
     }
 }

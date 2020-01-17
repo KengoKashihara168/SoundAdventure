@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 public enum ScreenType
 {
@@ -17,10 +18,14 @@ public enum ScreenType
 
 public class GameScene : MonoBehaviourPunCallbacks
 {
-    //[SerializeField] private Map map;
-    //[SerializeField] private Player[] players;
-    private NetworkObject network;
+    [SerializeField] private StageMap map;
+    [SerializeField] private List<Item> item;
+    private Player player;
+    
+    //private NetworkObject network;
 
+    [SerializeField] private JobScreen jobScreen;
+    [SerializeField] private DefaultScreen defaultScreen;
     [SerializeField] private GameObject soundScreen;
     [SerializeField] private GameObject moveScreen;
     [SerializeField] private GameObject itemUseScreen;
@@ -32,10 +37,11 @@ public class GameScene : MonoBehaviourPunCallbacks
     void Start()
     {
         PhotonNetwork.IsMessageQueueRunning = true;
-        GameObject instance = PhotonNetwork.Instantiate("NetworkObject", Vector3.zero, Quaternion.identity);
-        network = instance.GetComponent<NetworkObject>();
+        GameObject instance = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        player = instance.GetComponent<Player>();
+        player.Initialize(PhotonNetwork.LocalPlayer.ActorNumber);
         InitializeGame();
-        DefaultScreen();
+        JobScreen();
     }
 
     // Update is called once per frame
@@ -72,12 +78,69 @@ public class GameScene : MonoBehaviourPunCallbacks
         }
     }
 
+ 
+
     /// <summary>
     /// 初期化
     /// </summary>
     private void InitializeGame()
     {
+        if(PhotonNetwork.LocalPlayer.ActorNumber == 3)
+        {
+            item = new List<Item>();
+            CreateItem(ItemKind.Amulet);
+            InitializeItem();
+        }
+    }
 
+    private void CreateItem(ItemKind kind)
+    {
+        GameObject obj = PhotonNetwork.Instantiate("Item", Vector3.zero, Quaternion.identity);
+        switch (kind)
+        {
+            case ItemKind.Amulet:
+                item.Add(Amulet.Create(obj));
+                break;
+            case ItemKind.Cutter:
+                item.Add(Cutter.Create(obj));
+                break;
+            case ItemKind.Key:
+                item.Add(Key.Create(obj));
+                break;
+            case ItemKind.Sword:
+                item.Add(Sword.Create(obj));
+                break;
+        }
+    }
+
+    /// <summary>
+    /// アイテムの初期化
+    /// </summary>
+    private void InitializeItem()
+    {
+        
+        MapIndex index;
+        for(int i = 0;i < 4;i++)
+        {
+            index.column = StageMap.Column[Random.Range(0, 4)];
+            index.row = StageMap.Row[Random.Range(0, 4)];
+            for(int j = 0;j < i;j++)
+            {
+                if (item[j].GetPosition().row != index.row) continue;
+                if (item[j].GetPosition().column != index.column) continue;
+                index.column = StageMap.Column[Random.Range(0, 4)];
+                index.row = StageMap.Row[Random.Range(0, 4)];
+            }
+            item[i].SetPosition(index);
+        }
+    }
+
+    /// <summary>
+    /// 役職画面
+    /// </summary>
+    private void JobScreen()
+    {
+        jobScreen.SetJobImage(player.IsHaunted);
     }
 
     /// <summary>
@@ -85,7 +148,7 @@ public class GameScene : MonoBehaviourPunCallbacks
     /// </summary>
     private void DefaultScreen()
     {
-        Debug.Log("Default");
+        defaultScreen.OpenScreen();
     }
 
     /// <summary>
@@ -126,7 +189,7 @@ public class GameScene : MonoBehaviourPunCallbacks
     private void PrivateResultScreen()
     {
         string nickName = PhotonNetwork.NickName;
-        Player player = network.GetPlayer(nickName);
+        //Player player = network.GetPlayer(nickName);
         privateResultScreen.OpenScreen(player);
     }
 
@@ -135,8 +198,8 @@ public class GameScene : MonoBehaviourPunCallbacks
     /// </summary>
     private void WholeResultScreen()
     {
-        Result result = network.GetResult();
-        wholeResultScreen.OpenScreen(result);
+        //Result result = network.GetResult();
+        //wholeResultScreen.OpenScreen(result);
     }
 
 

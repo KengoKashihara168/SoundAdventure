@@ -7,7 +7,7 @@ public class Cutter : Item
     // Start is called before the first frame update
     void Start()
     {
-        
+        kind = ItemKind.Cutter;
     }
 
     // Update is called once per frame

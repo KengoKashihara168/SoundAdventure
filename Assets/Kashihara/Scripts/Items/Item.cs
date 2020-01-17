@@ -19,16 +19,15 @@ public enum ItemKind
 
 public class Item : MonoBehaviour
 {
-    public ItemKind kind
-    {
-        get;
-        protected set;
-    }
+    protected ItemKind kind;
+    private MapIndex position;
+    private AudioScene sound;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        sound = GetComponent<AudioScene>();
+        position.SetIndex(0, "A");
     }
 
     // Update is called once per frame
@@ -37,8 +36,14 @@ public class Item : MonoBehaviour
         
     }
 
-    public void Check()
+    public void SetPosition(MapIndex index)
     {
-        Debug.Log(kind);
+        position.SetIndex(index.row,index.column);
+        transform.position = StageMap.ConvertToVector(index);
+    }
+
+    public MapIndex GetPosition()
+    {
+        return position;
     }
 }

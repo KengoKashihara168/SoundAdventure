@@ -5,22 +5,21 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // メンバ変数
-    private MapIndex position;  // 座標
-    private Item     item;      // 所持アイテム
-    private bool     isGoal;    // 脱出フラグ
-    private bool     isDead;    // 死亡フラグ
-    private bool     isHaunted; // 憑人フラグ
-    private Action   action;    // プレイヤーの行動
+    private MapIndex position;         // 座標
+    private Item     item;             // 所持アイテム
+    private bool     isGoal;           // 脱出フラグ
+    private bool     isDead;           // 死亡フラグ
+    public bool IsHaunted{ get; set; } // 憑人フラグ
+    private Action   action;           // プレイヤーの行動
 
     private void Awake()
     {
         // メンバ変数の初期化
-        position.SetIndex(1, "A");
+        position.SetIndex(5, "F");
         item = null;
-        isGoal = true;
+        isGoal = false;
         isDead = false;
-        isHaunted = false;
-        CreateItem(ItemKind.Amulet);
+        //CreateItem(ItemKind.Amulet);
     }
 
     // Start is called before the first frame update
@@ -29,33 +28,27 @@ public class Player : MonoBehaviour
         
     }
 
-    /// <summary>
-    /// アイテムの生成
-    /// </summary>
-    /// <param name="kind">アイテムの種類</param>
-    private void CreateItem(ItemKind kind)
+    public void Initialize(int number)
     {
-        // アイテムオブジェクトを生成
-        GameObject obj = Instantiate(new GameObject(), Vector3.zero, Quaternion.identity);
-        obj.transform.SetParent(transform);
-        switch(kind)
+        MapIndex index;
+        int rand = Random.Range(0, 5);
+        if (rand == 5) rand = 4;
+        index.row = StageMap.Row[rand];
+        rand = Random.Range(0, 5);
+        if (rand == 5) rand = 4;
+        index.column = StageMap.Column[rand];
+        isGoal = false;
+        if(number == 3)
         {
-            case ItemKind.None:
-                // 何もしない
-                break;
-            case ItemKind.Key:
-                item = Key.Create(obj);    // 鍵
-                break;
-            case ItemKind.Amulet:
-                item = Amulet.Create(obj); // 御札
-                break;
-            case ItemKind.Cutter:
-                item = Cutter.Create(obj); // カッター
-                break;
-            case ItemKind.Sword:
-                item = Sword.Create(obj);  // 刀
-                break;
+            IsHaunted = true;
         }
+    }
+
+    public void SetPosition(MapIndex index)
+    {
+        if (StageMap.CheckRange(position)) return; // まだポジションが設定されていなければ
+        // プレイヤーの座標を設定
+        position.SetIndex(index.row,index.column);
     }
 
     /// <summary>
@@ -106,32 +99,12 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 憑人フラグの取得
-    /// </summary>
-    /// <returns></returns>
-    public bool IsHaunted()
-    {
-        return isHaunted;
-    }
-
-    /// <summary>
-    /// アイテム名の取得
-    /// </summary>
-    /// <returns>アイテム名</returns>
-    public ItemKind GetItemKind()
-    {
-        if (item == null) return ItemKind.None;
-
-        return item.kind;
-    }
-
-    /// <summary>
     /// 八尺様解放フラグの取得
     /// </summary>
     /// <returns>八尺様解放フラグ</returns>
     public bool IsRelease()
     {
-        if (!isHaunted) return false;
+        if (!IsHaunted) return false;
 
         return true;
     }
