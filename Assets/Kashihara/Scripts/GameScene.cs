@@ -44,7 +44,7 @@ public class GameScene : MonoBehaviourPunCallbacks
         
     }
 
-    public void OnScreenButton(ScreenType type)
+    public void ChangeScreen(ScreenType type)
     {
         switch (type)
         {

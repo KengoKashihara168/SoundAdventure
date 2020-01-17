@@ -336,7 +336,7 @@ PrefabInstance:
     - target: {fileID: 6110229992579982912, guid: 776e4d13d4700c349b212d6531a5dd9a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6110229992579982912, guid: 776e4d13d4700c349b212d6531a5dd9a,
         type: 3}
@@ -352,7 +352,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 344132690}
+      objectReference: {fileID: 0}
     - target: {fileID: 6110229992579982912, guid: 776e4d13d4700c349b212d6531a5dd9a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -393,11 +393,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 344132689}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd80ac0a46544e749be41ad8c7f48fee, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ba4b2f42c738594cb67fc2be21e4e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 6
-  gameScene: {fileID: 552385478}
+  screenType: 6
 --- !u!1 &398245407
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,6 +693,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8611e584bf2138e43a7ac13c0f20cb4e, type: 3}
+--- !u!1 &622628192 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8991179808303164413, guid: 8611e584bf2138e43a7ac13c0f20cb4e,
+    type: 3}
+  m_PrefabInstance: {fileID: 622628191}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &622628193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622628192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ba4b2f42c738594cb67fc2be21e4e2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenType: 0
 --- !u!1 &667864994
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,18 +983,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1626829104}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1626829106}
-        m_MethodName: OnScreenButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1626829104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1022,11 +1029,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1626829101}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd80ac0a46544e749be41ad8c7f48fee, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ba4b2f42c738594cb67fc2be21e4e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 5
-  gameScene: {fileID: 552385478}
+  screenType: 5
 --- !u!1 &1771597915
 GameObject:
   m_ObjectHideFlags: 0
