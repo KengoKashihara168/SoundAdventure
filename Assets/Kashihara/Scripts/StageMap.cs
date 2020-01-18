@@ -32,13 +32,14 @@ public struct MapIndex
 public class StageMap : MonoBehaviour
 {
     // 定数
-    private readonly string[] Column = { "A", "B", "C", "D", "E" }; // 列の添え字用配列
-    private readonly int      MapSize = 5;                          // マップの大きさ
+    public static readonly int[] Row = { 0, 1, 2, 3, 4 };
+    public static readonly string[] Column = { "A", "B", "C", "D", "E" }; // 列の添え字用配列
+    public static readonly int      MapSize = 5;                          // マップの大きさ
+    public static readonly float ChipDistance = 2.0f; // 各チップの距離
 
     // メンバ変数
     private Dictionary<string, Chip>[]  map;          // マップの2次元配列
     [SerializeField] private GameObject chip;         // チップ
-    [SerializeField] private float      chipDistance; // 各チップの距離
     private MapIndex[] playerPosition;
 
     // Start is called before the first frame update
@@ -64,7 +65,7 @@ public class StageMap : MonoBehaviour
 
                 // 各チップに値を設定
                 map[i][key].SetName(i, key);
-                Vector3 pos = new Vector3(chipDistance * j, -chipDistance * i, 0.0f);
+                Vector3 pos = new Vector3(ChipDistance * j, -ChipDistance * i, 0.0f);
                 value.SetPosition(pos);
             }
         }
@@ -116,5 +117,24 @@ public class StageMap : MonoBehaviour
 
 
 
+    }
+
+    public static Vector3 IndexToVector(MapIndex index)
+    {
+        Vector3 pos = Vector3.zero;
+
+        for(int i = 0; i < Column.Length;i++)
+        {
+            if (index.column != Column[i]) continue;
+            pos.x = ChipDistance * i;
+        }
+
+        for(int i = 0;i < Row.Length;i++)
+        {
+            if (index.row != Row[i]) continue;
+            pos.y = -ChipDistance * i;
+        }
+
+        return pos;
     }
 }

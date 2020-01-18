@@ -6,10 +6,10 @@ public class Player : MonoBehaviour
 {
     // メンバ変数
     private MapIndex position;  // 座標
-    [SerializeField] private Item     item;      // 所持アイテム
-    [SerializeField] private bool     isGoal;    // 脱出フラグ
-    [SerializeField] private bool     isDead;    // 死亡フラグ
-    [SerializeField] private bool     isHaunted; // 憑人フラグ
+    private Item     item;      // 所持アイテム
+    private bool     isGoal;    // 脱出フラグ
+    private bool     isDead;    // 死亡フラグ
+    public bool     isHaunted; // 憑人フラグ
     private Action   action;    // プレイヤーの行動
 
     // Start is called before the first frame update

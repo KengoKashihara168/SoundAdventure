@@ -5,19 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Onokeiju/Scene/Title.unity
     guid: 6320e2796e1952e47837e43bc6a54eaf
-  - enabled: 1
+  - enabled: 0
     path: Assets/Teramoto/Scene/PositionSetting.unity
     guid: eae304a22ca0a6f499dd1867f0b67fbc
-  - enabled: 1
+  - enabled: 0
     path: Assets/yamaguthi/Sound.unity
     guid: 8a3e6a0d57eb5d94e814ddd66dc3c87b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Kobayashi/Scene/Result.unity
     guid: ad7c78df9ecf1104e9c82f5ed149ff52
-  - enabled: 1
+  - enabled: 0
     path: Assets/Onokeiju/Scene/Move.unity
     guid: 884bda20f5c53ac4bba223c3ad15bc4d
+  - enabled: 1
+    path: Assets/Kashihara/GameTestScene.unity
+    guid: dad25182101bf8447990ec3963cf464b
   m_configObjects: {}
