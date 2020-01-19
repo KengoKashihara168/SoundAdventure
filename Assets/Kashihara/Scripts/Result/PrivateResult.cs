@@ -62,9 +62,9 @@ public class PrivateResult : MonoBehaviour
             case ItemKind.Sword:
                 image.sprite = sword;
                 break;
-            case ItemKind.None:
-                image.sprite = none;
-                break;
+            //case ItemKind.None:
+            //    image.sprite = none;
+            //    break;
         }
     }
 }

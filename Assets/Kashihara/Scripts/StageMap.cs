@@ -137,4 +137,17 @@ public class StageMap : MonoBehaviour
 
         return pos;
     }
+
+    public static MapIndex VectorToIndex(Vector3 vector)
+    {
+        MapIndex index;
+
+        int rowNum = (int)(-vector.y / ChipDistance);
+        index.row = Row[rowNum];
+        int columnNum = (int)(vector.x / ChipDistance);
+        index.column = Column[columnNum];
+        Debug.Log(index.row.ToString() + index.column);
+
+        return index;
+    }
 }

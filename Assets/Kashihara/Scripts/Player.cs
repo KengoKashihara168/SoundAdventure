@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
     /// <returns>アイテム名</returns>
     public ItemKind GetItemKind()
     {
-        if (item == null) return ItemKind.None;
+//        if (item == null) return ItemKind.None;
 
         return item.GetKind();
     }
@@ -108,5 +108,10 @@ public class Player : MonoBehaviour
     public bool IsKill()
     {
         return false;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
     }
 }
