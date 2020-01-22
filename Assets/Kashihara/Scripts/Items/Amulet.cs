@@ -5,7 +5,7 @@ using UnityEngine;
 public class Amulet : Item
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         kind = ItemKind.Amulet;
     }
@@ -16,10 +16,13 @@ public class Amulet : Item
         
     }
 
+<<<<<<< HEAD
     static public Amulet Create(GameObject obj)
     {
         Amulet amulet = obj.AddComponent<Amulet>();
         amulet.kind = ItemKind.Amulet;
         return amulet;
     }
+=======
+>>>>>>> Kashihara_PUN2
 }

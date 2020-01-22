@@ -27,15 +27,29 @@ public struct MapIndex
         row = r;
         column = c;
     }
+
+    public bool IsSame(MapIndex a,MapIndex b)
+    {
+        if (a.row != b.row) return false;
+        if (a.column != b.column) return false;
+        return true;
+    }
 }
 
 public class StageMap : MonoBehaviour
 {
     // 定数
+<<<<<<< HEAD
     public static readonly  int[]    Row     = { 0, 1, 2, 3, 4 };           // 行の添え字用配列
     public static readonly  string[] Column  = { "A", "B", "C", "D", "E" }; // 列の添え字用配列
     public static readonly  int      MapSize = 5;                           // マップの大きさ
     public static readonly float ChipDistance = 2.0f;
+=======
+    public static readonly int[] Row = { 0, 1, 2, 3, 4 };
+    public static readonly string[] Column = { "A", "B", "C", "D", "E" }; // 列の添え字用配列
+    public static readonly int      MapSize = 5;                          // マップの大きさ
+    public static readonly float ChipDistance = 2.0f; // 各チップの距離
+>>>>>>> Kashihara_PUN2
 
     // メンバ変数
     private Dictionary<string, Chip>[]  map;          // マップの2次元配列
@@ -119,6 +133,7 @@ public class StageMap : MonoBehaviour
 
     }
 
+<<<<<<< HEAD
     /// <summary>
     /// インデックスがマップの範囲内か調べる
     /// </summary>
@@ -158,5 +173,61 @@ public class StageMap : MonoBehaviour
         }
 
         return vec;
+=======
+    public static Vector3 IndexToVector(MapIndex index)
+    {
+        Vector3 pos = Vector3.zero;
+
+        for(int i = 0; i < Column.Length;i++)
+        {
+            if (index.column != Column[i]) continue;
+            pos.x = ChipDistance * i;
+        }
+
+        for(int i = 0;i < Row.Length;i++)
+        {
+            if (index.row != Row[i]) continue;
+            pos.y = -ChipDistance * i;
+        }
+
+        return pos;
+    }
+
+    public static MapIndex VectorToIndex(Vector3 vector)
+    {
+        MapIndex index;
+
+        int rowNum = (int)(-vector.y / ChipDistance);
+        index.row = Row[rowNum];
+        int columnNum = (int)(vector.x / ChipDistance);
+        index.column = Column[columnNum];
+
+        return index;
+    }
+
+    /// <summary>
+    /// ランダムなインデックスを取得
+    /// </summary>
+    /// <returns></returns>
+    public static MapIndex GetRandomIndex()
+    {
+        MapIndex index;
+        index.row = Row[GetRand(4)];
+        index.column = Column[GetRand(4)];
+        return index;
+    }
+
+    /// <summary>
+    /// ０～rangeの乱数を取得
+    /// </summary>
+    /// <param name="range"></param>
+    /// <returns></returns>
+    public static int GetRand(int range)
+    {
+        float rand_f = Random.Range(0.0f, range + 1.0f);
+        int rand_i = (int)rand_f;
+        if (rand_i <= range) return rand_i;
+        return rand_i - 1;
+>>>>>>> Kashihara_PUN2
     }
 }

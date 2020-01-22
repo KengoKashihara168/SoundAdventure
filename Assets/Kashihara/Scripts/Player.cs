@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+<<<<<<< HEAD
     // メンバ変数
     private MapIndex position;         // 座標
     private Item     item;             // 所持アイテム
@@ -21,11 +22,17 @@ public class Player : MonoBehaviour
         isDead = false;
         //CreateItem(ItemKind.Amulet);
     }
+=======
+    public bool isHaunted { get; private set; }
+    public MapIndex position { get; private set; }
+    public ItemKind item { get; private set; }
+>>>>>>> Kashihara_PUN2
 
     // Start is called before the first frame update
     void Start()
     {
         
+<<<<<<< HEAD
     }
 
     public void Initialize(int number)
@@ -49,24 +56,22 @@ public class Player : MonoBehaviour
         if (StageMap.CheckRange(position)) return; // まだポジションが設定されていなければ
         // プレイヤーの座標を設定
         position.SetIndex(index.row,index.column);
+=======
+>>>>>>> Kashihara_PUN2
     }
 
-    /// <summary>
-    /// 進行方向の設定
-    /// </summary>
-    /// <param name="dir">進行方向</param>
-    public void MoveAction(Direction dir)
+    public void Initialize(bool job,MapIndex startPos)
     {
-        Debug.Log(dir);
+        isHaunted = job;
+        position = startPos;
+        transform.position = StageMap.IndexToVector(position);
+        item = ItemKind.Sword;
     }
 
-    /// <summary>
-    /// 刀の使用設定
-    /// </summary>
-    /// <param name="isKill">刀の使用フラグ</param>
-    /// <param name="dir">使用する方向</param>
-    public void KillAction(bool isKill,Direction dir)
+    // Update is called once per frame
+    void Update()
     {
+<<<<<<< HEAD
         if (!isKill) return;
         Debug.Log(dir);
     }
@@ -116,5 +121,8 @@ public class Player : MonoBehaviour
     public bool IsKill()
     {
         return false;
+=======
+        
+>>>>>>> Kashihara_PUN2
     }
 }

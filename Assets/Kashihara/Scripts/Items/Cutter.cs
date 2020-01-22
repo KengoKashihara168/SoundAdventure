@@ -5,7 +5,7 @@ using UnityEngine;
 public class Cutter : Item
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         kind = ItemKind.Cutter;
     }
@@ -16,10 +16,13 @@ public class Cutter : Item
         
     }
 
+<<<<<<< HEAD
     static public Cutter Create(GameObject obj)
     {
         Cutter cutter = obj.AddComponent<Cutter>();
         cutter.kind = ItemKind.Cutter;
         return cutter;
     }
+=======
+>>>>>>> Kashihara_PUN2
 }

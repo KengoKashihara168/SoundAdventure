@@ -31,7 +31,11 @@ public class WholeResult : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+<<<<<<< HEAD:Assets/Kashihara/Scripts/Result/WholeResult.cs
         gameObject.SetActive(false);
+=======
+        
+>>>>>>> Kashihara_PUN2:Assets/Kashihara/Scripts/Screen/WholeResult.cs
     }
 
     // Update is called once per frame

@@ -2,24 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Key : Item
+public class Goal : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        kind = ItemKind.Key;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-
-    static public Key Create(GameObject obj)
-    {
-        Key key = obj.AddComponent<Key>();
-        key.kind = ItemKind.Key;
-        return key;
     }
 }
