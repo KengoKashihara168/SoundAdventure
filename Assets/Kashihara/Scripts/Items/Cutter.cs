@@ -5,9 +5,9 @@ using UnityEngine;
 public class Cutter : Item
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        kind = ItemKind.Cutter;
     }
 
     // Update is called once per frame
@@ -15,4 +15,5 @@ public class Cutter : Item
     {
         
     }
+
 }

@@ -2,116 +2,146 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Player : MonoBehaviour
 {
     // メンバ変数
+    [SerializeField] JobScreen jobScreen;
+    [SerializeField] DefaultScreen defaultScreen;
+    [SerializeField] SoundScreen soundScreen;
+    [SerializeField] MoveScreen moveScreen;
+    [SerializeField] UseScreen useScreen;
+    [SerializeField] GetScreen getScreen;
+    [SerializeField] PrivateResult privateResult;
+
+    private ScreenType currentScreen;
+
     private MapIndex position;  // 座標
-    private Item     item;      // 所持アイテム
-    private bool     isGoal;    // 脱出フラグ
-    private bool     isDead;    // 死亡フラグ
-    public bool     isHaunted; // 憑人フラグ
+    private ItemKind item;      // 所持アイテム
+    public bool isGoal { get; private set; }    // 脱出フラグ
+    public bool isDead { get; private set; }    // 死亡フラグ
+    public bool isHaunted { get; private set; } // 憑人フラグ
     private Action   action;    // プレイヤーの行動
+
+    private void Awake()
+    {
+        // メンバ変数の初期化
+        currentScreen = ScreenType.Job;
+        position.SetIndex(0, "A");
+        item = ItemKind.MaxItem;
+        isGoal = false;
+        isDead = false;
+        isHaunted = false;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        // メンバ変数の初期化
-        position.SetIndex(7, "Player");
-        //item           = null;
-        //isGoal         = false;
-        //isDead         = false;
-        //isHaunted      = false;
+        Job();
     }
 
-    /// <summary>
-    /// 進行方向の設定
-    /// </summary>
-    /// <param name="dir">進行方向</param>
-    public void MoveAction(Direction dir)
+    public void Job()
     {
-        Debug.Log(dir);
+        jobScreen.OpenScreen(isHaunted);
     }
 
-    /// <summary>
-    /// 刀の使用設定
-    /// </summary>
-    /// <param name="isKill">刀の使用フラグ</param>
-    /// <param name="dir">使用する方向</param>
-    public void KillAction(bool isKill,Direction dir)
+    public void Default()
     {
-        if (!isKill) return;
-        Debug.Log(dir);
+        AllCloseScreen();
+        defaultScreen.OpenScreen(isHaunted, position,item);
     }
 
-    /// <summary>
-    /// アイテムの獲得設定
-    /// </summary>
-    /// <param name="isGet">アイテムの獲得フラグ</param>
-    public void ItemAction(bool isGet)
+    public void Sound(Item item)
     {
-
+        AllCloseScreen();
+        soundScreen.OpenScreen(item);
     }
 
-    /// <summary>
-    /// 死亡フラグの取得
-    /// </summary>
-    /// <returns>死亡フラグ</returns>
-    public bool IdDead()
+    public void Move()
     {
-        return isDead;
+        AllCloseScreen();
+        moveScreen.OpenScreen(position);
     }
 
-    /// <summary>
-    /// 脱出フラグの取得
-    /// </summary>
-    /// <returns>脱出フラグ</returns>
-    public bool IsGoal()
+    public bool Use()
     {
-        return isGoal;
-    }
-
-    /// <summary>
-    /// 憑人フラグの取得
-    /// </summary>
-    /// <returns></returns>
-    public bool IsHaunted()
-    {
-        return isHaunted;
-    }
-
-    /// <summary>
-    /// アイテム名の取得
-    /// </summary>
-    /// <returns>アイテム名</returns>
-    public ItemKind GetItemKind()
-    {
-//        if (item == null) return ItemKind.None;
-
-        return item.GetKind();
-    }
-
-    /// <summary>
-    /// 八尺様解放フラグの取得
-    /// </summary>
-    /// <returns>八尺様解放フラグ</returns>
-    public bool IsRelease()
-    {
-        if (!isHaunted) return false;
-
+        if (item != ItemKind.Sword) return false;
+        AllCloseScreen();
+        useScreen.OpenScreen();
         return true;
     }
 
-    /// <summary>
-    /// 刀の使用結果の取得
-    /// </summary>
-    /// <returns>刀の使用結果</returns>
-    public bool IsKill()
+    public bool Get(ItemKind kind)
     {
-        return false;
+        if (kind == ItemKind.MaxItem) return false;
+        AllCloseScreen();
+        getScreen.OpenScreen(kind);
+        return true;
     }
 
-    public Vector3 GetPosition()
+    public void Private()
     {
-        return transform.position;
+        AllCloseScreen();
+        privateResult.OpenScreen(GetComponent<Player>());
     }
+
+    public void SetPosition(MapIndex index)
+    {
+        position = index;
+        transform.position = StageMap.IndexToVector(index);
+        Debug.Log("Player = " + index.row.ToString() + index.column);
+    }
+
+    public void Haunted()
+    {
+        isHaunted = true;
+    }
+
+    public void SetItem(ItemKind getItem)
+    {
+        item = getItem;
+    }
+
+    public void Dead()
+    {
+        isDead = true;
+    }
+
+    public void Goal()
+    {
+        isGoal = true;
+    }
+
+    public ItemKind GetItemKind()
+    {
+        return item;
+    }
+
+    public MapIndex GetNextPosition()
+    {
+        return moveScreen.GetNextMove();
+    }
+
+    public bool GetIsUse()
+    {
+        return useScreen.IsUse();
+    }
+
+    public bool GetIsGet()
+    {
+        return getScreen.IsGet();
+    }
+
+    public void AllCloseScreen()
+    {
+        jobScreen.CloseScreen();
+        defaultScreen.CloseScreen();
+        soundScreen.CloseScreen();
+        moveScreen.CloseScreen();
+        useScreen.CloseScreen();
+        getScreen.CloseScreen();
+        privateResult.CloseScreen();
+    }
+
 }

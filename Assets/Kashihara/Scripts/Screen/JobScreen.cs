@@ -12,7 +12,7 @@ public class JobScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -21,7 +21,7 @@ public class JobScreen : MonoBehaviour
         
     }
 
-    public void SetJobSprite(bool isHaunted)
+    public void OpenScreen(bool isHaunted)
     {
         gameObject.SetActive(true);
         if(isHaunted)
@@ -33,4 +33,11 @@ public class JobScreen : MonoBehaviour
             jobImage.sprite = youthSprite;
         }
     }
+
+    public void CloseScreen()
+    {
+        gameObject.SetActive(false);
+    }
+
+
 }

@@ -27,6 +27,13 @@ public struct MapIndex
         row = r;
         column = c;
     }
+
+    public bool IsSame(MapIndex a,MapIndex b)
+    {
+        if (a.row != b.row) return false;
+        if (a.column != b.column) return false;
+        return true;
+    }
 }
 
 public class StageMap : MonoBehaviour
@@ -146,8 +153,32 @@ public class StageMap : MonoBehaviour
         index.row = Row[rowNum];
         int columnNum = (int)(vector.x / ChipDistance);
         index.column = Column[columnNum];
-        Debug.Log(index.row.ToString() + index.column);
 
         return index;
+    }
+
+    /// <summary>
+    /// ランダムなインデックスを取得
+    /// </summary>
+    /// <returns></returns>
+    public static MapIndex GetRandomIndex()
+    {
+        MapIndex index;
+        index.row = Row[GetRand(4)];
+        index.column = Column[GetRand(4)];
+        return index;
+    }
+
+    /// <summary>
+    /// ０～rangeの乱数を取得
+    /// </summary>
+    /// <param name="range"></param>
+    /// <returns></returns>
+    public static int GetRand(int range)
+    {
+        float rand_f = Random.Range(0.0f, range + 1.0f);
+        int rand_i = (int)rand_f;
+        if (rand_i <= range) return rand_i;
+        return rand_i - 1;
     }
 }

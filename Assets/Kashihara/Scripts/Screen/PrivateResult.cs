@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class PrivateResult : MonoBehaviour
 {
-    [SerializeField] private Player player;   // プレイヤー
+    
+    [SerializeField] private Image image;     // 画像
     [SerializeField] private Sprite hassyaku; // 八尺様
     [SerializeField] private Sprite exit;     // 出口
     [SerializeField] private Sprite none;     // 何もなし
@@ -14,35 +15,36 @@ public class PrivateResult : MonoBehaviour
     [SerializeField] private Sprite cutter;   // カッター
     [SerializeField] private Sprite sword;    // 刀
 
-    private Image image;                      // 画像
+    private Player player;   // プレイヤー
 
 
     // Start is called before the first frame update
     void Start()
     {
-        image = GetComponent<Image>();
-        
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        ChangeImage(player);
+
     }
 
     /// <summary>
     /// 画像の切り替え
     /// </summary>
     /// <param name="player">プレイヤー</param>
-    public void ChangeImage(Player player)
+    public void OpenScreen(Player player)
     {
-        if(player.IdDead())
+        gameObject.SetActive(true);
+        
+        if(player.isDead)
         {
             image.sprite = hassyaku;
             return;
         }
 
-        if(player.IsGoal())
+        if(player.isGoal)
         {
             image.sprite = exit;
             return;
@@ -62,9 +64,14 @@ public class PrivateResult : MonoBehaviour
             case ItemKind.Sword:
                 image.sprite = sword;
                 break;
-            //case ItemKind.None:
-            //    image.sprite = none;
-            //    break;
+            case ItemKind.MaxItem:
+                image.sprite = none;
+                break;
         }
+    }
+
+    public void CloseScreen()
+    {
+        gameObject.SetActive(false);
     }
 }

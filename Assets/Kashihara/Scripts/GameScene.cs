@@ -1,188 +1,213 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
 
-using UnityEngine.UI;
-using ExitGames.Client.Photon;
-
-public class GameScene : MonoBehaviourPunCallbacks
+public enum ScreenType
 {
-    [SerializeField] private JobScreen jobScreen;
-    [SerializeField] private SoundScreen soundScreen;
-    [SerializeField] private MoveScreen moveScreen;
-    private Player player;
-    private List<Item> items;
-    private Goal goal;
-    private Hassyaku hassyaku;
+    Job,
+    Default,
+    Sound,
+    Move,
+    Use,
+    Get,
+    Private,
+    Whole,
+}
+
+public class GameScene : MonoBehaviour
+{
+    [SerializeField] private Player[] players;
+    [SerializeField] private Item[] items;
+
+    [SerializeField] private NextPlayerScreen nextScreen;
+
+    private readonly int MaxPlayer = 4;
+
+    private int activeNumber;
+    private bool[] jobList = { false, false, false, false };
+    private MapIndex[] moveList;
+
+
+    private void Awake()
+    {
+        activeNumber = 0;
+
+        moveList = new MapIndex[MaxPlayer];
+
+        foreach (var item in items)
+        {
+            item.SetPosition(StageMap.GetRandomIndex());
+            MapIndex index = StageMap.VectorToIndex(item.transform.position);
+            Debug.Log(item.GetKind() + "=" + index.row.ToString() + index.column);
+        }
+    }
+
+    /// <summary>
+    /// プレイヤーの初期化
+    /// </summary>
+    private void InitializePlayer()
+    {
+        // 座標を設定
+        int i = 0;
+        foreach (Player player in players)
+        {
+            moveList[i] = StageMap.GetRandomIndex();
+            player.SetPosition(moveList[i]);
+            i++;
+        }
+        // 役職を設定
+        int hauntedNum = Random.Range(0, MaxPlayer - 1);
+        players[hauntedNum].Haunted();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        PhotonNetwork.ConnectUsingSettings();
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        PhotonNetwork.JoinOrCreateRoom("room", new RoomOptions(), TypedLobby.Default);
-    }
-
-    public override void OnJoinedRoom()
-    {
-        // プレイヤーの生成
-        CreatePlayer();
-        // アイテムの生成
-        CreateItem();
-        // ゴールの生成
-        CreateGoal();
-        // 八尺様の生成
-        CreateHassyaku();
-
-        OpenMoveScreen();
-    }
-
-    private void CreatePlayer()
-    {
-        MapIndex index = GetRandomIndex();
-        Debug.Log(index.row.ToString() + index.column);
-        Vector3 pos = StageMap.IndexToVector(index);
-        GameObject obj = PhotonNetwork.Instantiate("Player", pos, Quaternion.identity);
-        player = obj.GetComponent<Player>();
-
-        if(PhotonNetwork.LocalPlayer.ActorNumber == 2)
+        InitializePlayer();
+        foreach (var player in players)
         {
-            player.isHaunted = true;
+            player.gameObject.SetActive(false);
         }
-        else
-        {
-            player.isHaunted = false;
-        }
-
-        SetPlayerData();
+        players[activeNumber].gameObject.SetActive(true);
+        ChangeScreen(ScreenType.Job);
     }
 
-    private void SetPlayerData()
+    // Update is called once per frame
+    void Update()
     {
-        // 座標の設定
-        var hashtable = new ExitGames.Client.Photon.Hashtable();
-        hashtable["PlayerPos"] = player.GetPosition();
-        PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
-        // 職種の設定
-        hashtable["PlayerJob"] = player.isHaunted;
-        PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
+
     }
 
-    private void CreateItem()
+    public void ChangeScreen(ScreenType type)
     {
-        items = new List<Item>();
-        SetItem((ItemKind)PhotonNetwork.LocalPlayer.ActorNumber - 1);
-        foreach(Item item in items)
+        players[activeNumber].AllCloseScreen();
+        switch (type)
         {
-            item.InitializeSound();
-        }
-    }
+            case ScreenType.Job:
+                players[activeNumber].Job();
+                break;
+            case ScreenType.Default:
+                players[activeNumber].Default();
+                break;
+            case ScreenType.Sound:
+                players[activeNumber].Sound(NearItem());
+                break;
+            case ScreenType.Move:
+                players[activeNumber].Move();
+                break;
+            case ScreenType.Use:
+                if(!players[activeNumber].Use())
+                {
+                    ChangeScreen(ScreenType.Get);
+                }
+                break;
+            case ScreenType.Get:
+                if (!players[activeNumber].Get(GetNextItem()))
+                {
+                    ChangeScreen(ScreenType.Private);
+                }
+                break;
+            case ScreenType.Private:
+                SetPlayerResult();
+                players[activeNumber].Private();
+                break;
+            case ScreenType.Whole:
 
-    private void SetItem(ItemKind kind)
-    {
-        MapIndex index = GetRandomIndex();
-        Vector3 pos = StageMap.IndexToVector(index);
-        GameObject obj;
-        switch(kind)
-        {
-            case ItemKind.Amulet:
-                obj = PhotonNetwork.Instantiate("Amulet", pos, Quaternion.identity);
-                items.Add(obj.GetComponent<Amulet>());
-                break;
-            case ItemKind.Cutter:
-                obj = PhotonNetwork.Instantiate("Cutter", pos, Quaternion.identity);
-                items.Add(obj.GetComponent<Cutter>());
-                break;
-            case ItemKind.Key:
-                obj = PhotonNetwork.Instantiate("Key", pos, Quaternion.identity);
-                items.Add(obj.GetComponent<Key>());
-                break;
-            case ItemKind.Sword:
-                obj = PhotonNetwork.Instantiate("Sword", pos, Quaternion.identity);
-                items.Add(obj.GetComponent<Sword>());
                 break;
         }
     }
 
-    private void CreateGoal()
-    {
-        if (PhotonNetwork.LocalPlayer.ActorNumber != 1) return;
-        MapIndex index = GetRandomIndex();
-        Vector3 pos = StageMap.IndexToVector(index);
-        GameObject obj = PhotonNetwork.Instantiate("Goal", pos, Quaternion.identity);
-        goal = obj.GetComponent<Goal>();
-    }
 
-    private void CreateHassyaku()
-    {
-        if (PhotonNetwork.LocalPlayer.ActorNumber != 2) return;
-        MapIndex index = GetRandomIndex();
-        Vector3 pos = StageMap.IndexToVector(index);
-        GameObject obj = PhotonNetwork.Instantiate("Hassyaku", pos, Quaternion.identity);
-        hassyaku = obj.GetComponent<Hassyaku>();
-    }
 
     /// <summary>
-    /// ランダムなインデックスを取得
+    /// 次のプレイヤーへ後退する（０～３プレイヤーのJobに設定）
     /// </summary>
-    /// <returns></returns>
-    private MapIndex GetRandomIndex()
+    private void NextPlayer()
     {
-        MapIndex index;
-        index.row = StageMap.Row[GetRand(4)];
-        index.column = StageMap.Column[GetRand(4)];
-        return index;
+        players[activeNumber].gameObject.SetActive(false);
+        // ４カウントをループ
+        int nextNum = (activeNumber + 1) % MaxPlayer;
+        activeNumber = nextNum;
+        // プレイヤーをアクティブにする
+        players[activeNumber].gameObject.SetActive(true);
     }
 
-    /// <summary>
-    /// ０～rangeの乱数を取得
-    /// </summary>
-    /// <param name="range"></param>
-    /// <returns></returns>
-    private int GetRand(int range)
+    public void JobNext()
     {
-        float rand_f = Random.Range(0.0f, range + 1.0f);
-        int rand_i = (int)rand_f;
-        if (rand_i <= range) return rand_i;
-        return rand_i - 1;
+        //NextPlayer();
+        players[activeNumber].Default();
     }
 
-    private void OpenJobScreen()
-    { 
-        jobScreen.SetJobSprite(player.isHaunted);
-    }
-
-    public void OpenSoundScreen()
+    public void JobEnd()
     {
-        Item nearItem = GetNearItem();
-        if (nearItem == null) return;
-        nearItem.PlaySound();
+        NextPlayer();
+        players[activeNumber].Default();
     }
 
-    public void OpenMoveScreen()
+    public void OnSound()
     {
-        MapIndex index = StageMap.VectorToIndex(player.GetPosition());
-        moveScreen.OpenScreen(index);
+        Camera.main.transform.position = players[activeNumber].transform.position;
+        players[activeNumber].Sound(NearItem());
     }
 
-    private Item GetNearItem()
+    public void OnDefault()
+    {
+        players[activeNumber].Default();
+    }
+
+    public void OnMove()
+    {
+        players[activeNumber].Move();
+    }
+
+    public void MoveNext()
+    {
+        moveList[activeNumber] = players[activeNumber].GetNextPosition();
+
+        if(players[activeNumber].GetItemKind() == ItemKind.Sword)
+        {
+            players[activeNumber].Use();
+        }
+
+        
+
+        NextPlayer();
+        players[activeNumber].Default();
+    }
+
+    public void MoveEnd()
+    {
+        moveList[activeNumber] = players[activeNumber].GetNextPosition();
+        NextPlayer();
+    }
+
+    private void SetPlayerResult()
+    {
+        // 座標の更新
+        players[activeNumber].SetPosition(players[activeNumber].GetNextPosition());
+        // アイテムの更新
+        if(players[activeNumber].GetIsGet())
+        {
+            players[activeNumber].SetItem(GetNextItem());
+        }
+        // 八尺様の更新
+
+        // 出口の更新
+    }
+
+    private Item NearItem()
     {
         float distance = 99999.0f;
         Item nearItem = null;
-        Vector3 playerPos = player.transform.position;
+        Vector3 playerPos = players[activeNumber].transform.position;
         Vector3 itemPos;
-        foreach(var item in items)
+        foreach (var item in items)
         {
             itemPos = item.transform.position;
             float toItem = (playerPos - itemPos).magnitude;
-            if(toItem < distance)
+            if (toItem < distance)
             {
-                if(toItem < StageMap.ChipDistance * 2)
+                if (toItem < StageMap.ChipDistance * 2)
                 {
                     nearItem = item;
                 }
@@ -192,9 +217,19 @@ public class GameScene : MonoBehaviourPunCallbacks
         return nearItem;
     }
 
-    public void StopSound()
+    private ItemKind GetNextItem()
     {
-        Item nearItem = GetNearItem();
-        nearItem.StopSound();
+        MapIndex playerIndex = players[activeNumber].GetNextPosition();
+        ItemKind kind = ItemKind.MaxItem;
+        foreach(var item in items)
+        {
+            MapIndex itemIndex = StageMap.VectorToIndex(item.transform.position);
+            if(Equals(playerIndex,itemIndex))
+            {
+                kind = item.GetKind();
+            }
+        }
+
+        return kind;
     }
 }

@@ -10,9 +10,9 @@ public struct ItemInfo
 
 public enum ItemKind
 {
-    Key,
     Amulet,
     Cutter,
+    Key,
     Sword,
     MaxItem
 }
@@ -20,12 +20,13 @@ public enum ItemKind
 public class Item : MonoBehaviour
 {
     [SerializeField] protected ItemKind kind;
+    MapIndex position;
     protected AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,9 +35,10 @@ public class Item : MonoBehaviour
         
     }
 
-    public void InitializeSound()
+    public void SetPosition(MapIndex index)
     {
-        audioSource = GetComponent<AudioSource>();
+        position = index;
+        transform.position = StageMap.IndexToVector(index);
     }
 
     public void PlaySound()

@@ -20,8 +20,6 @@ public struct Result
 
 public class WholeResult : MonoBehaviour
 {
-    [SerializeField] private ResultDebug debug;
-
     private Result result;
 
     [SerializeField] private Text deadList;
@@ -33,7 +31,7 @@ public class WholeResult : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        result = debug.GetResult();
+        
     }
 
     // Update is called once per frame

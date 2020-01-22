@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6232770009324653564}
   - component: {fileID: 1889760718109094924}
-  - component: {fileID: 8560196352160159476}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -45,28 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 420f35a7bdcb3aa489ca3a59bfb198f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8560196352160159476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2301404120839363436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 0
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 0}
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &3336883428671843677
 GameObject:
   m_ObjectHideFlags: 0

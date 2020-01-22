@@ -1,16 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MoveScreen : MonoBehaviour
 {
+    [SerializeField] private Button nextButton;
     private MapIndex playerPosition;
     private MapIndex nextPosition;
+
+    private void Awake()
+    {
+        nextButton.interactable = false;
+        gameObject.SetActive(false);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -23,7 +31,6 @@ public class MoveScreen : MonoBehaviour
     {
         gameObject.SetActive(true);
         playerPosition = playerPos;
-        Debug.Log(playerPosition.row.ToString() + playerPosition.column);
     }
 
     public void MoveNorth()
@@ -38,8 +45,7 @@ public class MoveScreen : MonoBehaviour
         }
 
         nextPosition = playerPos;
-
-        Debug.Log(nextPosition.row.ToString() + nextPosition.column);
+        nextButton.interactable = true;
     }
 
     public void MoveSouth()
@@ -54,8 +60,7 @@ public class MoveScreen : MonoBehaviour
         }
 
         nextPosition = playerPos;
-
-        Debug.Log(nextPosition.row.ToString() + nextPosition.column);
+        nextButton.interactable = true;
     }
 
     public void MoveEast()
@@ -70,8 +75,7 @@ public class MoveScreen : MonoBehaviour
         }
 
         nextPosition = playerPos;
-
-        Debug.Log(nextPosition.row.ToString() + nextPosition.column);
+        nextButton.interactable = true;
     }
 
     public void MoveWest()
@@ -84,14 +88,17 @@ public class MoveScreen : MonoBehaviour
                 playerPos.column = StageMap.Column[i - 1];
             }
         }
-
+        nextButton.interactable = true;
         nextPosition = playerPos;
-
-        Debug.Log(nextPosition.row.ToString() + nextPosition.column);
     }
 
     public MapIndex GetNextMove()
     {
         return nextPosition;
+    }
+
+    public void CloseScreen()
+    {
+        gameObject.SetActive(false);
     }
 }
