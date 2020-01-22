@@ -36,6 +36,10 @@ public class DefaultScreen : MonoBehaviour
         {
             jobImage.sprite = hauntedSprite;
         }
+        else
+        {
+            jobImage.sprite = youthSprite;
+        }
         posText.text = "現在の居場所：" + index.row.ToString() + index.column;
 
         if (item == ItemKind.MaxItem) return;
@@ -43,18 +47,18 @@ public class DefaultScreen : MonoBehaviour
     }
 
     /// <summary>
-    /// 音を聞くボタンが押されたとき
+    /// プレイヤーが全員音を聞き終わったとき
     /// </summary>
-    public void OnSoundButton()
+    public void SoundEnd()
     {
         soundButton.gameObject.SetActive(false);
         moveButton.gameObject.SetActive(true);
     }
 
     /// <summary>
-    /// 移動するボタンが押されたとき
+    /// プレイヤーが全員移動し終えたとき
     /// </summary>
-    public void OnMoveButton()
+    public void MoveEnd()
     {
         soundButton.gameObject.SetActive(true);
         moveButton.gameObject.SetActive(false);

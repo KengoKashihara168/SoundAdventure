@@ -19,13 +19,25 @@ public class GameScene : MonoBehaviour
     [SerializeField] private Player[] players;
     [SerializeField] private Item[] items;
 
+    [SerializeField] JobScreen jobScreen;
+    [SerializeField] DefaultScreen defaultScreen;
+    [SerializeField] SoundScreen soundScreen;
+    [SerializeField] MoveScreen moveScreen;
+    [SerializeField] UseScreen useScreen;
+    [SerializeField] GetScreen getScreen;
+    [SerializeField] PrivateResult privateResult;
+
+
     [SerializeField] private NextPlayerScreen nextScreen;
 
     private readonly int MaxPlayer = 4;
+    private readonly int MaxItem = 4;
 
     private int activeNumber;
-    private bool[] jobList = { false, false, false, false };
     private MapIndex[] moveList;
+    private bool[] isGetList;
+    private ItemKind[] getItemList;
+    private bool isUse;
 
 
     private void Awake()
@@ -33,6 +45,9 @@ public class GameScene : MonoBehaviour
         activeNumber = 0;
 
         moveList = new MapIndex[MaxPlayer];
+        isGetList = new bool[MaxPlayer];
+        getItemList = new ItemKind[MaxPlayer];
+        isUse = false;
 
         foreach (var item in items)
         {
@@ -47,29 +62,37 @@ public class GameScene : MonoBehaviour
     /// </summary>
     private void InitializePlayer()
     {
+        // 役職を設定
+        bool[] jobList = { false, false, false, false };
+        int hauntedNum = Random.Range(0, MaxPlayer - 1);
+        jobList[hauntedNum] = true;
+
         // 座標を設定
-        int i = 0;
-        foreach (Player player in players)
+        for(int i = 0;i < MaxPlayer;i++)
         {
             moveList[i] = StageMap.GetRandomIndex();
-            player.SetPosition(moveList[i]);
-            i++;
+            Debug.Log("Player" + i + ":" + moveList[i].row + moveList[i].column);
+            players[i].Initialize(jobList[i], moveList[i]);
         }
-        // 役職を設定
-        int hauntedNum = Random.Range(0, MaxPlayer - 1);
-        players[hauntedNum].Haunted();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        // プレイヤーの初期化
         InitializePlayer();
-        foreach (var player in players)
-        {
-            player.gameObject.SetActive(false);
-        }
-        players[activeNumber].gameObject.SetActive(true);
-        ChangeScreen(ScreenType.Job);
+        // 役職画面を表示
+        jobScreen.OpenScreen(players[activeNumber].isHaunted);
+        nextScreen.OpenScreen(activeNumber);
+    }
+
+    /// <summary>
+    /// プレイヤーのラウンドアップ
+    /// </summary>
+    private void RoundUpPlayer()
+    {
+        int next = activeNumber + 1;
+        activeNumber = next % MaxPlayer;
     }
 
     // Update is called once per frame
@@ -78,121 +101,164 @@ public class GameScene : MonoBehaviour
 
     }
 
-    public void ChangeScreen(ScreenType type)
+    /// <summary>
+    /// 役職画面の次が押された
+    /// </summary>
+    public void OnJobButton()
     {
-        players[activeNumber].AllCloseScreen();
-        switch (type)
+        // 役職画面を閉じる
+        jobScreen.CloseScreen();
+        // プレイヤーのカウントアップ
+        RoundUpPlayer();
+        // プレイヤーが１巡していなければ
+        if(activeNumber != 0)
         {
-            case ScreenType.Job:
-                players[activeNumber].Job();
-                break;
-            case ScreenType.Default:
-                players[activeNumber].Default();
-                break;
-            case ScreenType.Sound:
-                players[activeNumber].Sound(NearItem());
-                break;
-            case ScreenType.Move:
-                players[activeNumber].Move();
-                break;
-            case ScreenType.Use:
-                if(!players[activeNumber].Use())
-                {
-                    ChangeScreen(ScreenType.Get);
-                }
-                break;
-            case ScreenType.Get:
-                if (!players[activeNumber].Get(GetNextItem()))
-                {
-                    ChangeScreen(ScreenType.Private);
-                }
-                break;
-            case ScreenType.Private:
-                SetPlayerResult();
-                players[activeNumber].Private();
-                break;
-            case ScreenType.Whole:
-
-                break;
+            // 役職画面を開く
+            jobScreen.OpenScreen(players[activeNumber].isHaunted);
+            nextScreen.OpenScreen(activeNumber);
+        }
+        else
+        {
+            // デフォルト画面を開く
+            defaultScreen.OpenScreen(players[activeNumber].isHaunted, players[activeNumber].position,ItemKind.MaxItem);
         }
     }
-
-
 
     /// <summary>
-    /// 次のプレイヤーへ後退する（０～３プレイヤーのJobに設定）
+    /// 音を聞くボタンが押された
     /// </summary>
-    private void NextPlayer()
+    public void OnSoundButton()
     {
-        players[activeNumber].gameObject.SetActive(false);
-        // ４カウントをループ
-        int nextNum = (activeNumber + 1) % MaxPlayer;
-        activeNumber = nextNum;
-        // プレイヤーをアクティブにする
-        players[activeNumber].gameObject.SetActive(true);
+        defaultScreen.CloseScreen();
+        soundScreen.OpenScreen(NearItem());
     }
 
-    public void JobNext()
+    /// <summary>
+    /// 音を聞く画面の「次へ」が押されたら
+    /// </summary>
+    public void OnSoundNextButton()
     {
-        //NextPlayer();
-        players[activeNumber].Default();
-    }
-
-    public void JobEnd()
-    {
-        NextPlayer();
-        players[activeNumber].Default();
-    }
-
-    public void OnSound()
-    {
-        Camera.main.transform.position = players[activeNumber].transform.position;
-        players[activeNumber].Sound(NearItem());
-    }
-
-    public void OnDefault()
-    {
-        players[activeNumber].Default();
-    }
-
-    public void OnMove()
-    {
-        players[activeNumber].Move();
-    }
-
-    public void MoveNext()
-    {
-        moveList[activeNumber] = players[activeNumber].GetNextPosition();
-
-        if(players[activeNumber].GetItemKind() == ItemKind.Sword)
+        // 音を聞く画面を閉じる
+        soundScreen.CloseScreen();
+        // プレイヤーのラウンドアップ
+        RoundUpPlayer();
+        // プレイヤーが１巡していたら
+        if (activeNumber == 0)
         {
-            players[activeNumber].Use();
+            // 音を聞き終える
+            defaultScreen.SoundEnd();
         }
 
+        // デフォルト画面を開く
+        defaultScreen.OpenScreen(players[activeNumber].isHaunted, players[activeNumber].position, ItemKind.MaxItem);
+        nextScreen.OpenScreen(activeNumber);
+    }
+
+    /// <summary>
+    /// デフォルト画面の「移動ボタン」が押されたら
+    /// </summary>
+    public void OnMoveButton()
+    {
+        // デフォルト画面を閉じる
+        defaultScreen.CloseScreen();
+        // 移動画面を開く
+        moveScreen.OpenScreen(players[activeNumber].position);
+    }
+
+    /// <summary>
+    /// 移動画面の「次へ」を押したとき
+    /// </summary>
+    public void OnMoveNextButton()
+    {
+        // 移動画面を閉じる
+        moveList[activeNumber] = moveScreen.GetNextMove();
+        ItemKind nextItem = GetNextItem();
+        if (nextItem != ItemKind.MaxItem)
+        {
+            getItemList[activeNumber] = nextItem;
+            // アイテム取得画面を開く
+            getScreen.OpenScreen();
+            return;
+        }
+
+        if (players[activeNumber].item == ItemKind.Sword)
+        {
+            // 刀仕様画面を開く
+            useScreen.OpenScreen();
+            return;
+        }
+
+        // 移動画面を閉じる
+        CloseMoveScreen();
+    }
+
+    /// <summary>
+    /// アイテム取得画面の「次へ」ボタンが押されたとき
+    /// </summary>
+    public void OnGetButton(bool isGet)
+    {
+        isGetList[activeNumber] = isGet;
+        if(!isGet)
+        {
+            getItemList[activeNumber] = ItemKind.MaxItem;
+        }
+        getScreen.CloseScreen();
+        // 移動画面を閉じる
+        CloseMoveScreen();
+
+        Debug.Log(getItemList[activeNumber]);
+    }
+
+    /// <summary>
+    /// 刀使用画面の「次へ」が押されたとき
+    /// </summary>
+    public void OnUseButton(bool use)
+    {
+        isUse = use;
+        useScreen.CloseScreen();
+        // 移動画面を閉じる
+        CloseMoveScreen();
+    }
+
+    /// <summary>
+    /// 移動画面を閉じる
+    /// </summary>
+    private void CloseMoveScreen()
+    {
+        moveScreen.CloseScreen();
+        // 次のプレイヤーへ
+        RoundUpPlayer();
+
+        // プレイヤーが１巡していたら
+        if (activeNumber == 0)
+        {
+            // 音を聞き終える
+            defaultScreen.MoveEnd();
+        }
+
+        // デフォルト画面を開く
+        defaultScreen.OpenScreen(players[activeNumber].isHaunted, players[activeNumber].position, ItemKind.MaxItem);
+        nextScreen.OpenScreen(activeNumber);
+    }
+
+    private void JudgeResult()
+    {
         
-
-        NextPlayer();
-        players[activeNumber].Default();
     }
 
-    public void MoveEnd()
+    private void GettingItem()
     {
-        moveList[activeNumber] = players[activeNumber].GetNextPosition();
-        NextPlayer();
-    }
 
-    private void SetPlayerResult()
-    {
-        // 座標の更新
-        players[activeNumber].SetPosition(players[activeNumber].GetNextPosition());
-        // アイテムの更新
-        if(players[activeNumber].GetIsGet())
+        for(int i = 0;i < MaxPlayer - 1;i++)
         {
-            players[activeNumber].SetItem(GetNextItem());
-        }
-        // 八尺様の更新
+            if(!players[i].position.Equals(players[i + 1].position))
+            {
+                if(isGetList[i])
+                {
 
-        // 出口の更新
+                }
+            }
+        }
     }
 
     private Item NearItem()
@@ -214,17 +280,22 @@ public class GameScene : MonoBehaviour
             }
         }
 
+        if(nearItem != null)
+        {
+            Debug.Log("Player" + activeNumber + "に一番近いアイテムは" + nearItem.GetKind());
+        }
+
         return nearItem;
     }
 
     private ItemKind GetNextItem()
     {
-        MapIndex playerIndex = players[activeNumber].GetNextPosition();
+        MapIndex playerIndex = moveList[activeNumber];
         ItemKind kind = ItemKind.MaxItem;
-        foreach(var item in items)
+        foreach (var item in items)
         {
             MapIndex itemIndex = StageMap.VectorToIndex(item.transform.position);
-            if(Equals(playerIndex,itemIndex))
+            if (Equals(playerIndex, itemIndex))
             {
                 kind = item.GetKind();
             }

@@ -38,36 +38,36 @@ public class PrivateResult : MonoBehaviour
     {
         gameObject.SetActive(true);
         
-        if(player.isDead)
-        {
-            image.sprite = hassyaku;
-            return;
-        }
+        //if(player.isDead)
+        //{
+        //    image.sprite = hassyaku;
+        //    return;
+        //}
 
-        if(player.isGoal)
-        {
-            image.sprite = exit;
-            return;
-        }
+        //if(player.isGoal)
+        //{
+        //    image.sprite = exit;
+        //    return;
+        //}
 
-        switch(player.GetItemKind())
-        {
-            case ItemKind.Key:
-                image.sprite = key;
-                break;
-            case ItemKind.Amulet:
-                image.sprite = amulet;
-                break;
-            case ItemKind.Cutter:
-                image.sprite = cutter;
-                break;
-            case ItemKind.Sword:
-                image.sprite = sword;
-                break;
-            case ItemKind.MaxItem:
-                image.sprite = none;
-                break;
-        }
+        //switch(player.GetItemKind())
+        //{
+        //    case ItemKind.Key:
+        //        image.sprite = key;
+        //        break;
+        //    case ItemKind.Amulet:
+        //        image.sprite = amulet;
+        //        break;
+        //    case ItemKind.Cutter:
+        //        image.sprite = cutter;
+        //        break;
+        //    case ItemKind.Sword:
+        //        image.sprite = sword;
+        //        break;
+        //    case ItemKind.MaxItem:
+        //        image.sprite = none;
+        //        break;
+        //}
     }
 
     public void CloseScreen()

@@ -22,7 +22,8 @@ public class NextPlayerScreen : MonoBehaviour
     public void OpenScreen(int playerNum)
     {
         gameObject.SetActive(true);
-        playerCount.text = playerNum.ToString() + "人目";
+        int count = playerNum + 1;
+        playerCount.text = count.ToString() + "人目";
     }
 
     public void OnNextButton()

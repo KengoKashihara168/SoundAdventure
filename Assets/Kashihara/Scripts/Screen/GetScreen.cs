@@ -20,7 +20,7 @@ public class GetScreen : MonoBehaviour
         
     }
 
-    public void OpenScreen(ItemKind kind)
+    public void OpenScreen()
     {
         gameObject.SetActive(true);
     }
@@ -28,13 +28,11 @@ public class GetScreen : MonoBehaviour
     public void OnYesButton()
     {
         isGet = true;
-        Debug.Log(isGet);
     }
 
     public void OnNoButton()
     {
         isGet = false;
-        Debug.Log(isGet);
     }
 
     public bool IsGet()
