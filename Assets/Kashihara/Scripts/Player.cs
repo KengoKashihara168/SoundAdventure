@@ -6,21 +6,26 @@ public class Player : MonoBehaviour
 {
     // メンバ変数
     private MapIndex position;  // 座標
-    [SerializeField] private Item     item;      // 所持アイテム
-    [SerializeField] private bool     isGoal;    // 脱出フラグ
-    [SerializeField] private bool     isDead;    // 死亡フラグ
-    [SerializeField] private bool     isHaunted; // 憑人フラグ
+    /*[SerializeField]*/ private Item     item;      // 所持アイテム
+    /*[SerializeField]*/ private bool     isGoal;    // 脱出フラグ
+    /*[SerializeField]*/ private bool     isDead;    // 死亡フラグ
+    /*[SerializeField]*/ private bool     isHaunted; // 憑人フラグ
     private Action   action;    // プレイヤーの行動
+
+    private void Awake()
+    {
+        // メンバ変数の初期化
+        position.SetIndex(1, "A");
+        item = null;
+        isGoal = false;
+        isDead = true;
+        isHaunted = false;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        // メンバ変数の初期化
-        position.SetIndex(7, "Player");
-        //item           = null;
-        //isGoal         = false;
-        //isDead         = false;
-        //isHaunted      = false;
+        
     }
 
     /// <summary>
@@ -56,7 +61,7 @@ public class Player : MonoBehaviour
     /// 死亡フラグの取得
     /// </summary>
     /// <returns>死亡フラグ</returns>
-    public bool IdDead()
+    public bool IsDead()
     {
         return isDead;
     }
