@@ -109,4 +109,9 @@ public class Player : MonoBehaviour
     {
         return false;
     }
+
+    public MapIndex GetPotision()
+    {
+        return position;
+    }
 }

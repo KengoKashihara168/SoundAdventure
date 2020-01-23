@@ -21,10 +21,12 @@ public class Item : MonoBehaviour
 {
     [SerializeField] private ItemKind kind;
 
+    private ItemInfo info;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        info = new ItemInfo();
     }
 
     // Update is called once per frame
@@ -36,5 +38,13 @@ public class Item : MonoBehaviour
     public ItemKind GetKind()
     {
         return kind;
+    }
+    public void SetKind(ItemKind kind)
+    {
+        this.kind= kind;
+    }
+    public ItemInfo GetInfo(ItemKind kind)
+    {
+        return info;
     }
 }

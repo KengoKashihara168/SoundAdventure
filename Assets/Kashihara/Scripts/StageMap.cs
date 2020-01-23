@@ -90,23 +90,32 @@ public class StageMap : MonoBehaviour
 
     }
 
-    public MapIndex GetPosition()
+    public MapIndex GetPosition(int row,string column)
     {
         MapIndex index;
 
         // ------- 初期配置 ------- //
-        index.row = 0;
-        index.column = "A";
+        index.row = row;
+        index.column = column;
         // ------- 初期配置 ------- //
 
         return index;
     }
-
-    public ItemInfo GetItemInfo(int playerNum)
+    public void SetItem(int row, string column,AudioClip audio, ItemKind kind)
     {
-        ItemInfo info = new ItemInfo();
-        info.position.SetIndex(6, "MapItem");
-        return info;
+        MapIndex index;
+        index.row = row;
+        index.column = column;
+        GameObject obj = GameObject.Find(index.row + index.column);
+
+        obj.GetComponent<Chip>().SetAduio(audio);
+        obj.GetComponent<Chip>().SetItem(kind);
+    }
+
+    public Item GetItemInfo(MapIndex player)
+    {
+        GameObject obj = GameObject.Find(player.row + player.column);
+        return obj.GetComponent<Chip>().GetItem();
     }
 
     public void GetNextChip(int playerNum,Direction dir)

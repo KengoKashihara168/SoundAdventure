@@ -15,17 +15,18 @@ public class Chip : MonoBehaviour
 {
     public ChipType type { get; set; }
     private AudioClip audio;
+    private Item info;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        info = new Item();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     /// <summary>
@@ -49,5 +50,18 @@ public class Chip : MonoBehaviour
         transform.localPosition = pos;
     }
 
+    public void SetAduio(AudioClip audio)
+    {
+        this.audio = audio;
+        this.gameObject.GetComponent<AudioSource>().clip = audio;
+    }
 
+    public void SetItem(ItemKind kind)
+    {
+        info.SetKind(kind);
+    }
+    public Item GetItem()
+    {
+        return info;
+    }
 }
