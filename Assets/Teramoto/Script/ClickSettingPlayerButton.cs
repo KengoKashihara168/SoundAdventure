@@ -21,7 +21,7 @@ public class ClickSettingPlayerButton : MonoBehaviour
     public void OnClickButton()
     {
         IsClickButton = true;
-       //S Debug.Log("aaaa");
+        Debug.Log("aaaa");
     }
 
     public bool GetClickButton()
