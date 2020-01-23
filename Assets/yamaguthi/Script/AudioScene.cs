@@ -61,8 +61,6 @@ public class AudioScene : MonoBehaviour
     public void Direction()
     {
         Vector3 _Rotation = camera.transform.eulerAngles;
-        Debug.Log(_Rotation.x);
-        Debug.Log(_Rotation.y);
         if (_Rotation.x == 270 && _Rotation.y==90)
         {
             dire.text = "北";
@@ -128,6 +126,14 @@ public class AudioScene : MonoBehaviour
       
         audio = top;
     */
+    }
+    // カメラをプレイヤーのポジションに移動させる
+    public void NextPlayer()
+    {
+        GameObject pl = GameObject.Find(map.GetComponent<StageMap>().GetPosition().row + map.GetComponent<StageMap>().GetPosition().column);
+        // map[0]["A"];
+        // カメラをプレイヤーのポジションに移動させる
+        camera.transform.position = pl.transform.position;
     }
     // カメラをプレイヤーのポジションに移動させる
     public void CameraPlayer()

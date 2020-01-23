@@ -51,6 +51,8 @@ public class AngleButtton : MonoBehaviour
             {
                 Audio();
             }
+            // 次のプレイヤーに変える
+            master.GetComponent<AudioScene>().NextPlayer();
         }
         else if (!master.GetComponent<AudioScene>().GetActive())
         {
