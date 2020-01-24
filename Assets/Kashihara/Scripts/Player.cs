@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     /*[SerializeField]*/ private bool     isGoal;    // 脱出フラグ
     /*[SerializeField]*/ private bool     isDead;    // 死亡フラグ
     /*[SerializeField]*/ private bool     isHaunted; // 憑人フラグ
+   /*[SerializeField]*/  private bool     isDropOut; // 脱落フラグ
     private Action   action;    // プレイヤーの行動
 
     private void Awake()
@@ -22,6 +23,9 @@ public class Player : MonoBehaviour
         isGoal = false;
         isDead = true;
         isHaunted = false;
+        isItem = false;
+        isFoot = false;
+        isDropOut = false;
     }
 
     // Start is called before the first frame update
@@ -61,7 +65,6 @@ public class Player : MonoBehaviour
                 Debug.Log(position.column);
                 break;
         }
-        Debug.Log(dir);
     }
 
     /// <summary>
@@ -118,6 +121,10 @@ public class Player : MonoBehaviour
     {
         return isHaunted;
     }
+    public void SetHaunted(bool haunted)
+    {
+        isHaunted = haunted;
+    }
 
     /// <summary>
     /// アイテム名の取得
@@ -150,11 +157,28 @@ public class Player : MonoBehaviour
         return false;
     }
 
+
+    /// <summary>
+    /// 脱落フラグの取得
+    /// </summary>
+    /// <returns></returns>
+    public bool IsDropOut()
+    {
+        return isDropOut;
+    }
+    public void SetDropOut(bool dropOut)
+    {
+        isDropOut = dropOut;
+    }
+
     public void SetPotision(int row,string column)
     {
         position.SetIndex(row, column);
     }
-
+    public void SetPotision(MapIndex index)
+    {
+        position.SetIndex(index.row, index.column);
+    }
     public MapIndex GetPotision()
     {
         return position;
