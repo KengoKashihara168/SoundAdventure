@@ -26,8 +26,6 @@ public class AudioScene : MonoBehaviour
         dire.text = "北";
         // カメラをプレイヤーのポジションに移動させる
         CameraPlayer();
-        // どれが一番近いか判別して保存する
-        AudioClose();
         // UI
         active = false;
         // リセット用に角度を保存
@@ -58,7 +56,7 @@ public class AudioScene : MonoBehaviour
         return audio;
     }
     // 向いている方向で方角を決める関数
-    public void Direction()
+    public void SetDirection()
     {
         Vector3 _Rotation = camera.transform.eulerAngles;
         if (_Rotation.x == 270 && _Rotation.y==90)
@@ -91,46 +89,55 @@ public class AudioScene : MonoBehaviour
     // 一番近い音の判別関数
     public void AudioClose()
     {
-        /*
-        GameObject top;
-        float oldDistance=0;
-        for (int i=0;i<map.Lenge;i++)
+        StageMap stm = map.GetComponent<StageMap>();
+        GameObject top = GameObject.Find(0 + "A");
+        Dictionary<string, Chip>[] olmap = stm.GetMap();
+        string[] col = stm.GetColumn();
+        float oldDistance = 0;
+        GameObject obj;
+        for (int i = 0; i < olmap.Length; i++)
         {
-            for (int j = 0; j < map[i].Count; j++)
+            for (int j = 0; j < olmap[i].Count; j++)
             {
-                if ( その場所に音がなるものがあれば)
+                obj = GameObject.Find(i+ col[j]);
+                Debug.Log(obj);
+                if (obj.GetComponent<Chip>().GetItem().GetKind()!=ItemKind.None)
                 {
-                    // どれが一番近いか判別して保存する
-                    Vector2 posA = new Vector2(player.GetComponent<Player>().postion, player.GetComponent<Player>().postion);
-                    Vector2 posB = new Vector2(map[i][Column[j]].postion, map[i][Column[j]].positon);
-
+                    //どれが一番近いか判別して保存する
+                    MapIndex index = player.GetComponent<Player>().GetPotision();
+                    obj = GameObject.Find(index.row + index.column);
+                    Vector2 posA = new Vector2(obj.transform.position.x, obj.transform.position.y);
+                    index = player.GetComponent<Player>().GetPotision();
+                    obj = GameObject.Find(i + col[j]);
+                    Vector2 posB = new Vector2(obj.transform.position.x, obj.transform.position.y);
                     float distance = (posA - posB).magnitude;
                     if (i != 0)
                     {
                         if (oldDistance > distance)
                         {
                             oldDistance = distance;
-                            top = Map.();
+                            top = obj;
                         }
                     }
                     else
                     {
                         oldDistance = distance;
-                        top = map[i].Column[j];
+                        top = obj;
                     }
                 }
             }
 
 
         }
-      
-        audio = top;
-    */
+
+        audio = top.GetComponent<Chip>().GetAduio();
+
     }
     // カメラをプレイヤーのポジションに移動させる
     public void NextPlayer()
     {
-        GameObject pl = GameObject.Find(map.GetComponent<StageMap>().GetPosition().row + map.GetComponent<StageMap>().GetPosition().column);
+        MapIndex index = player.GetComponent<Player>().GetPotision();
+        GameObject pl = GameObject.Find(index.row+ index.column) ;
         // map[0]["A"];
         // カメラをプレイヤーのポジションに移動させる
         camera.transform.position = pl.transform.position;
@@ -138,8 +145,13 @@ public class AudioScene : MonoBehaviour
     // カメラをプレイヤーのポジションに移動させる
     public void CameraPlayer()
     {
-        GameObject pl = GameObject.Find( map.GetComponent<StageMap>().GetPosition().row + map.GetComponent<StageMap>().GetPosition().column);
-       // map[0]["A"];
+        MapIndex index = player.GetComponent<Player>().GetPotision();
+        GameObject pl = GameObject.Find(index.row + index.column);
+        Debug.Log((int)index.column.ToCharArray()[0]);
+        Direction direction;
+        direction = Direction.East;
+        player.GetComponent<Player>().MoveAction(direction);
+        // map[0]["A"];
         // カメラをプレイヤーのポジションに移動させる
         camera.transform.position= pl.transform.position;
     }

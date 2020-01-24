@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     // メンバ変数
     private MapIndex position;  // 座標
     /*[SerializeField]*/ private Item     item;      // 所持アイテム
+    /*[SerializeField]*/ private bool     isItem;    // 所持フラグ
+    /*[SerializeField]*/ private bool     isFoot;    // 足元フラグ
     /*[SerializeField]*/ private bool     isGoal;    // 脱出フラグ
     /*[SerializeField]*/ private bool     isDead;    // 死亡フラグ
     /*[SerializeField]*/ private bool     isHaunted; // 憑人フラグ
@@ -34,6 +36,31 @@ public class Player : MonoBehaviour
     /// <param name="dir">進行方向</param>
     public void MoveAction(Direction dir)
     {
+        int ascli;
+        char charascli;
+        switch (dir)
+        {
+            case Direction.North:// 北
+                position.row -= 1;
+                break;
+            case Direction.South:// 南
+                position.row += 1;
+                break;
+            case Direction.West:// 西
+                 ascli= (int)position.column.ToCharArray()[0];
+                ascli -= 1;
+                charascli = (char)ascli;
+                position.column= charascli.ToString();
+                Debug.Log(position.column);
+                break;
+            case Direction.East:// 東
+                 ascli = (int)position.column.ToCharArray()[0];
+                ascli += 1;
+                charascli = (char)ascli;
+                position.column = charascli.ToString();
+                Debug.Log(position.column);
+                break;
+        }
         Debug.Log(dir);
     }
 
@@ -48,13 +75,21 @@ public class Player : MonoBehaviour
         Debug.Log(dir);
     }
 
+    public void SetFoot(bool isfoot)
+    {
+        isFoot = isfoot;
+    }
+    public bool GetFoot()
+    {
+        return isFoot;
+    }
     /// <summary>
     /// アイテムの獲得設定
     /// </summary>
     /// <param name="isGet">アイテムの獲得フラグ</param>
     public void ItemAction(bool isGet)
     {
-
+        isItem = isGet;
     }
 
     /// <summary>
@@ -113,6 +148,11 @@ public class Player : MonoBehaviour
     public bool IsKill()
     {
         return false;
+    }
+
+    public void SetPotision(int row,string column)
+    {
+        position.SetIndex(row, column);
     }
 
     public MapIndex GetPotision()

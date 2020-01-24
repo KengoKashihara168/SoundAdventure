@@ -55,6 +55,11 @@ public class Chip : MonoBehaviour
         this.audio = audio;
         this.gameObject.GetComponent<AudioSource>().clip = audio;
     }
+    public AudioSource GetAduio()
+    {
+        return this.gameObject.GetComponent<AudioSource>();
+    }
+
 
     public void SetItem(ItemKind kind)
     {

@@ -3751,8 +3751,10 @@ MonoBehaviour:
   direction: {fileID: 1193808940}
   moveDecision: {fileID: 2032980627}
   swordDecision: {fileID: 1302676718}
-  Yes: {fileID: 473549735}
-  No: {fileID: 960084773}
+  yesButton: {fileID: 473549735}
+  noButton: {fileID: 960084773}
+  mapButton: {fileID: 0}
+  moveButton: {fileID: 0}
   Image: {fileID: 264916016}
 --- !u!1 &1663598170
 GameObject:
