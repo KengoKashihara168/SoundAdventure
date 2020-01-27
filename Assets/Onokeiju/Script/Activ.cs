@@ -13,14 +13,19 @@ public class Activ : MonoBehaviour
     [SerializeField] GameObject yesButton;
     [SerializeField] GameObject noButton;
     [SerializeField] Image Image;
+    [SerializeField] GameScene gameScene;
+    [SerializeField] GameObject audioUI;
     int nowPlayer;
     MasterScriot mas;
     GameObject[] player;
     Player[] playerscr;
+    bool isMove;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        isMove = false;
         mas = Master.GetComponent<MasterScriot>();
         nowPlayer = mas.GetNowPlayer();
         player = mas.GetPlayer();
@@ -31,7 +36,9 @@ public class Activ : MonoBehaviour
         }
         //方角ボタンだけ表示
         DirectionButtonOn();
-        playerscr[1].SetDropOut(true);
+        playerscr[2].SetDead(true);
+       // playerscr[2].SetDropOut(true);
+
     }
     
     public void MovePlay()
@@ -74,77 +81,85 @@ public class Activ : MonoBehaviour
     //移動の決定ボタンを押したら
     public void MoveDecisionPush()
     {
-        bool isMove = false;
-        //移動系UIを非表示
-        direction.SetActive(false);
-        moveDecision.SetActive(false);
-        swordDecision.SetActive(false);
-
-        if (playerscr[nowPlayer].GetItemKind() == ItemKind.Sword)
+        nowPlayer = mas.GetNowPlayer();
+        if (!isMove)
         {
-            //刀系UIを表示
-            yesButton.SetActive(true);
-            noButton.SetActive(true);
-            Image.enabled = true;
-        }
-        else
-        {
-            mas.AddNowPlayer();
-            nowPlayer = mas.GetNowPlayer();
-            if (nowPlayer >= 4)
+            //移動系UIを非表示
+            direction.SetActive(false);
+            moveDecision.SetActive(false);
+            swordDecision.SetActive(false);
+            if (playerscr[nowPlayer].GetItemKind() == ItemKind.Sword)
             {
-                mas.ResetNowPlayer();
-                SwordDecisionPush();
+                //刀系UIを表示
+                yesButton.SetActive(true);
+                noButton.SetActive(true);
+                Image.enabled = true;
             }
             else
             {
-                if (playerscr[nowPlayer].IsDropOut())
+                mas.AddNowPlayer();
+                nowPlayer = mas.GetNowPlayer();
+                if (nowPlayer >= 4)
                 {
-                    while (playerscr[nowPlayer].IsDropOut())
-                    {
-                        mas.AddNowPlayer();
-                        nowPlayer = mas.GetNowPlayer();
-                        DirectionButtonOn();
-                        if (nowPlayer >= 4)
-                        {
-                            mas.ResetNowPlayer();
-                            SwordDecisionPush();
-                            break;
-                        }
-
-                    }
+                
+                    mas.ResetNowPlayer();
+                    SwordDecisionPush();
+                    audioUI.SetActive(false);
+                    gameScene.DeadPlayer();
+                    gameScene.OnScreenButton(ScreenType.Private);
                 }
                 else
                 {
-                    DirectionButtonOn();
+                    if (playerscr[nowPlayer].IsDropOut())
+                    {
+                        while (playerscr[nowPlayer].IsDropOut())
+                        {
+                            mas.AddNowPlayer();
+                            nowPlayer = mas.GetNowPlayer();
+                            DirectionButtonOn();
+                            if (nowPlayer >= 4)
+                            {
+                             
+                                mas.ResetNowPlayer();
+                                SwordDecisionPush();
+                                audioUI.SetActive(false);
+                                gameScene.DeadPlayer();
+                                gameScene.OnScreenButton(ScreenType.Private);
+                                break;
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        DirectionButtonOn();
+                    }
+
+
                 }
-
-
             }
-
-
-
-        }
-           
+        }     
     }
 
     //プレイヤーのポジション設定
-    public bool MoveDecision()
+    public void MoveDecision()
     {
-        if (playerscr[nowPlayer].GetPotision().row > 0 ||
-            playerscr[nowPlayer].GetPotision().row < 4 ||
-            (int)playerscr[nowPlayer].GetPotision().column.ToCharArray()[0] > 69 ||
-            (int)playerscr[nowPlayer].GetPotision().column.ToCharArray()[0] < 65)
-        {
-            return false;
-        }
+        nowPlayer = mas.GetNowPlayer();
+        string pPos = playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column;
         playerscr[nowPlayer].MoveAction(this.gameObject.GetComponent<Move>().GetDirection());
-        GameObject map = GameObject.Find(playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column);
-        if (map.GetComponent<Chip>().GetItem().GetKind() != ItemKind.None)
+        if (pPos == playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column)
         {
-            playerscr[nowPlayer].SetFoot(true);
+            isMove = true;
         }
-        return true;
+      else
+        {
+            GameObject chip = GameObject.Find(playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column);
+            if (chip.GetComponent<Chip>().GetItem().GetKind() != ItemKind.None)
+            {
+                playerscr[nowPlayer].SetFoot(true);
+            }
+            isMove = false;
+        } 
     }
 
     //刀の決定ボタンを押したら
@@ -191,7 +206,7 @@ public class Activ : MonoBehaviour
             swordDecision.SetActive(true);
         }
     }
-    private void DirectionButtonOn()
+    public void DirectionButtonOn()
     {
         //方角ボタンだけ表示
         direction.SetActive(true);

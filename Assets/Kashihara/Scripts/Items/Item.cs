@@ -5,7 +5,7 @@ using UnityEngine;
 public struct ItemInfo
 {
     public MapIndex position; // 座標
-                              // 音
+    public AudioClip audio;   // 音
 }
 
 public enum ItemKind
@@ -34,7 +34,7 @@ public class Item : MonoBehaviour
     {
         
     }
-
+    // アイテムの名前を取得設定
     public ItemKind GetKind()
     {
         return kind;
@@ -43,6 +43,7 @@ public class Item : MonoBehaviour
     {
         this.kind= kind;
     }
+    // アイテムの情報の取得
     public ItemInfo GetInfo(ItemKind kind)
     {
         return info;

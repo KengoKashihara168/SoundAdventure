@@ -1,12 +1,14 @@
 ﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class JobScene : MonoBehaviour
 {
     public GameObject map;
     public GameObject master;
+    public Text playerName;
     GameObject[] Player;
     List<MapIndex> save = new List<MapIndex>();
     public AudioClip[] audio;
@@ -19,9 +21,11 @@ public class JobScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        int nowPlayer = master.GetComponent<MasterScriot>().GetNowPlayer();
         isItem = false;
         isHaunted = Random.Range(0, maxcolumn);
         Player = master.GetComponent<MasterScriot>().GetPlayer();
+        playerName.text = "プレイヤー" + (nowPlayer + 1);
     }
 
     // Update is called once per frame
@@ -43,8 +47,9 @@ public class JobScene : MonoBehaviour
         }
     }
     public void SetinfoPos()
-    {
+    {    
         int nowPlayer = master.GetComponent<MasterScriot>().GetNowPlayer();
+        playerName.text = "プレイヤー" + (nowPlayer + 1);
         if (!isItem)
         {
             for (int i = 0; i < itemNum; i++)
@@ -69,8 +74,6 @@ public class JobScene : MonoBehaviour
             Player[nowPlayer].GetComponent<Player>().SetHaunted(true);
         }
         Player[nowPlayer].GetComponent<Player>().SetPotision(index);
-        Debug.Log(Player[nowPlayer].GetComponent<Player>().GetPotision().row+ Player[nowPlayer].GetComponent<Player>().GetPotision().column);
-        Debug.Log(Player[nowPlayer].GetComponent<Player>().IsHaunted());
         master.GetComponent<MasterScriot>().AddNowPlayer();
         if (master.GetComponent<MasterScriot>().GetNowPlayer() >= 4)
         {

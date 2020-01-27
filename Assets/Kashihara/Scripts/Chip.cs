@@ -50,6 +50,7 @@ public class Chip : MonoBehaviour
         transform.localPosition = pos;
     }
 
+    // チップの音の設定
     public void SetAduio(AudioClip audio)
     {
         this.audio = audio;
@@ -60,7 +61,7 @@ public class Chip : MonoBehaviour
         return this.gameObject.GetComponent<AudioSource>();
     }
 
-
+    // アイテムの取得と設定
     public void SetItem(ItemKind kind)
     {
         info.SetKind(kind);

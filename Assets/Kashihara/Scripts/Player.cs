@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
         position.SetIndex(1, "A");
         item = null;
         isGoal = false;
-        isDead = true;
+        isDead = false;
         isHaunted = false;
         isItem = false;
         isFoot = false;
@@ -46,24 +46,30 @@ public class Player : MonoBehaviour
         switch (dir)
         {
             case Direction.North:// 北
-                position.row -= 1;
+                if (position.row - 1 >= 0)
+                    position.row -= 1;
                 break;
             case Direction.South:// 南
-                position.row += 1;
+                if (position.row + 1 <= 4)
+                    position.row += 1;
                 break;
             case Direction.West:// 西
                 ascli = (int)position.column.ToCharArray()[0];
-                ascli -= 1;
-                charascli = (char)ascli;
-                position.column = charascli.ToString();
-                Debug.Log(position.column);
+                if (ascli - 1 >= 65)
+                {
+                    ascli -= 1;
+                    charascli = (char)ascli;
+                    position.column = charascli.ToString();
+                }
                 break;
             case Direction.East:// 東
                  ascli = (int)position.column.ToCharArray()[0];
-                ascli += 1;
-                charascli = (char)ascli;
-                position.column = charascli.ToString();
-                Debug.Log(position.column);
+                if (ascli + 1 <= 69)
+                {
+                    ascli += 1;
+                    charascli = (char)ascli;
+                    position.column = charascli.ToString();
+                }
                 break;
         }
     }
@@ -98,7 +104,7 @@ public class Player : MonoBehaviour
     {
         return isItem;
     }
-    public void ItemAction(bool isGet)
+    public void SetItem(bool isGet)
     {
         isItem = isGet;
     }
@@ -123,6 +129,14 @@ public class Player : MonoBehaviour
     public bool IsDead()
     {
         return isDead;
+    }
+    /// <summary>
+    /// 死亡フラグの設定
+    /// </summary>
+    /// <returns>死亡フラグ</returns>
+    public void SetDead(bool dead)
+    {
+        isDead = dead;
     }
 
     /// <summary>

@@ -27,7 +27,11 @@ public class GameScene : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject itemGetScreen;
     [SerializeField] private PrivateResult privateResultScreen;
     [SerializeField] private GameObject wholeResultScreen;
-
+    [SerializeField] private GameObject master;
+    [SerializeField] private Activ activ;
+    List<string> deadPlayers = new List<string>();
+    GameObject[] Player;
+    int nowPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +40,10 @@ public class GameScene : MonoBehaviourPunCallbacks
         network = instance.GetComponent<NetworkObject>();
         InitializeGame();
         DefaultScreen();
+        Player = master.GetComponent<MasterScriot>().GetPlayer();
+        for (int i = 0; i < Player.Length; i++)
+          //  player[i] = gPlayer[i].GetComponent<Player>();
+        nowPlayer = master.GetComponent<MasterScriot>().GetNowPlayer();
     }
 
     // Update is called once per frame
@@ -64,6 +72,7 @@ public class GameScene : MonoBehaviourPunCallbacks
                 GetItemScreen();
                 break;
             case ScreenType.Private:
+                Debug.Log("イン");
                 PrivateResultScreen();
                 break;
             case ScreenType.Whole:
@@ -77,7 +86,7 @@ public class GameScene : MonoBehaviourPunCallbacks
     /// </summary>
     private void InitializeGame()
     {
-
+      
     }
 
     /// <summary>
@@ -120,15 +129,72 @@ public class GameScene : MonoBehaviourPunCallbacks
         Debug.Log("Get");
     }
 
+    public void DeadPlayer()
+    {
+        for (int i = 0; i < Player.Length; i++)
+        {
+            if (!Player[i].GetComponent<Player>().IsDropOut() && Player[i].GetComponent<Player>().IsDead())
+            {
+                deadPlayers.Add(Player[i].name); Debug.Log("起動");
+            }
+        }
+    }
+    public List<string> GetDeadPlayers()
+    {
+        return deadPlayers;
+    }
+
     /// <summary>
     /// 個人結果画面
     /// </summary>
     private void PrivateResultScreen()
     {
-        privateResultScreen.gameObject.SetActive(true);
-        string nickName = PhotonNetwork.NickName;
-        Player player = network.GetPlayer(nickName);
-        privateResultScreen.SetPlayer(player);
+       
+       
+        nowPlayer = master.GetComponent<MasterScriot>().GetNowPlayer();
+        if(nowPlayer>4)
+        {
+            master.GetComponent<MasterScriot>().ResetNowPlayer();
+            foreach (Transform child in privateResultScreen.gameObject.transform)
+            {
+                child.gameObject.SetActive(false);
+                if (child.name == "NextButton")
+                {
+                    foreach (Transform text in child)
+                    {
+                        text.gameObject.SetActive(false);
+                    }
+                }
+            }
+            deadPlayers.Clear();
+            activ.DirectionButtonOn();
+        }else
+        if (!Player[nowPlayer].GetComponent<Player>().IsDropOut())
+        {
+            foreach (Transform child in privateResultScreen.gameObject.transform)
+            {
+                child.gameObject.SetActive(true);
+                if(child.name=="NextButton")
+                {
+                    foreach (Transform text in child)
+                    {
+                        text.gameObject.SetActive(true);
+                    }
+                }      
+            }
+            privateResultScreen.OpenScreen(Player[nowPlayer].GetComponent<Player>(), deadPlayers);
+        }
+        else
+        {
+            master.GetComponent<MasterScriot>().AddNowPlayer();
+            PrivateResultScreen();
+        }
+         
+
+        // privateResultScreen.OpenScreen();
+        //string nickName = PhotonNetwork.NickName;
+        // Player player = network.GetPlayer(nickName);
+        //privateResultScreen.SetPlayer(player);
     }
 
     /// <summary>
@@ -138,6 +204,4 @@ public class GameScene : MonoBehaviourPunCallbacks
     {
 
     }
-
-
 }
