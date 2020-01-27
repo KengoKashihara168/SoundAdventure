@@ -74,6 +74,7 @@ public class Activ : MonoBehaviour
     //移動の決定ボタンを押したら
     public void MoveDecisionPush()
     {
+        bool isMove = false;
         //移動系UIを非表示
         direction.SetActive(false);
         moveDecision.SetActive(false);
@@ -128,14 +129,22 @@ public class Activ : MonoBehaviour
     }
 
     //プレイヤーのポジション設定
-    public void MoveDecision()
+    public bool MoveDecision()
     {
+        if (playerscr[nowPlayer].GetPotision().row > 0 ||
+            playerscr[nowPlayer].GetPotision().row < 4 ||
+            (int)playerscr[nowPlayer].GetPotision().column.ToCharArray()[0] > 69 ||
+            (int)playerscr[nowPlayer].GetPotision().column.ToCharArray()[0] < 65)
+        {
+            return false;
+        }
         playerscr[nowPlayer].MoveAction(this.gameObject.GetComponent<Move>().GetDirection());
         GameObject map = GameObject.Find(playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column);
         if (map.GetComponent<Chip>().GetItem().GetKind() != ItemKind.None)
         {
             playerscr[nowPlayer].SetFoot(true);
         }
+        return true;
     }
 
     //刀の決定ボタンを押したら

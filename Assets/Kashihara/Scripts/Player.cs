@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private MapIndex position;  // 座標
     /*[SerializeField]*/ private Item     item;      // 所持アイテム
     /*[SerializeField]*/ private bool     isItem;    // 所持フラグ
+    private bool isTakeItem;    // 獲得フラグ
     /*[SerializeField]*/ private bool     isFoot;    // 足元フラグ
     /*[SerializeField]*/ private bool     isGoal;    // 脱出フラグ
     /*[SerializeField]*/ private bool     isDead;    // 死亡フラグ
@@ -51,10 +52,10 @@ public class Player : MonoBehaviour
                 position.row += 1;
                 break;
             case Direction.West:// 西
-                 ascli= (int)position.column.ToCharArray()[0];
+                ascli = (int)position.column.ToCharArray()[0];
                 ascli -= 1;
                 charascli = (char)ascli;
-                position.column= charascli.ToString();
+                position.column = charascli.ToString();
                 Debug.Log(position.column);
                 break;
             case Direction.East:// 東
@@ -77,7 +78,10 @@ public class Player : MonoBehaviour
         if (!isKill) return;
         Debug.Log(dir);
     }
-
+    /// <summary>
+    /// 足元の設定
+    /// </summary>
+    /// <param name="isfoot">足元にアイテムあるかのフラグ</param> 
     public void SetFoot(bool isfoot)
     {
         isFoot = isfoot;
@@ -87,12 +91,29 @@ public class Player : MonoBehaviour
         return isFoot;
     }
     /// <summary>
-    /// アイテムの獲得設定
+    /// アイテムの所持設定
     /// </summary>
-    /// <param name="isGet">アイテムの獲得フラグ</param>
+    /// <param name="isGet">アイテムの所持フラグ</param> 
+    public bool IsItem()
+    {
+        return isItem;
+    }
     public void ItemAction(bool isGet)
     {
         isItem = isGet;
+    }
+
+    /// <summary>
+    /// アイテムの獲得設定
+    /// </summary>
+    /// <param name="isGet">アイテムの獲得フラグ</param>
+    public bool IsTake()
+    {
+        return isTakeItem;
+    }
+    public void SetTake(bool isGet)
+    {
+        isTakeItem = isGet;
     }
 
     /// <summary>
@@ -136,6 +157,14 @@ public class Player : MonoBehaviour
 
         return item.GetKind();
     }
+    /// <summary>
+    /// アイテムの設定
+    /// </summary>
+    /// <returns>アイテム名</returns>
+    public void SetItemKind(ItemKind kind)
+    {
+        item.SetKind(kind);
+    }
 
     /// <summary>
     /// 八尺様解放フラグの取得
@@ -171,6 +200,10 @@ public class Player : MonoBehaviour
         isDropOut = dropOut;
     }
 
+    /// <summary>
+    /// プレイヤーのポジションの設定と取得
+    /// </summary>
+    /// <returns></returns>
     public void SetPotision(int row,string column)
     {
         position.SetIndex(row, column);

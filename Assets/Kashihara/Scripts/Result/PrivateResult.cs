@@ -41,6 +41,7 @@ public class PrivateResult : MonoBehaviour
     /// <param name="player">プレイヤー</param>
     public void ChangeImage(Player player)
     {
+        Debug.Log("チェック");
         if(player.IsDead())
         {
             image.sprite = hassyaku;
