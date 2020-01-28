@@ -41,6 +41,7 @@ public class StageMap : MonoBehaviour
     [SerializeField] private float      chipDistance; // 各チップの距離
     private MapIndex[] playerPosition;
     private List<MapIndex>itemPostion;
+    private Item[] allItem;
 
     // Start is called before the first frame update
     void Start()
@@ -156,8 +157,12 @@ public class StageMap : MonoBehaviour
         return itemPostion;
     }
 
-    public void SetItemInfo(ItemKind kind,AudioClip clip)
+    public void SetItemInfo(ItemKind kind,AudioClip clip,int num)
     {
-
+        allItem[num].SetInfo(kind, clip);
+    }
+    public Item[] GetItemInfo()
+    {
+        return allItem;
     }
 }

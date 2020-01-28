@@ -15,6 +15,7 @@ public class Activ : MonoBehaviour
     [SerializeField] Image Image;
     [SerializeField] GameScene gameScene;
     [SerializeField] GameObject audioUI;
+    [SerializeField] Aggregate aggregate;
     int nowPlayer;
     MasterScriot mas;
     GameObject[] player;
@@ -100,10 +101,10 @@ public class Activ : MonoBehaviour
                 mas.AddNowPlayer();
                 nowPlayer = mas.GetNowPlayer();
                 if (nowPlayer >= 4)
-                {
-                
+                {         
                     mas.ResetNowPlayer();
                     SwordDecisionPush();
+                    aggregate.AggregateON();
                     audioUI.SetActive(false);
                     gameScene.DeadPlayer();
                     gameScene.OnScreenButton(ScreenType.Private);
@@ -119,9 +120,9 @@ public class Activ : MonoBehaviour
                             DirectionButtonOn();
                             if (nowPlayer >= 4)
                             {
-                             
                                 mas.ResetNowPlayer();
                                 SwordDecisionPush();
+                                aggregate.AggregateON();
                                 audioUI.SetActive(false);
                                 gameScene.DeadPlayer();
                                 gameScene.OnScreenButton(ScreenType.Private);
@@ -134,8 +135,6 @@ public class Activ : MonoBehaviour
                     {
                         DirectionButtonOn();
                     }
-
-
                 }
             }
         }     

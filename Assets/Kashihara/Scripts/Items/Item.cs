@@ -6,6 +6,7 @@ public struct ItemInfo
 {
     public MapIndex position; // 座標
     public AudioClip audio;   // 音
+    public ItemKind  kind;   // 名前
 }
 
 public enum ItemKind
@@ -34,6 +35,12 @@ public class Item : MonoBehaviour
     {
         
     }
+    // アイテムの情報の設定
+    public void SetInfo(ItemKind kind,AudioClip audio)
+    {
+        info.kind = kind;
+        info.audio = audio;
+    }
     // アイテムの名前を取得設定
     public ItemKind GetKind()
     {
@@ -44,7 +51,7 @@ public class Item : MonoBehaviour
         this.kind= kind;
     }
     // アイテムの情報の取得
-    public ItemInfo GetInfo(ItemKind kind)
+    public ItemInfo GetInfo()
     {
         return info;
     }

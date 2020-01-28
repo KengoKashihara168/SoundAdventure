@@ -189,12 +189,6 @@ public class GameScene : MonoBehaviourPunCallbacks
             master.GetComponent<MasterScriot>().AddNowPlayer();
             PrivateResultScreen();
         }
-         
-
-        // privateResultScreen.OpenScreen();
-        //string nickName = PhotonNetwork.NickName;
-        // Player player = network.GetPlayer(nickName);
-        //privateResultScreen.SetPlayer(player);
     }
 
     /// <summary>

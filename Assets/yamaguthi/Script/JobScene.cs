@@ -9,10 +9,11 @@ public class JobScene : MonoBehaviour
     public GameObject map;
     public GameObject master;
     public Text playerName;
-    GameObject[] Player;
-    List<MapIndex> save = new List<MapIndex>();
     public AudioClip[] audio;
     public Canvas canvas;
+    GameObject[] Player;
+    List<MapIndex> save = new List<MapIndex>();
+    Item[] item;
     int itemNum = 1;
     bool isItem;
     bool isSceneClose=false;
@@ -26,6 +27,7 @@ public class JobScene : MonoBehaviour
         isHaunted = Random.Range(0, maxcolumn);
         Player = master.GetComponent<MasterScriot>().GetPlayer();
         playerName.text = "プレイヤー" + (nowPlayer + 1);
+        item = map.GetComponent<StageMap>().GetItemInfo();
     }
 
     // Update is called once per frame
@@ -55,7 +57,7 @@ public class JobScene : MonoBehaviour
             for (int i = 0; i < itemNum; i++)
             {
                 SetItemPositon();
-                SetItem(audio[i], ItemKind.Cutter, i);
+                SetItem(item[i].GetInfo().audio, item[i].GetInfo().kind, i);
             }
             isItem = true;
         }

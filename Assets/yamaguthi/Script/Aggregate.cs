@@ -11,11 +11,18 @@ public class Aggregate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+    }
+    public void AggregateON()
+    {
         players = master.GetPlayer();
         for (int i = 0; i < players.Length; i++)
         {
             player[i] = players[i].GetComponent<Player>();
         }
+        GoalPlayer();
+        DeadPlayer();
+        GetPlayerItem();
     }
     public void GetPlayerItem()
     {
@@ -26,7 +33,7 @@ public class Aggregate : MonoBehaviour
         saveIndex = map.GetItemPostion();
         for (int i=0;i<players.Length;i++)
         {
-            if(!player[i].IsDropOut())
+            if(!player[i].IsDropOut()&& !player[i].IsDead()&& !player[i].IsGoal())
             {
                 if(player[i].IsFoot())
                 {
@@ -65,7 +72,7 @@ public class Aggregate : MonoBehaviour
         MapIndex Goal = new MapIndex();
         for (int i = 0; i < players.Length; i++)
         {
-            if (!player[i].IsDropOut() && !player[i].IsGoal())
+            if (!player[i].IsDropOut() && !player[i].IsDead())
             {
                 if (master.CheckPosition(player[i].GetPotision(), Goal))
                 {
