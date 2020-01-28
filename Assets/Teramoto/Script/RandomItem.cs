@@ -23,6 +23,23 @@ public class RandomItem : MonoBehaviour
     //リストに数値を入れる。
     List<int> itemList = new List<int>();
 
+    //リストに数値を入れる。
+    List<int> itemSoundList = new List<int>();
+
+    //音を入れる
+    //リストに数値を入れる。
+    List<AudioClip> soundList = new List<AudioClip>();
+
+    [SerializeField]
+    private AudioClip sound1;
+    [SerializeField]
+    private AudioClip sound2;
+    [SerializeField]
+    private AudioClip sound3;
+    [SerializeField]
+    private AudioClip sound4;
+    [SerializeField]
+    private AudioClip sound5;
 
     // Start is called before the first frame update
     void Start()
@@ -31,8 +48,18 @@ public class RandomItem : MonoBehaviour
         for(int i = 0;i < 4;i++)
         {
             itemList.Add(i);
+            itemSoundList.Add(i);
         }
 
+        {
+            soundList.Add(sound1);
+            soundList.Add(sound2);
+            soundList.Add(sound3);
+            soundList.Add(sound4);
+
+        }
+
+        print(soundList);
         print(itemList);
     }
 
@@ -44,7 +71,8 @@ public class RandomItem : MonoBehaviour
            for(int i=0;i<4;i++)
             {
 
-                SetItem();
+                SettingItem();
+                SettingItemSound();
                 point += 1;
 
             }
@@ -59,8 +87,55 @@ public class RandomItem : MonoBehaviour
 
     }
 
+
+    void SettingItemSound()
+    {
+        //乱数決め
+        int index = UnityEngine.Random.Range(0, itemSoundList.Count);
+        //配列に乱数を入れる。
+        int ransu = itemSoundList[index];
+        //要素削除
+        itemSoundList.RemoveAt(index);
+
+        //乱数を回す
+        soundRoulette(ransu);
+
+    }
+
+    private void soundRoulette(int ransu)
+    {
+        switch (ransu)
+        {
+            case 0:
+
+                print(soundList[0]);
+                break;
+
+            case 1:
+                print(soundList[1]);
+
+                break;
+
+            case 2:
+                print(soundList[2]);
+
+                break;
+
+            case 3:
+                print(soundList[3]);
+
+                break;
+
+
+
+            default:
+                print("バグです");
+                break;
+        }
+    }
+
     //アイテムと音の設定
-    void SetItem()
+    void SettingItem()
     {
 
         //乱数決め
@@ -71,10 +146,10 @@ public class RandomItem : MonoBehaviour
         itemList.RemoveAt(index);
 
         //乱数を回す
-        roulette(ransu);
+        itemRulette(ransu);
     }
 
-    private void roulette(int ransu)
+    private void itemRulette(int ransu)
     {
         switch (ransu)
         {
