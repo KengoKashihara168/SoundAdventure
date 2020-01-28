@@ -35,7 +35,7 @@ public class ChangeImageUI : MonoBehaviour
         if (job)
         {
             //青年の画像
-            print("青年");
+            //print("青年");
             panel.sprite = YouthSprite;
 
         }
@@ -44,7 +44,7 @@ public class ChangeImageUI : MonoBehaviour
         if (!job)
         {
             //憑人の画像    
-            print("憑人");
+           // print("憑人");
             panel.sprite = ScooldSprite;
         }
     }

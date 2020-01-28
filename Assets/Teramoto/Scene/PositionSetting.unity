@@ -854,6 +854,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2139325616}
   - component: {fileID: 2139325615}
+  - component: {fileID: 2139325614}
   m_Layer: 0
   m_Name: MainObj
   m_TagString: Untagged
@@ -861,6 +862,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2139325614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139325613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a7ae82543cf3f449073ddb45a2872c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound1: {fileID: 8300000, guid: a025b50f0466e764881fe6db1daba748, type: 3}
+  sound2: {fileID: 8300000, guid: b95d5f5a765636c4ea4a5c81e969bef5, type: 3}
+  sound3: {fileID: 8300000, guid: d0fc18b64c769cd44b14be67d411c28d, type: 3}
+  sound4: {fileID: 8300000, guid: 025328ad06bd7934bb689bfa0be9cd17, type: 3}
+  sound5: {fileID: 8300000, guid: a4a1b088c79139649a39db3c848adb26, type: 3}
 --- !u!114 &2139325615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -959,12 +977,12 @@ PrefabInstance:
     - target: {fileID: 3893024231775599644, guid: 2ab99883aef654247aa536eba33dbb31,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 323.48877
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3893024231775599644, guid: 2ab99883aef654247aa536eba33dbb31,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1920.5825
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3893024231775599644, guid: 2ab99883aef654247aa536eba33dbb31,
         type: 3}
