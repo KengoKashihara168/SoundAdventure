@@ -52,4 +52,8 @@ public class Move : MonoBehaviour
     {
         player.KillAction(kill, direction);
     }
+    public Direction GetDirection()
+    {
+        return direction;
+    }
 }

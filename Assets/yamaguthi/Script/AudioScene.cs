@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class AudioScene : MonoBehaviour
 {
+    public GameObject Master;
     // プレイヤー
-    public GameObject player;
+    GameObject[] player;
     // カメラ
     private GameObject camera;
+    private GameObject MainCamera;
     // マップ
     public GameObject map;
     // カメラのリセット用角度
@@ -19,13 +21,17 @@ public class AudioScene : MonoBehaviour
     public AudioSource audio;
     // UI表示非表示
     bool active;
+    int nowPlayer;
     // Start is called before the first frame update
     void Start()
     {
-        camera = GameObject.Find("MainCamera");
+        camera = GameObject.Find("SoundCamera");
+        MainCamera = GameObject.Find("Main Camera");
         dire.text = "北";
+        player = Master.GetComponent<MasterScriot>().GetPlayer();
+        nowPlayer = Master.GetComponent<MasterScriot>().GetNowPlayer();
         // カメラをプレイヤーのポジションに移動させる
-        CameraPlayer();
+       // CameraPlayer();
         // UI
         active = false;
         // リセット用に角度を保存
@@ -37,6 +43,11 @@ public class AudioScene : MonoBehaviour
     public GameObject GetCamera()
     {
         return camera;
+    }
+    // ゲームの主カメラのゲッター
+    public GameObject GetMainCamera()
+    {
+        return MainCamera;
     }
     // カメラの回転
     public void CameraAddAngle(int angle)
@@ -93,21 +104,23 @@ public class AudioScene : MonoBehaviour
         GameObject top = GameObject.Find(0 + "A");
         Dictionary<string, Chip>[] olmap = stm.GetMap();
         string[] col = stm.GetColumn();
-        float oldDistance = 0;
+        float oldDistance = 20;
         GameObject obj;
+        nowPlayer = Master.GetComponent<MasterScriot>().GetNowPlayer();
         for (int i = 0; i < olmap.Length; i++)
         {
             for (int j = 0; j < olmap[i].Count; j++)
             {
                 obj = GameObject.Find(i+ col[j]);
-                Debug.Log(obj);
+             
                 if (obj.GetComponent<Chip>().GetItem().GetKind()!=ItemKind.None)
                 {
+                    Debug.Log("音をとる");
                     //どれが一番近いか判別して保存する
-                    MapIndex index = player.GetComponent<Player>().GetPotision();
+                    MapIndex index = player[nowPlayer].GetComponent<Player>().GetPotision();
                     obj = GameObject.Find(index.row + index.column);
                     Vector2 posA = new Vector2(obj.transform.position.x, obj.transform.position.y);
-                    index = player.GetComponent<Player>().GetPotision();
+                    index = player[nowPlayer].GetComponent<Player>().GetPotision();
                     obj = GameObject.Find(i + col[j]);
                     Vector2 posB = new Vector2(obj.transform.position.x, obj.transform.position.y);
                     float distance = (posA - posB).magnitude;
@@ -116,12 +129,14 @@ public class AudioScene : MonoBehaviour
                         if (oldDistance > distance)
                         {
                             oldDistance = distance;
+                            Debug.Log(obj);
                             top = obj;
                         }
                     }
                     else
                     {
                         oldDistance = distance;
+                        Debug.Log(obj);
                         top = obj;
                     }
                 }
@@ -129,14 +144,14 @@ public class AudioScene : MonoBehaviour
 
 
         }
-
+        Debug.Log(top.GetComponent<Chip>().GetAduio());
         audio = top.GetComponent<Chip>().GetAduio();
 
     }
     // カメラをプレイヤーのポジションに移動させる
     public void NextPlayer()
     {
-        MapIndex index = player.GetComponent<Player>().GetPotision();
+        MapIndex index = player[nowPlayer].GetComponent<Player>().GetPotision();
         GameObject pl = GameObject.Find(index.row+ index.column) ;
         // map[0]["A"];
         // カメラをプレイヤーのポジションに移動させる
@@ -145,12 +160,9 @@ public class AudioScene : MonoBehaviour
     // カメラをプレイヤーのポジションに移動させる
     public void CameraPlayer()
     {
-        MapIndex index = player.GetComponent<Player>().GetPotision();
+        nowPlayer = Master.GetComponent<MasterScriot>().GetNowPlayer();
+        MapIndex index = player[nowPlayer].GetComponent<Player>().GetPotision();
         GameObject pl = GameObject.Find(index.row + index.column);
-        Debug.Log((int)index.column.ToCharArray()[0]);
-        Direction direction;
-        direction = Direction.East;
-        player.GetComponent<Player>().MoveAction(direction);
         // map[0]["A"];
         // カメラをプレイヤーのポジションに移動させる
         camera.transform.position= pl.transform.position;

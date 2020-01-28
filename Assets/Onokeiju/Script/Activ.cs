@@ -5,25 +5,40 @@ using UnityEngine.UI;
 
 public class Activ : MonoBehaviour
 {
+    public GameObject Master;
+    public GameObject MoveMain;
     [SerializeField] GameObject direction;
     [SerializeField] GameObject moveDecision;
     [SerializeField] GameObject swordDecision;
     [SerializeField] GameObject yesButton;
     [SerializeField] GameObject noButton;
-    [SerializeField] GameObject mapButton;
-    [SerializeField] GameObject moveButton;
     [SerializeField] Image Image;
+    [SerializeField] GameScene gameScene;
+    [SerializeField] GameObject audioUI;
+    int nowPlayer;
+    MasterScriot mas;
+    GameObject[] player;
+    Player[] playerscr;
+    bool isMove;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        isMove = false;
+        mas = Master.GetComponent<MasterScriot>();
+        nowPlayer = mas.GetNowPlayer();
+        player = mas.GetPlayer();
+        playerscr = new Player[player.Length];
+        for (int i=0;i<player.Length;i++)
+        {
+            playerscr[i] = player[i].GetComponent<Player>();
+        }
         //方角ボタンだけ表示
-        direction.SetActive(true);
-        moveDecision.SetActive(false);
-        swordDecision.SetActive(false);
-        yesButton.SetActive(false);
-        noButton.SetActive(false);
-        Image.enabled = false;
+        DirectionButtonOn();
+        playerscr[2].SetDead(true);
+       // playerscr[2].SetDropOut(true);
+
     }
     
     public void MovePlay()
@@ -46,18 +61,105 @@ public class Activ : MonoBehaviour
         direction.SetActive(false);
         swordDecision.SetActive(false);
     }
+
+    public void StartMove()
+    {
+        if (playerscr[nowPlayer].IsDropOut())
+        {
+            while (playerscr[nowPlayer].IsDropOut())
+            {
+                mas.AddNowPlayer();
+                nowPlayer = mas.GetNowPlayer();
+                if (nowPlayer >= 4)
+                {
+                   //   ゲーム終了
+                }
+            }
+        }
+    }
     
     //移動の決定ボタンを押したら
     public void MoveDecisionPush()
     {
-        //移動系UIを非表示
-        direction.SetActive(false);
-        moveDecision.SetActive(false);
-        swordDecision.SetActive(false);
-        //刀系UIを表示
-        yesButton.SetActive(true);
-        noButton.SetActive(true);
-        Image.enabled = true;
+        nowPlayer = mas.GetNowPlayer();
+        if (!isMove)
+        {
+            //移動系UIを非表示
+            direction.SetActive(false);
+            moveDecision.SetActive(false);
+            swordDecision.SetActive(false);
+            if (playerscr[nowPlayer].GetItemKind() == ItemKind.Sword)
+            {
+                //刀系UIを表示
+                yesButton.SetActive(true);
+                noButton.SetActive(true);
+                Image.enabled = true;
+            }
+            else
+            {
+                mas.AddNowPlayer();
+                nowPlayer = mas.GetNowPlayer();
+                if (nowPlayer >= 4)
+                {
+                
+                    mas.ResetNowPlayer();
+                    SwordDecisionPush();
+                    audioUI.SetActive(false);
+                    gameScene.DeadPlayer();
+                    gameScene.OnScreenButton(ScreenType.Private);
+                }
+                else
+                {
+                    if (playerscr[nowPlayer].IsDropOut())
+                    {
+                        while (playerscr[nowPlayer].IsDropOut())
+                        {
+                            mas.AddNowPlayer();
+                            nowPlayer = mas.GetNowPlayer();
+                            DirectionButtonOn();
+                            if (nowPlayer >= 4)
+                            {
+                             
+                                mas.ResetNowPlayer();
+                                SwordDecisionPush();
+                                audioUI.SetActive(false);
+                                gameScene.DeadPlayer();
+                                gameScene.OnScreenButton(ScreenType.Private);
+                                break;
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        DirectionButtonOn();
+                    }
+
+
+                }
+            }
+        }     
+    }
+
+    //プレイヤーのポジション設定
+    public void MoveDecision()
+    {
+        nowPlayer = mas.GetNowPlayer();
+        string pPos = playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column;
+        playerscr[nowPlayer].MoveAction(this.gameObject.GetComponent<Move>().GetDirection());
+        if (pPos == playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column)
+        {
+            isMove = true;
+        }
+      else
+        {
+            GameObject chip = GameObject.Find(playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column);
+            if (chip.GetComponent<Chip>().GetItem().GetKind() != ItemKind.None)
+            {
+                playerscr[nowPlayer].SetFoot(true);
+            }
+            isMove = false;
+        } 
     }
 
     //刀の決定ボタンを押したら
@@ -69,8 +171,6 @@ public class Activ : MonoBehaviour
         swordDecision.SetActive(false);
         yesButton.SetActive(false);
         noButton.SetActive(false);
-        mapButton.SetActive(false);
-        moveButton.SetActive(false);
         Image.enabled = false;
     }
 
@@ -89,8 +189,6 @@ public class Activ : MonoBehaviour
         swordDecision.SetActive(false);
         yesButton.SetActive(false);
         noButton.SetActive(false);
-        mapButton.SetActive(false);
-        moveButton.SetActive(false);
         Image.enabled = false;
     }
     //方角のボタンを押したら
@@ -107,5 +205,15 @@ public class Activ : MonoBehaviour
             //刀の決定ボタンを表示
             swordDecision.SetActive(true);
         }
+    }
+    public void DirectionButtonOn()
+    {
+        //方角ボタンだけ表示
+        direction.SetActive(true);
+        moveDecision.SetActive(false);
+        swordDecision.SetActive(false);
+        yesButton.SetActive(false);
+        noButton.SetActive(false);
+        Image.enabled = false;
     }
 }
