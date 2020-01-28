@@ -38,9 +38,13 @@ public class RandomItem : MonoBehaviour
     private AudioClip sound3;
     [SerializeField]
     private AudioClip sound4;
-    [SerializeField]
-    private AudioClip sound5;
 
+    private AudioClip audioClip = null;
+
+
+    ItemKind itemkind = ItemKind.None;
+    [SerializeField]
+    StageMap stageMap; 
     // Start is called before the first frame update
     void Start()
     {
@@ -68,13 +72,26 @@ public class RandomItem : MonoBehaviour
     {
         if (!IsDicision)
         {
+
            for(int i=0;i<4;i++)
             {
 
+                //アイテムの設定
                 SettingItem();
                 SettingItemSound();
-                point += 1;
 
+                //確認用表示
+                print("item=" + itemkind);
+                print("soundCrip=" + audioClip);
+
+                //ItemInfoの追加
+                stageMap.SetItemInfo(itemkind, audioClip);
+
+
+                itemkind = ItemKind.None;
+                audioClip = null;
+
+                point += 1;
             }
 
             //回した回数が4かいだったら止める
@@ -107,22 +124,25 @@ public class RandomItem : MonoBehaviour
         switch (ransu)
         {
             case 0:
-
-                print(soundList[0]);
+                audioClip = soundList[0];
+                print(audioClip);
                 break;
 
             case 1:
-                print(soundList[1]);
+                audioClip = soundList[1];
+                print(audioClip);
 
                 break;
 
             case 2:
-                print(soundList[2]);
+                audioClip = soundList[2];
+                print(audioClip);
 
                 break;
 
             case 3:
-                print(soundList[3]);
+                audioClip = soundList[3];
+                print(audioClip);
 
                 break;
 
@@ -155,22 +175,24 @@ public class RandomItem : MonoBehaviour
         {
             case 0:
                 print("鍵");
-
+                itemkind = ItemKind.Key;
                 break;
 
             case 1:
                 print("チェーンソー");
+                itemkind = ItemKind.Cutter;
 
                 break;
 
             case 2:
                 print("刀");
+                itemkind = ItemKind.Sword;
 
                 break;
 
             case 3:
                 print("塩");
-
+                itemkind = ItemKind.Amulet;
                 break;
 
 
