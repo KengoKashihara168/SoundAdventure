@@ -28,6 +28,8 @@ public class Item : MonoBehaviour
     void Start()
     {
         info = new ItemInfo();
+        info.kind = ItemKind.None;
+        info.audio = null;
     }
 
     // Update is called once per frame
@@ -44,15 +46,20 @@ public class Item : MonoBehaviour
     // アイテムの名前を取得設定
     public ItemKind GetKind()
     {
-        return kind;
+        return info.kind;
     }
     public void SetKind(ItemKind kind)
     {
-        this.kind= kind;
+        info.kind = kind;
     }
     // アイテムの情報の取得
     public ItemInfo GetInfo()
     {
         return info;
+    }
+    // アイテムの情報の取得
+    public void SetAudio(AudioClip audio)
+    {
+        info.audio = audio;
     }
 }

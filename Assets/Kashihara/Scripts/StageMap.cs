@@ -72,6 +72,7 @@ public class StageMap : MonoBehaviour
         }
 
         playerPosition = new MapIndex[4];
+        allItem = new Item[4];
     }
 
     private Chip ChipCreate()

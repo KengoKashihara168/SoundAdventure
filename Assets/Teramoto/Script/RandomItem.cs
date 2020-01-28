@@ -70,40 +70,32 @@ public class RandomItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!IsDicision)
-        {
-
-           for(int i=0;i<4;i++)
-            {
-
-                //アイテムの設定
-                SettingItem();
-                SettingItemSound();
-
-                //確認用表示
-                print("item=" + itemkind);
-                print("soundCrip=" + audioClip);
-
-                //ItemInfoの追加
-                stageMap.SetItemInfo(itemkind, audioClip);
-
-
-                itemkind = ItemKind.None;
-                audioClip = null;
-
-                point += 1;
-            }
-
-            //回した回数が4かいだったら止める
-            if (point >= 4)
-            {
-                IsDicision = true;
-            }
-
-        }
-
+       
     }
 
+    public void Dicision()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+
+            //アイテムの設定
+            SettingItem();
+            SettingItemSound();
+
+            //確認用表示
+            print("item=" + itemkind);
+            print("soundCrip=" + audioClip);
+
+            //ItemInfoの追加
+            stageMap.SetItemInfo(itemkind, audioClip, i);
+
+
+            itemkind = ItemKind.None;
+            audioClip = null;
+
+            point += 1;
+        }
+    }
 
     void SettingItemSound()
     {

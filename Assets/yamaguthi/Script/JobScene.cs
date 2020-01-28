@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class JobScene : MonoBehaviour
 {
+    [SerializeField] RandomItem randomItem;
     public GameObject map;
     public GameObject master;
     public Text playerName;
@@ -49,7 +50,8 @@ public class JobScene : MonoBehaviour
         }
     }
     public void SetinfoPos()
-    {    
+    {
+        randomItem.Dicision();
         int nowPlayer = master.GetComponent<MasterScriot>().GetNowPlayer();
         playerName.text = "プレイヤー" + (nowPlayer + 1);
         if (!isItem)
