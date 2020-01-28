@@ -40,7 +40,8 @@ public class StageMap : MonoBehaviour
     [SerializeField] private GameObject chip;         // チップ
     [SerializeField] private float      chipDistance; // 各チップの距離
     private MapIndex[] playerPosition;
-    
+    private List<MapIndex>itemPostion;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -133,5 +134,25 @@ public class StageMap : MonoBehaviour
     public string[] GetColumn()
     {
         return Column;
+    }
+
+    public void ItemChip()
+    {
+        GameObject chip = new GameObject();
+        for(int i=0;i<map.Length;i++)
+        {
+            for (int j = 0; i < map[j].Count; j++)
+            {
+                chip = GameObject.Find(i + Column[j]);
+                if(chip.GetComponent<Chip>().GetItem().GetKind()!=ItemKind.None)
+                {
+                    itemPostion.Add(chip.GetComponent<Chip>().GetMapindex());
+                }
+            }
+        }
+    }
+    public List<MapIndex> GetItemPostion()
+    {
+        return itemPostion;
     }
 }

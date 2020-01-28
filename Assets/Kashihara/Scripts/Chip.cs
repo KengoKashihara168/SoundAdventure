@@ -16,6 +16,7 @@ public class Chip : MonoBehaviour
     public ChipType type { get; set; }
     private AudioClip audio;
     private Item info;
+    MapIndex pos;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,8 @@ public class Chip : MonoBehaviour
     {
         // オブジェクト名は行番号 + 列番号
         string name = row.ToString() + column.ToString();
+        pos.row = row;
+        pos.column = column;
         gameObject.name = name;
     }
 
@@ -69,5 +72,10 @@ public class Chip : MonoBehaviour
     public Item GetItem()
     {
         return info;
+    }
+
+    public MapIndex GetMapindex()
+    {
+        return pos;
     }
 }

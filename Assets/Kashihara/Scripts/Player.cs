@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
     {
         isFoot = isfoot;
     }
-    public bool GetFoot()
+    public bool IsFoot()
     {
         return isFoot;
     }
