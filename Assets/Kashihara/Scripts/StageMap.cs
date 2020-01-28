@@ -155,4 +155,9 @@ public class StageMap : MonoBehaviour
     {
         return itemPostion;
     }
+
+    public void SetItemInfo(ItemKind kind,AudioClip clip)
+    {
+
+    }
 }
