@@ -5,7 +5,8 @@ using UnityEngine;
 public class Aggregate : MonoBehaviour
 {
     [SerializeField] MasterScriot master;
-    [SerializeField] StageMap map;
+    [SerializeField] GameObject map;
+    [SerializeField] Hassyakusama hassyaku;
     GameObject[] players;
     Player[] player;
     // Start is called before the first frame update
@@ -15,22 +16,36 @@ public class Aggregate : MonoBehaviour
     }
     public void AggregateON()
     {
+        
         players = master.GetPlayer();
+        player = new Player[players.Length];
         for (int i = 0; i < players.Length; i++)
         {
             player[i] = players[i].GetComponent<Player>();
         }
+        if (!hassyaku.GetRelease())
+        {
+            ReleaseHssyaku();
+        }
+        else
+        {
+            hassyaku.MoveDirection();
+        }
+        Debug.Log("八尺は" + hassyaku.GetPosition().row + hassyaku.GetPosition().column);
         GoalPlayer();
         DeadPlayer();
         GetPlayerItem();
+        
     }
     public void GetPlayerItem()
     {
         List<GameObject> savePlayers= new List<GameObject>();
         List<string> savePos =new List<string>();
-        List<MapIndex> saveIndex = new List<MapIndex>();
+        map.GetComponent<StageMap>().ItemChip();
+        List<MapIndex> saveIndex = map.GetComponent<StageMap>().GetItemPostion();
+        Debug.Log(map.GetComponent<StageMap>().GetItemPostion());
         Dictionary<string, Chip>[] savePlayerIndex = new Dictionary<string, Chip>[5];
-        saveIndex = map.GetItemPostion();
+        //saveIndex = map.GetItemPostion();
         for (int i=0;i<players.Length;i++)
         {
             if(!player[i].IsDropOut()&& !player[i].IsDead()&& !player[i].IsGoal())
@@ -46,7 +61,7 @@ public class Aggregate : MonoBehaviour
                             player[i].SetTake(true);
                             player[i].SetItemKind(chip.GetComponent<Chip>().GetItem().GetKind());
                             chip.GetComponent<Chip>().SetItem(ItemKind.None);
-                            break;
+
                         }
                     }                   
                 }
@@ -55,12 +70,11 @@ public class Aggregate : MonoBehaviour
     }
     public void DeadPlayer()
     {
-        MapIndex hassyaku =new MapIndex();
         for (int i = 0; i < players.Length; i++)
         {
-            if (!player[i].IsDropOut() && !player[i].IsGoal())
+            if (!player[i].IsDropOut() && !player[i].IsGoal()&& !player[i].IsHaunted())
             {
-                if(master.CheckPosition(player[i].GetPotision(), hassyaku))
+                if(master.CheckPosition(player[i].GetPotision(), hassyaku.GetPosition()))
                 {
                     player[i].SetDead(true);
                 }
@@ -78,6 +92,16 @@ public class Aggregate : MonoBehaviour
                 {
                     player[i].SetGoal(true);
                 }
+            }
+        }
+    }
+    public void ReleaseHssyaku()
+    {
+        for(int i=0;i< player.Length;i++)
+        {
+            if(player[i].IsHaunted()&& master.CheckPosition(player[i].GetPotision(), hassyaku.GetPosition()))
+            {
+                hassyaku.SetRelease(true);
             }
         }
     }

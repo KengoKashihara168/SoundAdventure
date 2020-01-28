@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class AudioScene : MonoBehaviour
 {
+    [SerializeField] Hassyakusama hassyaku;
     public GameObject Master;
     // プレイヤー
     GameObject[] player;
@@ -25,7 +26,7 @@ public class AudioScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        camera = GameObject.Find("SoundCamera");
+        camera = GameObject.Find("Main Camera");
         MainCamera = GameObject.Find("Main Camera");
         dire.text = "北";
         player = Master.GetComponent<MasterScriot>().GetPlayer();
@@ -106,7 +107,9 @@ public class AudioScene : MonoBehaviour
         string[] col = stm.GetColumn();
         float oldDistance = 20;
         GameObject obj;
+        MapIndex index =new MapIndex();
         nowPlayer = Master.GetComponent<MasterScriot>().GetNowPlayer();
+        hassyaku.SetTransPostion();
         for (int i = 0; i < olmap.Length; i++)
         {
             for (int j = 0; j < olmap[i].Count; j++)
@@ -117,7 +120,7 @@ public class AudioScene : MonoBehaviour
                 {
                     Debug.Log("音をとる");
                     //どれが一番近いか判別して保存する
-                    MapIndex index = player[nowPlayer].GetComponent<Player>().GetPotision();
+                    index = player[nowPlayer].GetComponent<Player>().GetPotision();
                     obj = GameObject.Find(index.row + index.column);
                     Vector2 posA = new Vector2(obj.transform.position.x, obj.transform.position.y);
                     index = player[nowPlayer].GetComponent<Player>().GetPotision();
@@ -129,24 +132,32 @@ public class AudioScene : MonoBehaviour
                         if (oldDistance > distance)
                         {
                             oldDistance = distance;
-                            Debug.Log(obj);
                             top = obj;
                         }
                     }
                     else
                     {
                         oldDistance = distance;
-                        Debug.Log(obj);
                         top = obj;
                     }
                 }
             }
-
-
         }
-        Debug.Log(top.GetComponent<Chip>().GetAduio());
-        audio = top.GetComponent<Chip>().GetAduio();
-
+        index = player[nowPlayer].GetComponent<Player>().GetPotision();
+        obj = GameObject.Find(index.row + index.column);
+        Vector2 A = new Vector2(obj.transform.position.x, obj.transform.position.y);
+        Vector2 B = new Vector2(hassyaku.GetTransPostion().position.x, hassyaku.GetTransPostion().position.y);
+        float distance2 = (A - B).magnitude;
+        if (oldDistance > distance2)
+        {
+            oldDistance = distance2;
+            top = hassyaku.GetGameObject();
+            audio = top.GetComponent<AudioSource>();
+        }
+        else
+        {
+            audio = top.GetComponent<Chip>().GetAduio();
+        }
     }
     // カメラをプレイヤーのポジションに移動させる
     public void NextPlayer()

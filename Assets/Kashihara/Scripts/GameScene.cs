@@ -72,7 +72,6 @@ public class GameScene : MonoBehaviourPunCallbacks
                 GetItemScreen();
                 break;
             case ScreenType.Private:
-                Debug.Log("イン");
                 PrivateResultScreen();
                 break;
             case ScreenType.Whole:

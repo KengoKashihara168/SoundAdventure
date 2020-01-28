@@ -37,7 +37,7 @@ public class Activ : MonoBehaviour
         }
         //方角ボタンだけ表示
         DirectionButtonOn();
-        playerscr[2].SetDead(true);
+       // playerscr[2].SetDead(true);
        // playerscr[2].SetDropOut(true);
 
     }
@@ -89,55 +89,94 @@ public class Activ : MonoBehaviour
             direction.SetActive(false);
             moveDecision.SetActive(false);
             swordDecision.SetActive(false);
-            if (playerscr[nowPlayer].GetItemKind() == ItemKind.Sword)
+            mas.AddNowPlayer();
+            nowPlayer = mas.GetNowPlayer();
+            if (nowPlayer >= 4)
             {
-                //刀系UIを表示
-                yesButton.SetActive(true);
-                noButton.SetActive(true);
-                Image.enabled = true;
+                mas.ResetNowPlayer();
+                SwordDecisionPush();
+                aggregate.AggregateON();
+                audioUI.SetActive(false);
+                gameScene.DeadPlayer();
+                gameScene.OnScreenButton(ScreenType.Private);
             }
             else
             {
-                mas.AddNowPlayer();
-                nowPlayer = mas.GetNowPlayer();
-                if (nowPlayer >= 4)
-                {         
-                    mas.ResetNowPlayer();
-                    SwordDecisionPush();
-                    aggregate.AggregateON();
-                    audioUI.SetActive(false);
-                    gameScene.DeadPlayer();
-                    gameScene.OnScreenButton(ScreenType.Private);
+                if (playerscr[nowPlayer].IsDropOut())
+                {
+                    while (playerscr[nowPlayer].IsDropOut())
+                    {
+                        mas.AddNowPlayer();
+                        nowPlayer = mas.GetNowPlayer();
+                        DirectionButtonOn();
+                        if (nowPlayer >= 4)
+                        {
+                            mas.ResetNowPlayer();
+                            SwordDecisionPush();
+                            aggregate.AggregateON();
+                            audioUI.SetActive(false);
+                            gameScene.DeadPlayer();
+                            gameScene.OnScreenButton(ScreenType.Private);
+                            break;
+                        }
+
+                    }
                 }
                 else
                 {
-                    if (playerscr[nowPlayer].IsDropOut())
-                    {
-                        while (playerscr[nowPlayer].IsDropOut())
-                        {
-                            mas.AddNowPlayer();
-                            nowPlayer = mas.GetNowPlayer();
-                            DirectionButtonOn();
-                            if (nowPlayer >= 4)
-                            {
-                                mas.ResetNowPlayer();
-                                SwordDecisionPush();
-                                aggregate.AggregateON();
-                                audioUI.SetActive(false);
-                                gameScene.DeadPlayer();
-                                gameScene.OnScreenButton(ScreenType.Private);
-                                break;
-                            }
-
-                        }
-                    }
-                    else
-                    {
-                        DirectionButtonOn();
-                    }
+                    DirectionButtonOn();
                 }
             }
-        }     
+            //    if (playerscr[nowPlayer].GetItemKind() == ItemKind.Sword)
+            //    {
+            //        //刀系UIを表示
+            //        yesButton.SetActive(true);
+            //        noButton.SetActive(true);
+            //        Image.enabled = true;
+            //    }
+            //    else
+            //    {
+            //        mas.AddNowPlayer();
+            //        nowPlayer = mas.GetNowPlayer();
+            //        if (nowPlayer >= 4)
+            //        {         
+            //            mas.ResetNowPlayer();
+            //            SwordDecisionPush();
+            //            aggregate.AggregateON();
+            //            audioUI.SetActive(false);
+            //            gameScene.DeadPlayer();
+            //            gameScene.OnScreenButton(ScreenType.Private);
+            //        }
+            //        else
+            //        {
+            //            if (playerscr[nowPlayer].IsDropOut())
+            //            {
+            //                while (playerscr[nowPlayer].IsDropOut())
+            //                {
+            //                    mas.AddNowPlayer();
+            //                    nowPlayer = mas.GetNowPlayer();
+            //                    DirectionButtonOn();
+            //                    if (nowPlayer >= 4)
+            //                    {
+            //                        mas.ResetNowPlayer();
+            //                        SwordDecisionPush();
+            //                        aggregate.AggregateON();
+            //                        audioUI.SetActive(false);
+            //                        gameScene.DeadPlayer();
+            //                        gameScene.OnScreenButton(ScreenType.Private);
+            //                        break;
+            //                    }
+
+            //                }
+            //            }
+            //            else
+            //            {
+            //                DirectionButtonOn();
+            //            }
+            //        }
+            //    }
+            //}   
+        }
     }
 
     //プレイヤーのポジション設定
@@ -207,12 +246,22 @@ public class Activ : MonoBehaviour
     }
     public void DirectionButtonOn()
     {
-        //方角ボタンだけ表示
-        direction.SetActive(true);
-        moveDecision.SetActive(false);
-        swordDecision.SetActive(false);
-        yesButton.SetActive(false);
-        noButton.SetActive(false);
-        Image.enabled = false;
+        nowPlayer = mas.GetNowPlayer();
+        if (player[nowPlayer].GetComponent<Player>().IsDropOut())
+        {
+            mas.AddNowPlayer();
+            DirectionButtonOn();
+        }
+        else
+        {
+            //方角ボタンだけ表示
+            direction.SetActive(true);
+            moveDecision.SetActive(false);
+            swordDecision.SetActive(false);
+            yesButton.SetActive(false);
+            noButton.SetActive(false);
+            Image.enabled = false;
+        }
+       
     }
 }

@@ -52,6 +52,7 @@ public class PrivateResult : MonoBehaviour
     /// <param name="player">プレイヤー</param>
     public void ChangeImage(Player player)
     {
+        Debug.Log(player.GetPotision().row+ player.GetPotision().column);
         if(player.IsDead())
         {
             image.sprite = hassyaku;
@@ -65,26 +66,33 @@ public class PrivateResult : MonoBehaviour
             player.SetDropOut(true);
             return;
         }
-
-        //switch(player.GetItemKind())
-        //{
-        //    case ItemKind.Key:
-        //        image.sprite = key;
-        //        break;
-        //    case ItemKind.Amulet:
-        //        image.sprite = amulet;
-        //        break;
-        //    case ItemKind.Cutter:
-        //        image.sprite = cutter;
-        //        break;
-        //    case ItemKind.Sword:
-        //        image.sprite = sword;
-        //        break;
-        //    case ItemKind.None:
-        //        image.sprite = none;
-        //        break;
-        //}
-            image.sprite = none;
+        
+        if(player.IsTake())
+        {
+            switch (player.GetItemKind())
+            {
+                case ItemKind.Key:
+                    image.sprite = key;
+                    player.SetTake(false);
+                    return;
+                case ItemKind.Amulet:
+                    image.sprite = amulet;
+                    player.SetTake(false);
+                    return;
+                case ItemKind.Cutter:
+                    image.sprite = cutter;
+                    player.SetTake(false);
+                    return;
+                case ItemKind.Sword:
+                    player.SetTake(false);
+                    image.sprite = sword;
+                    return;
+                case ItemKind.None:
+                    image.sprite = none;
+                    break;
+            }
+        }
+        image.sprite = none;
     }
 
     /// <summary>

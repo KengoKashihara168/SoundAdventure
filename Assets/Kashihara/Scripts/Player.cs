@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     {
         // メンバ変数の初期化
         position.SetIndex(1, "A");
-        item = null;
+        item = new Item();
         isGoal = false;
         isDead = false;
         isHaunted = false;
@@ -175,7 +175,7 @@ public class Player : MonoBehaviour
     /// <returns>アイテム名</returns>
     public ItemKind GetItemKind()
     {
-        if (item == null) return ItemKind.None;
+       // if (item == null) return ItemKind.None;
 
         return item.GetKind();
     }

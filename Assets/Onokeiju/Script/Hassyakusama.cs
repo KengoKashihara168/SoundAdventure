@@ -9,11 +9,12 @@ public class Hassyakusama : MonoBehaviour
 
     public Player[] player;
 
+    bool release;
+
     // Start is called before the first frame update
     void Start()
     {
-     
-      
+        release = false;
     }
 
     // Update is called once per frame
@@ -22,7 +23,26 @@ public class Hassyakusama : MonoBehaviour
     
     }
 
+    public void SetTransPostion()
+    {
+        GameObject chip = GameObject.Find(position.row + position.column);
+        this.gameObject.transform.position = chip.gameObject.transform.position;
+    }
+    public Transform GetTransPostion()
+    {
+        return this.gameObject.transform;
+    }
 
+    public GameObject GetGameObject()
+    {
+        return this.gameObject;
+    }
+
+    public void SetPostion(int row,string column)
+    {
+
+        position.SetIndex(row, column);
+    }
 
     public MapIndex GetPosition()
     {
@@ -30,6 +50,14 @@ public class Hassyakusama : MonoBehaviour
         return position;
     }
 
+    public bool GetRelease()
+    {
+        return release;
+    }
+    public void SetRelease(bool flag)
+    {
+        release = flag;
+    }
 
     public void MoveDirection()
     {
@@ -50,6 +78,8 @@ public class Hassyakusama : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
+            if (player[i].IsHaunted())
+                continue;
             //プレイヤーとの距離の計算
 
             //columnをアスキーコードに変換
@@ -166,26 +196,30 @@ public class Hassyakusama : MonoBehaviour
         switch (dir)
         {
             case Direction.North:// 北
-                position.row -= 1;
+                if (position.row - 1 >= 0)
+                    position.row -= 1;
                 break;
             case Direction.South:// 南
-                position.row += 1;
+                if (position.row + 1 <= 4)
+                    position.row += 1;
                 break;
             case Direction.West:// 西
                 ascli = (int)position.column.ToCharArray()[0];
-                ascli -= 1;
-                charascli = (char)ascli;
-                position.column = charascli.ToString();
-                Debug.Log(position.column);
+                if (ascli - 1 >= 65)
+                {
+                    ascli -= 1;
+                    charascli = (char)ascli;
+                    position.column = charascli.ToString();
+                }
                 break;
             case Direction.East:// 東
                 ascli = (int)position.column.ToCharArray()[0];
-                ascli += 1;
-                charascli = (char)ascli;
-                position.column = charascli.ToString();
-                Debug.Log(position.column);
-                break;
-            case Direction.None:// 東
+                if (ascli + 1 <= 69)
+                {
+                    ascli += 1;
+                    charascli = (char)ascli;
+                    position.column = charascli.ToString();
+                }
                 break;
         }
     }

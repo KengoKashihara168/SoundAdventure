@@ -71,8 +71,13 @@ public class StageMap : MonoBehaviour
             }
         }
 
+        itemPostion = new List<MapIndex>();
         playerPosition = new MapIndex[4];
         allItem = new Item[4];
+        for(int i=0;i<allItem.Length;i++)
+        {
+            allItem[i] = new Item();
+        }
     }
 
     private Chip ChipCreate()
@@ -143,7 +148,7 @@ public class StageMap : MonoBehaviour
         GameObject chip = new GameObject();
         for(int i=0;i<map.Length;i++)
         {
-            for (int j = 0; i < map[j].Count; j++)
+            for (int j = 0; j < map[i].Count; j++)
             {
                 chip = GameObject.Find(i + Column[j]);
                 if(chip.GetComponent<Chip>().GetItem().GetKind()!=ItemKind.None)

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour
 {
+    [SerializeField] RandomItem randomItem;
     public GameObject jobMain;
+    bool gameStart;
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameStart = false;
     }
 
     // Update is called once per frame
@@ -18,7 +20,17 @@ public class ButtonScript : MonoBehaviour
     }
     public void Click()
     {
-        if(!jobMain.GetComponent<JobScene>().GetCloseFlag())
+        if(!gameStart)
+        {
+
+            randomItem.Dicision();
+            Debug.Log("一回だけ");
+            Debug.Log(gameStart);
+            gameStart = true;
+            Debug.Log(gameStart);
+        }
+
+        if (!jobMain.GetComponent<JobScene>().GetCloseFlag())
         {
             jobMain.GetComponent<JobScene>().SetinfoPos();
         }
