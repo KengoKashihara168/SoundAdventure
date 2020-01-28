@@ -147,6 +147,14 @@ public class Player : MonoBehaviour
     {
         return isGoal;
     }
+    /// <summary>
+    /// 脱出フラグの設定
+    /// </summary>
+    /// <returns>脱出フラグ</returns>
+    public void SetGoal(bool goal)
+    {
+        isGoal = goal;
+    }
 
     /// <summary>
     /// 憑人フラグの取得

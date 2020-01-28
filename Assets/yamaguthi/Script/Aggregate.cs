@@ -17,17 +17,12 @@ public class Aggregate : MonoBehaviour
             player[i] = players[i].GetComponent<Player>();
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void GetPlayerItem()
     {
         List<GameObject> savePlayers= new List<GameObject>();
         List<string> savePos =new List<string>();
         List<MapIndex> saveIndex = new List<MapIndex>();
+        Dictionary<string, Chip>[] savePlayerIndex = new Dictionary<string, Chip>[5];
         saveIndex = map.GetItemPostion();
         for (int i=0;i<players.Length;i++)
         {
@@ -35,15 +30,47 @@ public class Aggregate : MonoBehaviour
             {
                 if(player[i].IsFoot())
                 {
-                    savePos.Add(players[i].GetComponent<Player>().GetPotision().row.ToString() + players[i].GetComponent<Player>().GetPotision().column.ToString());
+                    for (int j = 0; j < saveIndex.Count; j++)
+                    {
+                        GameObject chip = GameObject.Find(saveIndex[j].row+saveIndex[j].column);
+                        if (master.CheckPosition(player[i].GetPotision(), saveIndex[j])&& chip.GetComponent<Chip>().GetItem().GetKind()!=ItemKind.None)
+                        {
+                            player[i].SetItem(true);
+                            player[i].SetTake(true);
+                            player[i].SetItemKind(chip.GetComponent<Chip>().GetItem().GetKind());
+                            chip.GetComponent<Chip>().SetItem(ItemKind.None);
+                            break;
+                        }
+                    }                   
                 }
             }
         }
-        for(int i = 0; i < savePos.Count; i++)
+    }
+    public void DeadPlayer()
+    {
+        MapIndex hassyaku =new MapIndex();
+        for (int i = 0; i < players.Length; i++)
         {
-            if (savePos.Contains(saveIndex[i].ToString()))
+            if (!player[i].IsDropOut() && !player[i].IsGoal())
             {
-
+                if(master.CheckPosition(player[i].GetPotision(), hassyaku))
+                {
+                    player[i].SetDead(true);
+                }
+            }
+        }
+    }
+    public void GoalPlayer()
+    {
+        MapIndex Goal = new MapIndex();
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (!player[i].IsDropOut() && !player[i].IsGoal())
+            {
+                if (master.CheckPosition(player[i].GetPotision(), Goal))
+                {
+                    player[i].SetGoal(true);
+                }
             }
         }
     }

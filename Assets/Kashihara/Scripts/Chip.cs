@@ -67,6 +67,8 @@ public class Chip : MonoBehaviour
     // アイテムの取得と設定
     public void SetItem(ItemKind kind)
     {
+        if (kind == ItemKind.None)
+            this.gameObject.GetComponent<AudioSource>().clip = null;
         info.SetKind(kind);
     }
     public Item GetItem()

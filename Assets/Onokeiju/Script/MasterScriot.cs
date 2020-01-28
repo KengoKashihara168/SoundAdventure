@@ -42,4 +42,12 @@ public class MasterScriot : MonoBehaviour
     {
         nowPlayer++;
     }
+    public bool CheckPosition(MapIndex a,MapIndex b)
+    {
+        if (a.row == b.row && a.column == b.column)
+        {
+            return true;
+        }
+        return false;
+    }
 }
