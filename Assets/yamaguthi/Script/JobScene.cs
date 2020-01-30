@@ -62,7 +62,7 @@ public class JobScene : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 SetItemPositon();   
-                SetItem(item[i].GetInfo().audio, item[i].GetInfo().kind, i);
+                //SetItem(item[i].GetInfo().audio, item[i].GetInfo().kind, i);
             }
             SetItemPositon();
             hassyaku.SetPostion(save[save.Count-1].row, save[save.Count - 1].column);
