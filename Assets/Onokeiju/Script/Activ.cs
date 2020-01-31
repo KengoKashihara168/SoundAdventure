@@ -7,6 +7,7 @@ public class Activ : MonoBehaviour
 {
     public GameObject Master;
     public GameObject MoveMain;
+    [SerializeField] ColorChange colorChange;
     [SerializeField] GameObject direction;
     [SerializeField] GameObject moveDecision;
     [SerializeField] GameObject swordDecision;
@@ -85,6 +86,7 @@ public class Activ : MonoBehaviour
         nowPlayer = mas.GetNowPlayer();
         if (!isMove)
         {
+
             //移動系UIを非表示
             direction.SetActive(false);
             moveDecision.SetActive(false);
@@ -102,6 +104,7 @@ public class Activ : MonoBehaviour
             }
             else
             {
+                colorChange.Color(playerscr[nowPlayer].GetPotision());
                 if (playerscr[nowPlayer].IsDropOut())
                 {
                     while (playerscr[nowPlayer].IsDropOut())
@@ -248,6 +251,7 @@ public class Activ : MonoBehaviour
     public void DirectionButtonOn()
     {
         nowPlayer = mas.GetNowPlayer();
+        colorChange.ColorReset();
         if (player[nowPlayer].GetComponent<Player>().IsDropOut())
         {
             mas.AddNowPlayer();

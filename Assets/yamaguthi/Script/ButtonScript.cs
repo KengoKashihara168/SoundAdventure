@@ -5,7 +5,10 @@ using UnityEngine;
 public class ButtonScript : MonoBehaviour
 {
     [SerializeField] RandomItem randomItem;
+    [SerializeField] ColorChange colorChange;
+    [SerializeField] MasterScriot master;
     public GameObject jobMain;
+    private GameObject[] players; 
     bool gameStart;
     private bool breakFlag;
     // Start is called before the first frame update
@@ -13,6 +16,7 @@ public class ButtonScript : MonoBehaviour
     {
         gameStart = false;
         breakFlag = true;
+        players = master.GetPlayer();
     }
 
     // Update is called once per frame
@@ -24,7 +28,7 @@ public class ButtonScript : MonoBehaviour
     {
         if(!gameStart)
         {
-
+            colorChange.SetMap();
             randomItem.Dicision();
             Debug.Log("一回だけ");
             Debug.Log(gameStart);
@@ -47,6 +51,8 @@ public class ButtonScript : MonoBehaviour
         else
         {
             jobMain.GetComponent<JobScene>().CloseScene();
+            master.ResetNowPlayer();
+            colorChange.Color(players[master.GetNowPlayer()].GetComponent<Player>().GetPotision());
         }   
     }
 }

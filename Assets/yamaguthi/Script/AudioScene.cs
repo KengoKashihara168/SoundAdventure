@@ -54,7 +54,7 @@ public class AudioScene : MonoBehaviour
     public void CameraAddAngle(int angle)
     {
         //カメラを回転させる
-        camera.transform.Rotate(-angle, 0.0f, 0.0f);
+        camera.transform.Rotate(0.0f, -angle, 0.0f);
        // camera.transform.RotateAround(camera.transform.position, Vector3.up, angle);
     }
     // カメラの回転リセット
@@ -71,19 +71,19 @@ public class AudioScene : MonoBehaviour
     public void SetDirection()
     {
         Vector3 _Rotation = camera.transform.eulerAngles;
-        if (_Rotation.x == 270 && _Rotation.y==90)
+        if ( _Rotation.y==0)
         {
             dire.text = "北";
         }
-        else if (_Rotation.x == 0 && _Rotation.y == 270)
+        else if ( _Rotation.y == 270)
         {
             dire.text = "西";
         }
-        else if (_Rotation.x == 0 && _Rotation.y ==90)
+        else if (_Rotation.y == 90)
         {
             dire.text = "東";
         }
-        else if (_Rotation.x == 90 && _Rotation.y == 90)
+        else if ( _Rotation.y == 180)
         {
             dire.text = "南";
         }
@@ -167,6 +167,7 @@ public class AudioScene : MonoBehaviour
         // map[0]["A"];
         // カメラをプレイヤーのポジションに移動させる
         camera.transform.position = pl.transform.position;
+        camera.transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z - 20);
     }
     // カメラをプレイヤーのポジションに移動させる
     public void CameraPlayer()
@@ -177,5 +178,6 @@ public class AudioScene : MonoBehaviour
         // map[0]["A"];
         // カメラをプレイヤーのポジションに移動させる
         camera.transform.position= pl.transform.position;
+        camera.transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z - 20);
     }
 }

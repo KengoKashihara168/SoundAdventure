@@ -5,7 +5,9 @@ using UnityEngine.UI;
 public class ColorChange : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject[] map;
+    [SerializeField] GameObject mfMap;
+    private GameObject[] map;
+    public GameObject oldobjct;
     public Player player;
     void Start()
     {
@@ -17,13 +19,39 @@ public class ColorChange : MonoBehaviour
     {
       
     }
+    public void SetMap()
+    {
+        int max = mfMap.transform.childCount;
+        map = new GameObject[max];
+        for (int i = 0; i < max; i++)
+        {
+            map[i] = mfMap.transform.GetChild(i).gameObject;
+        }
+        oldobjct = map[0];
+    }
 
     public void Color(int row,string column)
     {
+        ColorReset();
         //columnをintに変換
         int ascli;
         ascli =column.ToCharArray()[0];
         //渡されたの位置のオブジェクトのカラー変更    
-        map[row + (ascli-65) * 5].GetComponent<Image>().color = new Vector4(1, 0, 1, 1);
+        map[row*5 + (ascli-65)].GetComponent<Image>().color = new Vector4(1, 0, 1, 1);
+        oldobjct = map[row * 5 + (ascli - 65)];
+    }
+    public void Color(MapIndex rc)
+    {
+        ColorReset();
+        //columnをintに変換
+        int ascli;
+        ascli = rc.column.ToCharArray()[0];
+        //渡されたの位置のオブジェクトのカラー変更    
+        map[rc.row * 5 + (ascli - 65)].GetComponent<Image>().color = new Vector4(1, 0, 1, 1);
+        oldobjct = map[rc.row * 5 + (ascli - 65)];
+    }
+    public void ColorReset()
+    {
+        oldobjct.GetComponent<Image>().color = new Vector4(1, 1, 1, 1);
     }
 }

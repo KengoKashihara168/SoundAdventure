@@ -154,7 +154,6 @@ public class JobScene : MonoBehaviour
         {
             role[2].enabled = false;
         }
-
     }
 }
 

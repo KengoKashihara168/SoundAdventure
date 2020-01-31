@@ -1038,7 +1038,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 7a41a5a32e825bc40b86ec402e67c2ba, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2929,6 +2929,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomItem: {fileID: 656081283}
+  colorChange: {fileID: 2063234178}
+  master: {fileID: 2063234176}
   jobMain: {fileID: 656081280}
 --- !u!1 &656081280
 GameObject:
@@ -4489,32 +4491,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf7b885d370525b48a540f48fea27bcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map:
-  - {fileID: 608120302}
-  - {fileID: 1760274682}
-  - {fileID: 43748440}
-  - {fileID: 230643490}
-  - {fileID: 2133089137}
-  - {fileID: 753603987}
-  - {fileID: 425699547}
-  - {fileID: 171834205}
-  - {fileID: 1591699588}
-  - {fileID: 1856869162}
-  - {fileID: 1794759009}
-  - {fileID: 39163526}
-  - {fileID: 1416035302}
-  - {fileID: 413115074}
-  - {fileID: 1263597852}
-  - {fileID: 950822088}
-  - {fileID: 1200085559}
-  - {fileID: 1100896291}
-  - {fileID: 1663598170}
-  - {fileID: 312896859}
-  - {fileID: 1688127241}
-  - {fileID: 414638879}
-  - {fileID: 1392489831}
-  - {fileID: 658282811}
-  - {fileID: 1098375480}
+  mfMap: {fileID: 0}
+  oldobjct: {fileID: 0}
   player: {fileID: 0}
 --- !u!1 &1098375480
 GameObject:
@@ -6943,6 +6921,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  colorChange: {fileID: 0}
+  masterScriot: {fileID: 0}
 --- !u!1 &1558497075
 GameObject:
   m_ObjectHideFlags: 0
@@ -7190,6 +7170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  colorChange: {fileID: 2063234178}
+  masterScriot: {fileID: 2063234176}
 --- !u!4 &1592710417
 Transform:
   m_ObjectHideFlags: 0
@@ -7218,6 +7200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Master: {fileID: 2063234175}
   MoveMain: {fileID: 1592710415}
+  colorChange: {fileID: 2063234178}
   direction: {fileID: 1193808940}
   moveDecision: {fileID: 2032980627}
   swordDecision: {fileID: 1302676718}
@@ -8146,7 +8129,7 @@ GameObject:
   - component: {fileID: 1908526260}
   - component: {fileID: 1908526262}
   m_Layer: 0
-  m_Name: SceneMaster
+  m_Name: asterMaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8164,7 +8147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f30da35dc80c104b9430dfe77885528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hassyaku: {fileID: 0}
+  hassyaku: {fileID: 210472947}
   Master: {fileID: 2063234175}
   map: {fileID: 1905652134}
   dire: {fileID: 1437337162}
@@ -8554,6 +8537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2063234177}
   - component: {fileID: 2063234176}
+  - component: {fileID: 2063234178}
   m_Layer: 0
   m_Name: Master
   m_TagString: Untagged
@@ -8592,6 +8576,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2063234178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063234175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf7b885d370525b48a540f48fea27bcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mfMap: {fileID: 642167070}
+  oldobjct: {fileID: 608120302}
+  player: {fileID: 0}
 --- !u!1 &2069376161
 GameObject:
   m_ObjectHideFlags: 0
