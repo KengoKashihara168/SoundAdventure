@@ -7,10 +7,12 @@ public class ButtonScript : MonoBehaviour
     [SerializeField] RandomItem randomItem;
     public GameObject jobMain;
     bool gameStart;
+    private bool breakFlag;
     // Start is called before the first frame update
     void Start()
     {
         gameStart = false;
+        breakFlag = true;
     }
 
     // Update is called once per frame
@@ -30,9 +32,17 @@ public class ButtonScript : MonoBehaviour
             Debug.Log(gameStart);
         }
 
-        if (!jobMain.GetComponent<JobScene>().GetCloseFlag())
+        if (!jobMain.GetComponent<JobScene>().GetCloseFlag() && breakFlag == false)
         {
+            jobMain.GetComponent<JobScene>().roleImagePlay(breakFlag);
             jobMain.GetComponent<JobScene>().SetinfoPos();
+            breakFlag = true;
+        }
+        else if (!jobMain.GetComponent<JobScene>().GetCloseFlag() && breakFlag == true)
+        {
+          
+            jobMain.GetComponent<JobScene>().roleImagePlay(breakFlag);
+            breakFlag = false;
         }
         else
         {
