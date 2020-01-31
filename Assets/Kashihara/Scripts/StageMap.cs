@@ -171,4 +171,17 @@ public class StageMap : MonoBehaviour
     {
         return allItem;
     }
+    public Item CheckItem(ItemKind kind)
+    {
+        Item item = new Item();
+        for(int i=0;i<allItem.Length;i++)
+        {
+            if(allItem[i].GetKind()==kind)
+            {
+                item = allItem[i];
+                break;
+            }
+        }
+        return item;
+    }
 }

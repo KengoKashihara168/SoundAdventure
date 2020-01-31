@@ -40,6 +40,7 @@ public class AngleButtton : MonoBehaviour
     {
         if (master.GetComponent<AudioScene>().GetActive())
         {
+            master.GetComponent<AudioScene>().BGMONOFF();
             // UIを非表示に
             master.GetComponent<AudioScene>().SetActive(false);
             // カメラの回転リセット
@@ -52,6 +53,7 @@ public class AngleButtton : MonoBehaviour
         }
         else if (!master.GetComponent<AudioScene>().GetActive())
         {
+            master.GetComponent<AudioScene>().BGMONOFF();
             // カメラをプレイヤーのポジションに移動させる
             master.GetComponent<AudioScene>().CameraPlayer();
             // 一番近い音の判別関数

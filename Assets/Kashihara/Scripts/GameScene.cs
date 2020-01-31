@@ -151,7 +151,7 @@ public class GameScene : MonoBehaviourPunCallbacks
        
        
         nowPlayer = master.GetComponent<MasterScriot>().GetNowPlayer();
-        if(nowPlayer>4)
+        if(nowPlayer>=4)
         {
             master.GetComponent<MasterScriot>().ResetNowPlayer();
             foreach (Transform child in privateResultScreen.gameObject.transform)

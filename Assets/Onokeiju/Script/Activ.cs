@@ -22,12 +22,13 @@ public class Activ : MonoBehaviour
     GameObject[] player;
     Player[] playerscr;
     bool isMove;
-
+    bool isItem;
 
     // Start is called before the first frame update
     void Start()
     {
         isMove = false;
+        isItem = false;
         mas = Master.GetComponent<MasterScriot>();
         nowPlayer = mas.GetNowPlayer();
         player = mas.GetPlayer();
@@ -91,45 +92,49 @@ public class Activ : MonoBehaviour
             direction.SetActive(false);
             moveDecision.SetActive(false);
             swordDecision.SetActive(false);
-            mas.AddNowPlayer();
-            nowPlayer = mas.GetNowPlayer();
-            if (nowPlayer >= 4)
+            if(!isItem)
             {
-                mas.ResetNowPlayer();
-                SwordDecisionPush();
-                aggregate.AggregateON();
-                audioUI.SetActive(false);
-                gameScene.DeadPlayer();
-                gameScene.OnScreenButton(ScreenType.Private);
-            }
-            else
-            {
-                colorChange.Color(playerscr[nowPlayer].GetPotision());
-                if (playerscr[nowPlayer].IsDropOut())
+                mas.AddNowPlayer();
+                nowPlayer = mas.GetNowPlayer();
+                if (nowPlayer >= 4 && !isItem)
                 {
-                    while (playerscr[nowPlayer].IsDropOut())
-                    {
-                        mas.AddNowPlayer();
-                        nowPlayer = mas.GetNowPlayer();
-                        DirectionButtonOn();
-                        if (nowPlayer >= 4)
-                        {
-                            mas.ResetNowPlayer();
-                            SwordDecisionPush();
-                            aggregate.AggregateON();
-                            audioUI.SetActive(false);
-                            gameScene.DeadPlayer();
-                            gameScene.OnScreenButton(ScreenType.Private);
-                            break;
-                        }
-
-                    }
+                    mas.ResetNowPlayer();
+                    SwordDecisionPush();
+                    aggregate.AggregateON();
+                    audioUI.SetActive(false);
+                    gameScene.DeadPlayer();
+                    gameScene.OnScreenButton(ScreenType.Private);
                 }
                 else
                 {
-                    DirectionButtonOn();
+                    colorChange.Color(playerscr[nowPlayer].GetPotision());
+                    if (playerscr[nowPlayer].IsDropOut())
+                    {
+                        while (playerscr[nowPlayer].IsDropOut())
+                        {
+                            mas.AddNowPlayer();
+                            nowPlayer = mas.GetNowPlayer();
+
+                            if (nowPlayer >= 4 && !isItem)
+                            {
+                                mas.ResetNowPlayer();
+                                SwordDecisionPush();
+                                aggregate.AggregateON();
+                                audioUI.SetActive(false);
+                                gameScene.DeadPlayer();
+                                gameScene.OnScreenButton(ScreenType.Private);
+                                break;
+                            }
+                        }
+                        DirectionButtonOn();
+                    }
+                    else
+                    {
+                        DirectionButtonOn();
+                    }
                 }
             }
+            
             //    if (playerscr[nowPlayer].GetItemKind() == ItemKind.Sword)
             //    {
             //        //刀系UIを表示
@@ -197,7 +202,20 @@ public class Activ : MonoBehaviour
             GameObject chip = GameObject.Find(playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column);
             if (chip.GetComponent<Chip>().GetItem().GetKind() != ItemKind.None)
             {
-                playerscr[nowPlayer].SetFoot(true);
+                if(chip.GetComponent<Chip>().GetItem().GetKind()== ItemKind.Sword)
+                {
+                    playerscr[nowPlayer].SetFoot(true);
+                    isItem = false;
+                }
+                else
+                {
+                    playerscr[nowPlayer].SetFoot(true);
+                    yesButton.SetActive(true);
+                    noButton.SetActive(true);
+                    Image.enabled = true;
+                    isItem = true;
+                }
+
             }
             isMove = false;
         } 
@@ -219,19 +237,15 @@ public class Activ : MonoBehaviour
     //はいのボタン
     public void YesPush()
     {
-        //方角を表示
-        direction.SetActive(true);
+        isItem = false;
+        MoveDecisionPush();
     }
     //いいえのボタン
     public void NoPush()
     {
-        //全て非表示
-        direction.SetActive(false);
-        moveDecision.SetActive(false);
-        swordDecision.SetActive(false);
-        yesButton.SetActive(false);
-        noButton.SetActive(false);
-        Image.enabled = false;
+        playerscr[nowPlayer].SetFoot(false);
+        isItem = false;
+        MoveDecisionPush();
     }
     //方角のボタンを押したら
     public void DirectiomPush()

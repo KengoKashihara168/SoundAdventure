@@ -62,4 +62,9 @@ public class Item : MonoBehaviour
     {
         info.audio = audio;
     }
+    // アイテムの情報の取得
+    public AudioClip GetAudio()
+    {
+        return info.audio;
+    }
 }

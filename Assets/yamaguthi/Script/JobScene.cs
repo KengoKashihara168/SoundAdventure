@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class JobScene : MonoBehaviour
 {
     public GameObject map;
+    [SerializeField] StageMap stageMap;
     public GameObject master;
     public Text playerName;
     public AudioClip[] audio;
@@ -29,14 +30,18 @@ public class JobScene : MonoBehaviour
         isHaunted = Random.Range(0, maxcolumn);
         Player = master.GetComponent<MasterScriot>().GetPlayer();
         playerName.text = "プレイヤー" + (nowPlayer + 1);
-        item = map.GetComponent<StageMap>().GetItemInfo();
+       // item = stageMap.GetItemInfo();
     }
 
     // Update is called once per frame
     void Update()
     {
     }
-    public void CloseScene()
+    public void newJob()
+    {
+        item = stageMap.GetItemInfo();
+    }
+        public void CloseScene()
     {
         // メインのキャンバスの子のサブキャンバスから非表示にするUIを探す
         foreach (Transform child in canvas.transform)
@@ -53,7 +58,7 @@ public class JobScene : MonoBehaviour
     // プレイヤーのポジションとアイテムのポジション設定
     public void SetinfoPos()
     {
-        
+
         int nowPlayer = master.GetComponent<MasterScriot>().GetNowPlayer();
         playerName.text = "プレイヤー" + (nowPlayer + 1);
         //  アイテムのポジション設定
@@ -61,31 +66,23 @@ public class JobScene : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                SetItemPositon();   
-                //SetItem(item[i].GetInfo().audio, item[i].GetInfo().kind, i);
+                SetItemPositon();
+                SetItem(item[i].GetInfo().audio, item[i].GetInfo().kind, i);
             }
             SetItemPositon();
-            hassyaku.SetPostion(save[save.Count-1].row, save[save.Count - 1].column);
+            hassyaku.SetPostion(save[save.Count - 1].row, save[save.Count - 1].column);
             Debug.Log("八尺" + hassyaku.GetPosition().row + hassyaku.GetPosition().column);
             isItem = true;
         }
 
         // プレイヤーのポジション設定
         MapIndex index = Autocheck();
-        for (int i=0;i< nowPlayer; i++)
-        {
-            if(Player[i].GetComponent<Player>().GetPotision().row==index.row&& Player[i].GetComponent<Player>().GetPotision().column == index.column )
-            {
-                index = Autocheck(); // 被ったらやり直し
-                i = 0;
-                continue;
-            }
-        }    
+        save.Add(index);
         // 役職設定
-        if(nowPlayer== isHaunted)
+        if (nowPlayer == isHaunted)
         {
             Player[nowPlayer].GetComponent<Player>().SetHaunted(true);
-            Debug.Log("つきびと"+"プレイヤー" + (nowPlayer + 1));
+            Debug.Log("つきびと" + "プレイヤー" + (nowPlayer + 1));
             role[0].enabled = false;
             role[1].enabled = true;
         }
@@ -111,7 +108,7 @@ public class JobScene : MonoBehaviour
     }
     private void SetItem(AudioClip audio, ItemKind kind,int num)
     {
-            map.GetComponent<StageMap>().SetItem(save[num].row, save[num].column, audio, kind);
+        map.GetComponent<StageMap>().SetItem(save[num].row, save[num].column, audio, kind);
     }
     private MapIndex Autocheck()
     {
@@ -126,7 +123,7 @@ public class JobScene : MonoBehaviour
             {
                 row = Random.Range(0, maxcolumn);
                 columnint = Random.Range(0, maxcolumn);
-                i = 0;
+                i = -1;
                 sa.SetIndex(row, Column[columnint]);
                 continue;
             }

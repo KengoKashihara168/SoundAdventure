@@ -6,7 +6,10 @@ using UnityEngine.UI;
 public class AudioScene : MonoBehaviour
 {
     [SerializeField] Hassyakusama hassyaku;
+    [SerializeField] AudioSource bgm;
+    [SerializeField] AudioUI audioUI;
     public GameObject Master;
+    public Sprite[] background;
     // プレイヤー
     GameObject[] player;
     // カメラ
@@ -74,18 +77,22 @@ public class AudioScene : MonoBehaviour
         if ( _Rotation.y==0)
         {
             dire.text = "北";
+           audioUI.SetBackground(background[0]);
         }
         else if ( _Rotation.y == 270)
         {
             dire.text = "西";
+            audioUI.SetBackground(background[1]);
         }
         else if (_Rotation.y == 90)
         {
             dire.text = "東";
+           audioUI.SetBackground(background[2]);
         }
         else if ( _Rotation.y == 180)
         {
             dire.text = "南";
+            audioUI.SetBackground(background[3]);
         }
     }
     // UIの表示フラグのゲッター
@@ -148,8 +155,10 @@ public class AudioScene : MonoBehaviour
         Vector2 A = new Vector2(obj.transform.position.x, obj.transform.position.y);
         Vector2 B = new Vector2(hassyaku.GetTransPostion().position.x, hassyaku.GetTransPostion().position.y);
         float distance2 = (A - B).magnitude;
+        Debug.Log(distance2);
         if (oldDistance > distance2)
         {
+            Debug.Log("八尺");
             oldDistance = distance2;
             top = hassyaku.GetGameObject();
             audio = top.GetComponent<AudioSource>();
@@ -179,5 +188,10 @@ public class AudioScene : MonoBehaviour
         // カメラをプレイヤーのポジションに移動させる
         camera.transform.position= pl.transform.position;
         camera.transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z - 20);
+    }
+    public void BGMONOFF()
+    {
+        Debug.Log(bgm.mute);
+        bgm.mute = !bgm.mute;
     }
 }

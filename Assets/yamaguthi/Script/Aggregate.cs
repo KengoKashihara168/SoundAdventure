@@ -9,10 +9,11 @@ public class Aggregate : MonoBehaviour
     [SerializeField] Hassyakusama hassyaku;
     GameObject[] players;
     Player[] player;
+    bool isGoal;
     // Start is called before the first frame update
     void Start()
     {
-
+        isGoal = false;
     }
     public void AggregateON()
     {
@@ -32,10 +33,9 @@ public class Aggregate : MonoBehaviour
             hassyaku.MoveDirection();
         }
         Debug.Log("八尺は" + hassyaku.GetPosition().row + hassyaku.GetPosition().column);
-        GoalPlayer();
         DeadPlayer();
         GetPlayerItem();
-        
+        GoalPlayer();
     }
     public void GetPlayerItem()
     {
@@ -57,11 +57,37 @@ public class Aggregate : MonoBehaviour
                         GameObject chip = GameObject.Find(saveIndex[j].row+saveIndex[j].column);
                         if (master.CheckPosition(player[i].GetPotision(), saveIndex[j])&& chip.GetComponent<Chip>().GetItem().GetKind()!=ItemKind.None)
                         {
-                            player[i].SetItem(true);
-                            player[i].SetTake(true);
-                            player[i].SetItemKind(chip.GetComponent<Chip>().GetItem().GetKind());
-                            chip.GetComponent<Chip>().SetItem(ItemKind.None);
+                            if(chip.GetComponent<Chip>().GetItem().GetKind() == ItemKind.Sword)
+                            {
+                                if(!player[i].IsHaunted() && !isGoal)
+                                {
+                                    if ((player[i].GetItemKind() == ItemKind.Key || player[i].GetItemKind() == ItemKind.Cutter))
+                                    {
+                                        player[i].SetItemKind(ItemKind.None);
+                                        isGoal = true;
+                                        Debug.Log("開く");
+                                    }
+                                }
 
+
+                            }
+                            else
+                            {
+                                if (player[i].GetItemKind()!=ItemKind.None)
+                                {
+                                    Item item = map.GetComponent<StageMap>().CheckItem(player[i].GetItemKind());
+                                    player[i].SetItemKind(chip.GetComponent<Chip>().GetItem().GetKind());
+                                    chip.GetComponent<Chip>().SetItem(item.GetKind());
+                                    chip.GetComponent<Chip>().SetAduio(item.GetAudio());
+                                }
+                                else
+                                {
+                                    player[i].SetItem(true);
+                                    player[i].SetTake(true);
+                                    player[i].SetItemKind(chip.GetComponent<Chip>().GetItem().GetKind());
+                                    chip.GetComponent<Chip>().SetItem(ItemKind.None);
+                                }
+                            }
                         }
                     }                   
                 }
@@ -83,17 +109,34 @@ public class Aggregate : MonoBehaviour
     }
     public void GoalPlayer()
     {
-        MapIndex Goal = new MapIndex();
-        for (int i = 0; i < players.Length; i++)
+        List<MapIndex> saveIndex = map.GetComponent<StageMap>().GetItemPostion();
+        if (isGoal)
         {
-            if (!player[i].IsDropOut() && !player[i].IsDead())
+            for (int i = 0; i < players.Length; i++)
             {
-                if (master.CheckPosition(player[i].GetPotision(), Goal))
+                if (!player[i].IsHaunted())
                 {
-                    player[i].SetGoal(true);
+                    if (!player[i].IsDropOut() && !player[i].IsDead())
+                    {
+
+                        for (int j = 0; j < saveIndex.Count; j++)
+                        {
+                            GameObject chip = GameObject.Find(saveIndex[j].row + saveIndex[j].column);
+                            if (chip.GetComponent<Chip>().GetItem().GetKind() == ItemKind.Sword)
+                            {
+                                if (master.CheckPosition(player[i].GetPotision(), chip.GetComponent<Chip>().GetMapindex()))
+                                {
+                                    player[i].SetGoal(true);
+                                }
+                            }
+
+                        }
+
+                    }
                 }
             }
         }
+      
     }
     public void ReleaseHssyaku()
     {

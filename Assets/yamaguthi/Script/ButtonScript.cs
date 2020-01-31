@@ -28,6 +28,7 @@ public class ButtonScript : MonoBehaviour
     {
         if(!gameStart)
         {
+            jobMain.GetComponent<JobScene>().newJob();
             colorChange.SetMap();
             randomItem.Dicision();
             Debug.Log("一回だけ");

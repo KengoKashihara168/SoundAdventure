@@ -1042,8 +1042,8 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
-  Mute: 0
+  Loop: 1
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -1084,7 +1084,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1389,7 +1389,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1801}
+  m_AnchoredPosition: {x: 0, y: 42}
   m_SizeDelta: {x: 1500, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &264916016
@@ -2153,7 +2153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -379, y: -2065}
+  m_AnchoredPosition: {x: -379, y: -460}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &473549737
@@ -2963,6 +2963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 1905652134}
+  stageMap: {fileID: 1905652135}
   master: {fileID: 2063234175}
   playerName: {fileID: 1373968768}
   audio:
@@ -3684,7 +3685,7 @@ GameObject:
   - component: {fileID: 903870665}
   - component: {fileID: 903870664}
   m_Layer: 0
-  m_Name: Audio Source
+  m_Name: BGM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4049,7 +4050,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 446, y: -2071}
+  m_AnchoredPosition: {x: 446, y: -466}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &960084775
@@ -5061,7 +5062,7 @@ Transform:
   m_GameObject: {fileID: 1290396778}
   m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: -0.5}
   m_LocalPosition: {x: 0, y: 1, z: -10}
-  m_LocalScale: {x: 1, y: 1.0000001, z: 0.99999994}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -8008,8 +8009,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 715ce8d022be8ce4f950ff0b0f66933c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -8129,7 +8130,7 @@ GameObject:
   - component: {fileID: 1908526260}
   - component: {fileID: 1908526262}
   m_Layer: 0
-  m_Name: asterMaster
+  m_Name: AuidoObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8148,10 +8149,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hassyaku: {fileID: 210472947}
+  bgm: {fileID: 903870664}
+  audioUI: {fileID: 1908526262}
   Master: {fileID: 2063234175}
+  background:
+  - {fileID: 21300000, guid: 52cc69e0bbbe8fd49922febaf0b69460, type: 3}
+  - {fileID: 21300000, guid: f1a49951366dfef4bb12baea70ace35d, type: 3}
+  - {fileID: 21300000, guid: 715ce8d022be8ce4f950ff0b0f66933c, type: 3}
+  - {fileID: 21300000, guid: c2eebf3b533a4df4bb7a2a75d358358d, type: 3}
   map: {fileID: 1905652134}
   dire: {fileID: 1437337162}
-  audio: {fileID: 0}
+  audio: {fileID: 903870664}
 --- !u!4 &1908526261
 Transform:
   m_ObjectHideFlags: 0
@@ -8178,6 +8186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd0473832923f65478e3eb2bd58a29c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  background: []
   canvas: {fileID: 1277595417}
 --- !u!1 &1938067962
 GameObject:
