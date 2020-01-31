@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public enum ChipType
 {
     Close,
@@ -16,6 +16,7 @@ public class Chip : MonoBehaviour
     public ChipType type { get; set; }
     private AudioClip audio;
     private Item info;
+    private Image image;
     MapIndex pos;
 
     // Start is called before the first frame update
@@ -79,5 +80,10 @@ public class Chip : MonoBehaviour
     public MapIndex GetMapindex()
     {
         return pos;
+    }
+
+    public void ColorChange()
+    {
+        this.image.color = new Vector4(1, 1, 1, 1);
     }
 }

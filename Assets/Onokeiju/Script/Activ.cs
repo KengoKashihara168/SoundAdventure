@@ -198,6 +198,7 @@ public class Activ : MonoBehaviour
             }
             isMove = false;
         } 
+
     }
 
     //刀の決定ボタンを押したら
