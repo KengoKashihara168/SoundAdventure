@@ -14,7 +14,8 @@ public class PrivateResult : MonoBehaviour
     [SerializeField] private Sprite amulet;   // 御札
     [SerializeField] private Sprite cutter;   // カッター
     [SerializeField] private Sprite sword;    // 刀
-
+    [SerializeField] private Text  name;    //
+    [SerializeField] private MasterScriot nowPlayer;    //
     private Player player;                    // プレイヤー
     private Image image;                      // 画像
 
@@ -52,6 +53,7 @@ public class PrivateResult : MonoBehaviour
     /// <param name="player">プレイヤー</param>
     public void ChangeImage(Player player)
     {
+        name.text = "プレイヤー" +(nowPlayer.GetNowPlayer()+1)+ "が移動した先は";
         Debug.Log(player.GetPotision().row+ player.GetPotision().column);
         if(player.IsDead())
         {

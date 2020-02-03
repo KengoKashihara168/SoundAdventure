@@ -78,7 +78,7 @@ public class Hassyakusama : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            if (player[i].IsHaunted())
+            if (player[i].IsHaunted()|| player[i].IsDropOut())
                 continue;
             //プレイヤーとの距離の計算
 

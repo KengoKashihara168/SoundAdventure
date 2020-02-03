@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AngleButtton : MonoBehaviour
 {
     [SerializeField]
     public GameObject master;
+    [SerializeField] Text audioText;
     public void Audio()
     {
         // 一番近い音のミュート ON OFF
@@ -40,6 +42,7 @@ public class AngleButtton : MonoBehaviour
     {
         if (master.GetComponent<AudioScene>().GetActive())
         {
+            audioText.text = "音を聞く";
             master.GetComponent<AudioScene>().BGMONOFF();
             // UIを非表示に
             master.GetComponent<AudioScene>().SetActive(false);
@@ -53,6 +56,7 @@ public class AngleButtton : MonoBehaviour
         }
         else if (!master.GetComponent<AudioScene>().GetActive())
         {
+            audioText.text = "閉じる";
             master.GetComponent<AudioScene>().BGMONOFF();
             // カメラをプレイヤーのポジションに移動させる
             master.GetComponent<AudioScene>().CameraPlayer();

@@ -144,6 +144,7 @@ public class Aggregate : MonoBehaviour
         {
             if(player[i].IsHaunted()&& master.CheckPosition(player[i].GetPotision(), hassyaku.GetPosition()))
             {
+                Debug.Log("解放");
                 hassyaku.SetRelease(true);
             }
         }
