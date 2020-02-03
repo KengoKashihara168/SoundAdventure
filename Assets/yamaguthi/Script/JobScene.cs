@@ -14,6 +14,7 @@ public class JobScene : MonoBehaviour
     public Canvas canvas;
     public Image[] role;
     [SerializeField] Hassyakusama hassyaku;
+    [SerializeField] ColorChange colorChange;
     GameObject[] Player;
     List<MapIndex> save = new List<MapIndex>();
     Item[] item;
@@ -93,8 +94,8 @@ public class JobScene : MonoBehaviour
         }
         Player[nowPlayer].GetComponent<Player>().SetPotision(index);
         Debug.Log(Player[nowPlayer].GetComponent<Player>().GetPotision().row + Player[nowPlayer].GetComponent<Player>().GetPotision().column + "プレイヤー" + (nowPlayer + 1));
-        master.GetComponent<MasterScriot>().AddNowPlayer();
-        if (master.GetComponent<MasterScriot>().GetNowPlayer() >= 4)
+       
+        if (master.GetComponent<MasterScriot>().GetNowPlayer() >= 3)
         {
             master.GetComponent<MasterScriot>().ResetNowPlayer();
             isSceneClose = true;
@@ -137,9 +138,6 @@ public class JobScene : MonoBehaviour
 
     public void roleImagePlay(bool breakFlag)
     {
-
-       
-
         if(breakFlag == true)
         {
             role[0].enabled = false;
@@ -151,6 +149,15 @@ public class JobScene : MonoBehaviour
         {
             role[2].enabled = false;
         }
+    }
+    public void add()
+    {
+        master.GetComponent<MasterScriot>().AddNowPlayer();
+    }
+    public void playerpostion()
+    {
+        int nowPlayer = master.GetComponent<MasterScriot>().GetNowPlayer();
+        colorChange.Color(Player[nowPlayer].GetComponent<Player>().GetPotision());
     }
 }
 

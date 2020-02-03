@@ -16,7 +16,9 @@ public class Activ : MonoBehaviour
     [SerializeField] Image Image;
     [SerializeField] GameScene gameScene;
     [SerializeField] GameObject audioUI;
+    [SerializeField] GameObject nextMoveUI;
     [SerializeField] Aggregate aggregate;
+    [SerializeField] Sprite[] itemImages;
     int nowPlayer;
     MasterScriot mas;
     GameObject[] player;
@@ -38,7 +40,8 @@ public class Activ : MonoBehaviour
             playerscr[i] = player[i].GetComponent<Player>();
         }
         //方角ボタンだけ表示
-        DirectionButtonOn();
+        SwordDecisionPush();
+       //DirectionButtonOn();
        // playerscr[2].SetDead(true);
        // playerscr[2].SetDropOut(true);
 
@@ -65,20 +68,20 @@ public class Activ : MonoBehaviour
         swordDecision.SetActive(false);
     }
 
-    public void StartMove()
+    public bool StartMove()
     {
-        if (playerscr[nowPlayer].IsDropOut())
+        int dead =0;
+        int goal = 0;
+        for (int i = 0; i < player.Length; i++)
         {
-            while (playerscr[nowPlayer].IsDropOut())
-            {
-                mas.AddNowPlayer();
-                nowPlayer = mas.GetNowPlayer();
-                if (nowPlayer >= 4)
-                {
-                   //   ゲーム終了
-                }
-            }
+            if (player[i].GetComponent<Player>().IsDead())
+                dead++;
+            if (player[i].GetComponent<Player>().IsGoal())
+                goal++;
+            if (dead > 2 || goal > 2)
+                return true;
         }
+        return false;
     }
     
     //移動の決定ボタンを押したら
@@ -98,12 +101,20 @@ public class Activ : MonoBehaviour
                 nowPlayer = mas.GetNowPlayer();
                 if (nowPlayer >= 4 && !isItem)
                 {
-                    mas.ResetNowPlayer();
-                    SwordDecisionPush();
-                    aggregate.AggregateON();
-                    audioUI.SetActive(false);
-                    gameScene.DeadPlayer();
-                    gameScene.OnScreenButton(ScreenType.Private);
+                    if(StartMove())
+                    {
+                        // ゲーム終了
+                    }
+                    else
+                    {
+                        mas.ResetNowPlayer();
+                        SwordDecisionPush();
+                        aggregate.AggregateON();
+                        audioUI.SetActive(false);
+                        gameScene.DeadPlayer();
+                        gameScene.OnScreenButton(ScreenType.Private);
+                    }
+
                 }
                 else
                 {
@@ -132,6 +143,7 @@ public class Activ : MonoBehaviour
                     {
                         DirectionButtonOn();
                     }
+                    colorChange.Color(playerscr[nowPlayer].GetPotision());
                 }
             }
             
@@ -209,6 +221,8 @@ public class Activ : MonoBehaviour
                 }
                 else
                 {
+                    int i = (int)chip.GetComponent<Chip>().GetItem().GetKind();
+                    Image.sprite = itemImages[i];
                     playerscr[nowPlayer].SetFoot(true);
                     yesButton.SetActive(true);
                     noButton.SetActive(true);
@@ -254,12 +268,12 @@ public class Activ : MonoBehaviour
         if (Image.enabled == false)
         {
             //移動の決定ボタンを表示
-            moveDecision.SetActive(true);
+         //   moveDecision.SetActive(true);
         }
         else
         {
             //刀の決定ボタンを表示
-            swordDecision.SetActive(true);
+          //  swordDecision.SetActive(true);
         }
     }
     public void DirectionButtonOn()
@@ -281,6 +295,19 @@ public class Activ : MonoBehaviour
             noButton.SetActive(false);
             Image.enabled = false;
         }
-       
+    }
+    public void MoveSceneNext()
+    {
+        nextMoveUI.SetActive(false);
+        DirectionButtonOn();
+        audioUI.SetActive(true);
+        colorChange.Color(player[mas.GetNowPlayer()].GetComponent<Player>().GetPotision());
+    }
+    public void OnNextMoveUI()
+    {
+        SwordDecisionPush();
+        nextMoveUI.SetActive(true);
+        colorChange.ColorReset();
+        audioUI.SetActive(false);
     }
 }

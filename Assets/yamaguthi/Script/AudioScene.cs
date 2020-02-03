@@ -117,6 +117,7 @@ public class AudioScene : MonoBehaviour
         MapIndex index =new MapIndex();
         nowPlayer = Master.GetComponent<MasterScriot>().GetNowPlayer();
         hassyaku.SetTransPostion();
+        Debug.Log(nowPlayer+"音をとる");
         for (int i = 0; i < olmap.Length; i++)
         {
             for (int j = 0; j < olmap[i].Count; j++)
@@ -125,7 +126,6 @@ public class AudioScene : MonoBehaviour
              
                 if (obj.GetComponent<Chip>().GetItem().GetKind()!=ItemKind.None)
                 {
-                    Debug.Log("音をとる");
                     //どれが一番近いか判別して保存する
                     index = player[nowPlayer].GetComponent<Player>().GetPotision();
                     obj = GameObject.Find(index.row + index.column);

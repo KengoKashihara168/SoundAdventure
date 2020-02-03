@@ -7,16 +7,22 @@ public class ButtonScript : MonoBehaviour
     [SerializeField] RandomItem randomItem;
     [SerializeField] ColorChange colorChange;
     [SerializeField] MasterScriot master;
+    [SerializeField] GameObject audioUI;
+    [SerializeField] GameObject MoveUI;
     public GameObject jobMain;
     private GameObject[] players; 
     bool gameStart;
     private bool breakFlag;
+    bool karifalg;
     // Start is called before the first frame update
     void Start()
     {
         gameStart = false;
         breakFlag = true;
         players = master.GetPlayer();
+        audioUI.SetActive(false);
+        karifalg = false;
+        MoveUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,23 +43,38 @@ public class ButtonScript : MonoBehaviour
             Debug.Log(gameStart);
         }
 
+
         if (!jobMain.GetComponent<JobScene>().GetCloseFlag() && breakFlag == false)
         {
+            audioUI.SetActive(true);
             jobMain.GetComponent<JobScene>().roleImagePlay(breakFlag);
             jobMain.GetComponent<JobScene>().SetinfoPos();
             breakFlag = true;
+            karifalg = true;
+            jobMain.GetComponent<JobScene>().playerpostion();
         }
         else if (!jobMain.GetComponent<JobScene>().GetCloseFlag() && breakFlag == true)
         {
-          
+
+            audioUI.SetActive(false);
             jobMain.GetComponent<JobScene>().roleImagePlay(breakFlag);
             breakFlag = false;
+            colorChange.ColorReset();
+            if (karifalg == true)
+            {
+                jobMain.GetComponent<JobScene>().add();
+                karifalg = false;
+            }
         }
         else
         {
+            colorChange.ColorReset();
+            audioUI.SetActive(false);
             jobMain.GetComponent<JobScene>().CloseScene();
             master.ResetNowPlayer();
-            colorChange.Color(players[master.GetNowPlayer()].GetComponent<Player>().GetPotision());
-        }   
+            MoveUI.SetActive(true);
+            // colorChange.Color(players[master.GetNowPlayer()].GetComponent<Player>().GetPotision());
+        }
+
     }
 }

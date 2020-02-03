@@ -43,7 +43,7 @@ public class ResultNextButton : MonoBehaviour
             }
             audioUI.SetActive(true);
             gameScene.GetDeadPlayers().Clear();
-            activ.DirectionButtonOn();
+            activ.OnNextMoveUI();
         }
     }
 }

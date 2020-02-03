@@ -37,8 +37,12 @@ public class ColorChange : MonoBehaviour
         int ascli;
         ascli =column.ToCharArray()[0];
         //渡されたの位置のオブジェクトのカラー変更    
-        map[row*5 + (ascli-65)].GetComponent<Image>().color = new Vector4(1, 0, 1, 1);
-        oldobjct = map[row * 5 + (ascli - 65)];
+        if(0<= row * 5 + (ascli - 65)&& row * 5 + (ascli - 65)<=24)
+        {
+            map[row * 5 + (ascli - 65)].GetComponent<Image>().color = new Vector4(1, 0, 1, 1);
+            oldobjct = map[row * 5 + (ascli - 65)];
+        }
+
     }
     public void Color(MapIndex rc)
     {
@@ -46,9 +50,12 @@ public class ColorChange : MonoBehaviour
         //columnをintに変換
         int ascli;
         ascli = rc.column.ToCharArray()[0];
-        //渡されたの位置のオブジェクトのカラー変更    
-        map[rc.row * 5 + (ascli - 65)].GetComponent<Image>().color = new Vector4(1, 0, 1, 1);
-        oldobjct = map[rc.row * 5 + (ascli - 65)];
+        //渡されたの位置のオブジェクトのカラー変更  
+        if (0 <= rc.row * 5 + (ascli - 65) && rc.row * 5 + (ascli - 65) <= 24)
+        {
+            map[rc.row * 5 + (ascli - 65)].GetComponent<Image>().color = new Vector4(1, 0, 1, 1);
+            oldobjct = map[rc.row * 5 + (ascli - 65)];
+        }
     }
     public void ColorReset()
     {

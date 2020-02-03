@@ -166,7 +166,7 @@ public class GameScene : MonoBehaviourPunCallbacks
                 }
             }
             deadPlayers.Clear();
-            activ.DirectionButtonOn();
+            activ.OnNextMoveUI();
         }else
         if (!Player[nowPlayer].GetComponent<Player>().IsDropOut())
         {
