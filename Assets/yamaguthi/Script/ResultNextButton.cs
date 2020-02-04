@@ -25,7 +25,7 @@ public class ResultNextButton : MonoBehaviour
         master.AddNowPlayer();
         if (master.GetNowPlayer()<4)
         {
-            gameScene.OnScreenButton(ScreenType.Private);
+            gameScene.OnScreenButton(ScreenType.Move);
         }
         else
         {

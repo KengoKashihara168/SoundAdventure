@@ -118,7 +118,7 @@ public class Activ : MonoBehaviour
                         aggregate.AggregateON();
                         audioUI.SetActive(false);
                         gameScene.DeadPlayer();
-                        gameScene.OnScreenButton(ScreenType.Private);
+                        gameScene.OnScreenButton(ScreenType.Move);
                     }
 
                 }
@@ -139,7 +139,7 @@ public class Activ : MonoBehaviour
                                 aggregate.AggregateON();
                                 audioUI.SetActive(false);
                                 gameScene.DeadPlayer();
-                                gameScene.OnScreenButton(ScreenType.Private);
+                                gameScene.OnScreenButton(ScreenType.Move);
                                 break;
                             }
                         }
@@ -272,7 +272,7 @@ public class Activ : MonoBehaviour
                 aggregate.AggregateON();
                 audioUI.SetActive(false);
                 gameScene.DeadPlayer();
-                gameScene.OnScreenButton(ScreenType.Private);
+                gameScene.OnScreenButton(ScreenType.Move);
             }
             else
             {

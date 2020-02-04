@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -28,7 +29,10 @@ public class GameScene : MonoBehaviourPunCallbacks
     [SerializeField] private PrivateResult privateResultScreen;
     [SerializeField] private GameObject wholeResultScreen;
     [SerializeField] private GameObject master;
+    [SerializeField] private MasterScriot mast;
     [SerializeField] private Activ activ;
+    [SerializeField] private GameObject[] nextPlayerUI;
+    [SerializeField] private Text nextPlayername;
     List<string> deadPlayers = new List<string>();
     GameObject[] Player;
     int nowPlayer;
@@ -109,7 +113,23 @@ public class GameScene : MonoBehaviourPunCallbacks
     /// </summary>
     private void MoveScreen()
     {
-        Debug.Log("Move");
+        for (int i = 0; i < nextPlayerUI.Length; i++)
+        {
+            nextPlayerUI[i].SetActive(true);
+        }
+        Debug.Log(mast.GetNowPlayer());
+        nextPlayername.text = "プレイヤー" + (mast.GetNowPlayer() + 1);
+        foreach (Transform child in privateResultScreen.gameObject.transform)
+        {
+            child.gameObject.SetActive(false);
+            if (child.name == "NextButton")
+            {
+                foreach (Transform text in child)
+                {
+                    text.gameObject.SetActive(false);
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -142,6 +162,22 @@ public class GameScene : MonoBehaviourPunCallbacks
     {
         return deadPlayers;
     }
+    public void NextButton()
+    {
+        for (int i = 0; i < nextPlayerUI.Length; i++)
+        {
+            nextPlayerUI[i].SetActive(false);
+        }
+        PrivateResultScreen();
+    }
+    public void ResetUI()
+    {
+        for (int i = 0; i < nextPlayerUI.Length; i++)
+        {
+            nextPlayerUI[i].SetActive(false);
+        }
+    }
+
 
     /// <summary>
     /// 個人結果画面
