@@ -16,6 +16,7 @@ public enum ItemKind
     Amulet,
     Cutter,
     Sword,
+    Goal,
 }
 
 public class Item : MonoBehaviour

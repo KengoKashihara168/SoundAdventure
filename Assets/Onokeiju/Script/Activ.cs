@@ -14,6 +14,7 @@ public class Activ : MonoBehaviour
     [SerializeField] GameObject yesButton;
     [SerializeField] GameObject noButton;
     [SerializeField] Image Image;
+    [SerializeField] Image sowrdImage;
     [SerializeField] GameScene gameScene;
     [SerializeField] GameObject audioUI;
     [SerializeField] GameObject nextMoveUI;
@@ -21,22 +22,27 @@ public class Activ : MonoBehaviour
     [SerializeField] Sprite[] itemImages;
     [SerializeField] GameObject[] nextUI;
     [SerializeField] Text playerName;
+    [SerializeField] Move move;
     int nowPlayer;
     MasterScriot mas;
     GameObject[] player;
     Player[] playerscr;
+    MapIndex oldPlayerPos;
     bool isMove;
     bool isItem;
+    bool useSword;
 
     // Start is called before the first frame update
     void Start()
     {
         isMove = false;
         isItem = false;
+        useSword = false;
         mas = Master.GetComponent<MasterScriot>();
         nowPlayer = mas.GetNowPlayer();
         player = mas.GetPlayer();
         playerscr = new Player[player.Length];
+        oldPlayerPos = new MapIndex();
         for (int i=0;i<player.Length;i++)
         {
             playerscr[i] = player[i].GetComponent<Player>();
@@ -127,6 +133,7 @@ public class Activ : MonoBehaviour
                     colorChange.Color(playerscr[nowPlayer].GetPotision());
                     if (playerscr[nowPlayer].IsDropOut())
                     {
+                        Debug.Log("死んでる");
                         while (playerscr[nowPlayer].IsDropOut())
                         {
                             mas.AddNowPlayer();
@@ -159,37 +166,62 @@ public class Activ : MonoBehaviour
     //プレイヤーのポジション設定
     public void MoveDecision()
     {
-        nowPlayer = mas.GetNowPlayer();
-        string pPos = playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column;
-        playerscr[nowPlayer].MoveAction(this.gameObject.GetComponent<Move>().GetDirection());
-        if (pPos == playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column)
+        if(useSword) // 刀を使ったら
         {
-            isMove = true;
+            Sowrd();
+            useSword = false;
+            isItem = false;
         }
-      else
+        else
         {
-            GameObject chip = GameObject.Find(playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column);
-            if (chip.GetComponent<Chip>().GetItem().GetKind() != ItemKind.None)
+            nowPlayer = mas.GetNowPlayer();
+            string pPos = playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column;
+            oldPlayerPos = playerscr[nowPlayer].GetPotision();
+            playerscr[nowPlayer].MoveAction(this.gameObject.GetComponent<Move>().GetDirection());
+            if (pPos == playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column)
             {
-                if(chip.GetComponent<Chip>().GetItem().GetKind()== ItemKind.Sword)
-                {
-                    playerscr[nowPlayer].SetFoot(true);
-                    isItem = false;
-                }
-                else
-                {
-                    int i = (int)chip.GetComponent<Chip>().GetItem().GetKind();
-                    Image.sprite = itemImages[i];
-                    playerscr[nowPlayer].SetFoot(true);
-                    yesButton.SetActive(true);
-                    noButton.SetActive(true);
-                    Image.enabled = true;
-                    isItem = true;
-                }
-
+                isMove = true;
             }
-            isMove = false;
-        } 
+            else
+            {
+                GameObject chip = GameObject.Find(playerscr[nowPlayer].GetPotision().row + playerscr[nowPlayer].GetPotision().column);
+                if (chip.GetComponent<Chip>().GetItem().GetKind() != ItemKind.None)
+                {
+                    if (chip.GetComponent<Chip>().GetItem().GetKind() == ItemKind.Goal)
+                    {
+                        playerscr[nowPlayer].SetFoot(true);
+                        isItem = false;
+                    }
+                    else
+                    {
+                        int i = (int)chip.GetComponent<Chip>().GetItem().GetKind();
+                        Image.sprite = itemImages[i];
+                        playerscr[nowPlayer].SetFoot(true);
+                        yesButton.SetActive(true);
+                        noButton.SetActive(true);
+                        Image.enabled = true;
+                        isItem = true;
+                    }
+
+                }
+                if (!isItem)
+                {
+                    if (playerscr[nowPlayer].GetItemKind() == ItemKind.Sword)
+                    {
+                        sowrdImage.enabled = true;
+                        useSword = true;
+                        yesButton.SetActive(true);
+                        noButton.SetActive(true);
+                        isMove = false;
+                        isItem = true;
+                        Debug.Log("刀持ってる");
+                    }
+                }
+                if(!useSword)
+                    isMove = false;
+            }
+        }
+       
 
     }
 
@@ -203,20 +235,50 @@ public class Activ : MonoBehaviour
         yesButton.SetActive(false);
         noButton.SetActive(false);
         Image.enabled = false;
+        sowrdImage.enabled = false;
     }
 
     //はいのボタン
     public void YesPush()
     {
-        isItem = false;
-        MoveDecisionPush();
+        if (useSword)   // 刀をしようする
+        {
+            sowrdImage.enabled = false;
+            DirectionButtonOn();
+            isItem = false;
+        }
+        else
+        {
+            useSword = false;
+            isItem = false;
+            MoveDecisionPush();
+        }
     }
     //いいえのボタン
     public void NoPush()
     {
-        playerscr[nowPlayer].SetFoot(false);
-        isItem = false;
-        MoveDecisionPush();
+        if(useSword)
+        {
+            useSword = false;
+            MoveDecisionPush();
+            isItem = false;
+        }
+        else
+        {
+            if (playerscr[nowPlayer].GetItemKind() != ItemKind.Sword)
+            {
+                playerscr[nowPlayer].SetFoot(false);
+                isItem = false;
+                MoveDecisionPush();
+            }
+            else
+            {
+                sowrdImage.enabled = true;
+                useSword = true;
+                Image.enabled = false;
+            }
+        }
+       
     }
     //方角のボタンを押したら
     public void DirectiomPush()
@@ -225,12 +287,12 @@ public class Activ : MonoBehaviour
         if (Image.enabled == false)
         {
             //移動の決定ボタンを表示
-         //   moveDecision.SetActive(true);
+            //moveDecision.SetActive(true);
         }
         else
         {
             //刀の決定ボタンを表示
-          //  swordDecision.SetActive(true);
+            //swordDecision.SetActive(true);
         }
     }
     public void DirectionButtonOn()
@@ -297,5 +359,39 @@ public class Activ : MonoBehaviour
         DirectionButtonOn();
         audioUI.SetActive(true);
         colorChange.Color(player[mas.GetNowPlayer()].GetComponent<Player>().GetPotision());
+    }
+    public void Sowrd()
+    {
+        int row = 0;
+        int column = 0;
+        switch (move.GetDirection())
+        {
+            case Direction.North:
+                row -= 1;
+                break;
+            case Direction.South:
+                row += 1;
+                break;
+            case Direction.West:
+                column -= 1;
+                break;
+            case Direction.East:
+                column += 1;
+                break;
+        }
+        MapIndex pos = new MapIndex();
+        int scolumn = (int)oldPlayerPos.column.ToCharArray()[0] + column;
+        char chars = (char)scolumn;
+        pos.SetIndex(oldPlayerPos.row+row, chars.ToString());
+        Debug.Log(chars + "刀");
+        aggregate.SetSorwd(pos);
+    }
+    public bool GetUseSwrod()
+    {
+        return useSword;
+    }
+    public MapIndex GetoldPostion()
+    {
+        return oldPlayerPos;
     }
 }

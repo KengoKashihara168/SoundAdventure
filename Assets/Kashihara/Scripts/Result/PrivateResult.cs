@@ -16,6 +16,7 @@ public class PrivateResult : MonoBehaviour
     [SerializeField] private Sprite sword;    // 刀
     [SerializeField] private Text  name;    //
     [SerializeField] private MasterScriot nowPlayer;    //
+    [SerializeField] Hassyakusama hassyakuRe;
     private Player player;                    // プレイヤー
     private Image image;                      // 画像
 
@@ -55,9 +56,15 @@ public class PrivateResult : MonoBehaviour
     {
         name.text = "プレイヤー" +(nowPlayer.GetNowPlayer()+1)+ "が移動した先は";
         Debug.Log(player.GetPotision().row+ player.GetPotision().column);
+        if(nowPlayer.CheckPosition(player.GetPotision(),hassyakuRe.GetPosition())&&player.IsHaunted())
+        {
+            image.sprite = hassyaku;
+            return;
+        }
         if(player.IsDead())
         {
             image.sprite = hassyaku;
+            Debug.Log("死んでる");
             player.SetDropOut(true);
             return;
         }

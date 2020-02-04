@@ -9,11 +9,14 @@ public class Aggregate : MonoBehaviour
     [SerializeField] Hassyakusama hassyaku;
     GameObject[] players;
     Player[] player;
+    MapIndex sordPos;
     bool isGoal;
+    bool isSowrd;
     // Start is called before the first frame update
     void Start()
     {
         isGoal = false;
+        isSowrd = false;
     }
     public void AggregateON()
     {
@@ -34,6 +37,9 @@ public class Aggregate : MonoBehaviour
         }
         Debug.Log("八尺は" + hassyaku.GetPosition().row + hassyaku.GetPosition().column);
         DeadPlayer();
+        if(isSowrd)
+            SowrdDeadPlayer();
+        isSowrd = false;
         GetPlayerItem();
         GoalPlayer();
     }
@@ -57,7 +63,7 @@ public class Aggregate : MonoBehaviour
                         GameObject chip = GameObject.Find(saveIndex[j].row+saveIndex[j].column);
                         if (master.CheckPosition(player[i].GetPotision(), saveIndex[j])&& chip.GetComponent<Chip>().GetItem().GetKind()!=ItemKind.None)
                         {
-                            if(chip.GetComponent<Chip>().GetItem().GetKind() == ItemKind.Sword)
+                            if(chip.GetComponent<Chip>().GetItem().GetKind() == ItemKind.Goal)
                             {
                                 if(!player[i].IsHaunted() && !isGoal)
                                 {
@@ -77,8 +83,11 @@ public class Aggregate : MonoBehaviour
                                 {
                                     Item item = map.GetComponent<StageMap>().CheckItem(player[i].GetItemKind());
                                     player[i].SetItemKind(chip.GetComponent<Chip>().GetItem().GetKind());
+                                    Debug.Log("疲労");
                                     chip.GetComponent<Chip>().SetItem(item.GetKind());
                                     chip.GetComponent<Chip>().SetAduio(item.GetAudio());
+                                    player[i].SetItem(true);
+                                    player[i].SetTake(true);
                                 }
                                 else
                                 {
@@ -102,7 +111,42 @@ public class Aggregate : MonoBehaviour
             {
                 if(master.CheckPosition(player[i].GetPotision(), hassyaku.GetPosition()))
                 {
+                    if (player[i].GetItemKind()==ItemKind.Amulet)
+                    {
+                        player[i].SetItemKind(ItemKind.None);
+                    }
+                    else
+                    {
+                        player[i].SetDead(true);
+                    }
+                    
+                }
+            }
+        }
+    }
+    public void SowrdDeadPlayer()
+    {
+        bool isdead = false;
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (!player[i].IsDropOut() && !player[i].IsGoal() && player[i].GetItemKind() != ItemKind.Sword && !player[i].IsDead())
+            {
+                Debug.Log("入る");
+                if (master.CheckPosition(player[i].GetPotision(), sordPos))
+                {
                     player[i].SetDead(true);
+                    isdead = true;
+                }
+            }
+        }
+        if(isdead)
+        {
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (player[i].GetItemKind() == ItemKind.Sword)
+                {
+                    player[i].SetItemKind(ItemKind.None);
+                    break;
                 }
             }
         }
@@ -122,7 +166,7 @@ public class Aggregate : MonoBehaviour
                         for (int j = 0; j < saveIndex.Count; j++)
                         {
                             GameObject chip = GameObject.Find(saveIndex[j].row + saveIndex[j].column);
-                            if (chip.GetComponent<Chip>().GetItem().GetKind() == ItemKind.Sword)
+                            if (chip.GetComponent<Chip>().GetItem().GetKind() == ItemKind.Goal)
                             {
                                 if (master.CheckPosition(player[i].GetPotision(), chip.GetComponent<Chip>().GetMapindex()))
                                 {
@@ -148,5 +192,11 @@ public class Aggregate : MonoBehaviour
                 hassyaku.SetRelease(true);
             }
         }
+    }
+    public void SetSorwd(MapIndex pos)
+    {
+        Debug.Log("セット"+pos.row+pos.column);
+        sordPos = pos;
+        isSowrd = true;
     }
 }

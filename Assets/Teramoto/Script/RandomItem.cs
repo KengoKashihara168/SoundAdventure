@@ -31,6 +31,8 @@ public class RandomItem : MonoBehaviour
     List<AudioClip> soundList = new List<AudioClip>();
 
     [SerializeField]
+    private AudioClip[] sound;
+    [SerializeField]
     private AudioClip sound1;
     [SerializeField]
     private AudioClip sound2;
@@ -49,18 +51,15 @@ public class RandomItem : MonoBehaviour
     void Start()
     {
         IsDicision = false;
-        for(int i = 0;i < 4;i++)
+        for(int i = 0;i < 5; i++)
         {
             itemList.Add(i);
             itemSoundList.Add(i);
         }
 
+        for(int i=0;i< sound.Length;i++)
         {
-            soundList.Add(sound1);
-            soundList.Add(sound2);
-            soundList.Add(sound3);
-            soundList.Add(sound4);
-
+            soundList.Add(sound[i]);
         }
 
         print(soundList);
@@ -75,7 +74,7 @@ public class RandomItem : MonoBehaviour
 
     public void Dicision()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
         {
 
             //アイテムの設定
@@ -113,37 +112,43 @@ public class RandomItem : MonoBehaviour
 
     private void soundRoulette(int ransu)
     {
-        switch (ransu)
-        {
-            case 0:
-                audioClip = soundList[0];
-                print(audioClip);
-                break;
+        audioClip = soundList[ransu];
+        print(audioClip);
+        //switch (ransu)
+        //{
+        //    case 0:
+        //        audioClip = soundList[ransu];
+        //        print(audioClip);
+        //        break;
 
-            case 1:
-                audioClip = soundList[1];
-                print(audioClip);
+        //    case 1:
+        //        audioClip = soundList[ransu];
+        //        print(audioClip);
 
-                break;
+        //        break;
 
-            case 2:
-                audioClip = soundList[2];
-                print(audioClip);
+        //    case 2:
+        //        audioClip = soundList[ransu];
+        //        print(audioClip);
 
-                break;
+        //        break;
 
-            case 3:
-                audioClip = soundList[3];
-                print(audioClip);
+        //    case 3:
+        //        audioClip = soundList[ransu];
+        //        print(audioClip);
 
-                break;
+        //        break;
 
+        //    case 4:
+        //        audioClip = soundList[ransu];
+        //        print(audioClip);
 
+        //        break;
 
-            default:
-                print("バグです");
-                break;
-        }
+        //    default:
+        //        print("バグです");
+        //        break;
+        //}
     }
 
     //アイテムと音の設定
@@ -171,7 +176,7 @@ public class RandomItem : MonoBehaviour
                 break;
 
             case 1:
-                print("チェーンソー");
+                print("カッター");
                 itemkind = ItemKind.Cutter;
 
                 break;
@@ -187,7 +192,10 @@ public class RandomItem : MonoBehaviour
                 itemkind = ItemKind.Amulet;
                 break;
 
-
+            case 4:
+                print("ゴール");
+                itemkind = ItemKind.Goal;
+                break;
 
             default:
                 print("バグです");

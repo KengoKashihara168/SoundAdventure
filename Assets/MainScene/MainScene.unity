@@ -1899,6 +1899,16 @@ PrefabInstance:
       propertyPath: nowPlayer
       value: 
       objectReference: {fileID: 2063234176}
+    - target: {fileID: 3748727636155890181, guid: 776e4d13d4700c349b212d6531a5dd9a,
+        type: 3}
+      propertyPath: hassyakuRe
+      value: 
+      objectReference: {fileID: 210472947}
+    - target: {fileID: 6110229994189460996, guid: 776e4d13d4700c349b212d6531a5dd9a,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6110229994061789318, guid: 776e4d13d4700c349b212d6531a5dd9a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 776e4d13d4700c349b212d6531a5dd9a, type: 3}
@@ -2649,6 +2659,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 530301619}
   m_CullTransparentMesh: 0
+--- !u!1 &546300529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 546300530}
+  - component: {fileID: 546300532}
+  - component: {fileID: 546300531}
+  m_Layer: 5
+  m_Name: SowrdImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &546300530
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546300529}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1550844086}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 66, y: 72}
+  m_SizeDelta: {x: 1500, y: 1000}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &546300531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546300529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 0f20392594c57ed4f9731eae3e2f9f19, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &546300532
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546300529}
+  m_CullTransparentMesh: 0
 --- !u!1 &552385475
 GameObject:
   m_ObjectHideFlags: 0
@@ -3181,6 +3264,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a7ae82543cf3f449073ddb45a2872c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sound:
+  - {fileID: 8300000, guid: b95d5f5a765636c4ea4a5c81e969bef5, type: 3}
+  - {fileID: 8300000, guid: a4a1b088c79139649a39db3c848adb26, type: 3}
+  - {fileID: 8300000, guid: 025328ad06bd7934bb689bfa0be9cd17, type: 3}
+  - {fileID: 8300000, guid: a29d2675212ca7d4d8b63a8b58d4d68d, type: 3}
+  - {fileID: 8300000, guid: d0fc18b64c769cd44b14be67d411c28d, type: 3}
   sound1: {fileID: 8300000, guid: b95d5f5a765636c4ea4a5c81e969bef5, type: 3}
   sound2: {fileID: 8300000, guid: d0fc18b64c769cd44b14be67d411c28d, type: 3}
   sound3: {fileID: 8300000, guid: a4a1b088c79139649a39db3c848adb26, type: 3}
@@ -7424,6 +7513,7 @@ RectTransform:
   - {fileID: 1646183686}
   - {fileID: 817068480}
   - {fileID: 900231678}
+  - {fileID: 546300530}
   m_Father: {fileID: 1277595418}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7448,6 +7538,7 @@ MonoBehaviour:
   colorChange: {fileID: 0}
   masterScriot: {fileID: 0}
   activUI: {fileID: 0}
+  activ: {fileID: 0}
 --- !u!1 &1558497075
 GameObject:
   m_ObjectHideFlags: 0
@@ -7699,6 +7790,7 @@ MonoBehaviour:
   colorChange: {fileID: 2063234178}
   masterScriot: {fileID: 2063234176}
   activUI: {fileID: 2032980627}
+  activ: {fileID: 1592710418}
 --- !u!4 &1592710417
 Transform:
   m_ObjectHideFlags: 0
@@ -7734,6 +7826,7 @@ MonoBehaviour:
   yesButton: {fileID: 473549735}
   noButton: {fileID: 960084773}
   Image: {fileID: 264916016}
+  sowrdImage: {fileID: 546300531}
   gameScene: {fileID: 552385478}
   audioUI: {fileID: 1518541167}
   nextMoveUI: {fileID: 699663817}
@@ -7749,6 +7842,7 @@ MonoBehaviour:
   - {fileID: 463010274}
   - {fileID: 817068479}
   playerName: {fileID: 1646183687}
+  move: {fileID: 1592710416}
 --- !u!1 &1646183685
 GameObject:
   m_ObjectHideFlags: 0

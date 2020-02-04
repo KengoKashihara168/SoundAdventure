@@ -65,7 +65,7 @@ public class JobScene : MonoBehaviour
         //  アイテムのポジション設定
         if (!isItem)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 SetItemPositon();
                 SetItem(item[i].GetInfo().audio, item[i].GetInfo().kind, i);

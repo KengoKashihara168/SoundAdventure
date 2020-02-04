@@ -73,7 +73,7 @@ public class StageMap : MonoBehaviour
 
         itemPostion = new List<MapIndex>();
         playerPosition = new MapIndex[4];
-        allItem = new Item[4];
+        allItem = new Item[5];
         for(int i=0;i<allItem.Length;i++)
         {
             allItem[i] = new Item();

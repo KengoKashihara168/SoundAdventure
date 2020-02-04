@@ -10,6 +10,7 @@ public class Move : MonoBehaviour
     [SerializeField] ColorChange colorChange;
     [SerializeField] MasterScriot masterScriot;
     [SerializeField] GameObject activUI;
+    [SerializeField] Activ activ;
 
     // Start is called before the first frame update
     void Start()
@@ -22,15 +23,25 @@ public class Move : MonoBehaviour
     public void MoveNorth()
     {
         direction = Direction.North;
-        int row = masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().row - 1;
-        if ((row >= 0))
+        MapIndex pos =new MapIndex();
+        if (activ.GetUseSwrod())
         {
-            activUI.SetActive(true);
-            colorChange.Color(masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().row - 1, masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().column);
+            pos = activ.GetoldPostion();
         }
         else
         {
-            colorChange.Color(masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().row , masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().column);
+            pos = masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision();
+        }
+        int row = pos.row - 1;
+        if ((row >= 0))
+        {
+            activUI.SetActive(true);
+            colorChange.Color(pos.row - 1, pos.column);
+        }
+        else
+        {
+            Debug.Log("通れない");
+            colorChange.Color(pos.row , pos.column);
             activUI.SetActive(false);
         }
     }
@@ -40,52 +51,82 @@ public class Move : MonoBehaviour
     {
 
         direction = Direction.South;
-        int row = masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().row + 1;
-        if ((row <= 4))
+        MapIndex pos = new MapIndex();
+        if (activ.GetUseSwrod())
         {
-            activUI.SetActive(true);
-            colorChange.Color(masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().row + 1, masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().column);
+            pos = activ.GetoldPostion();
         }
         else
         {
-            colorChange.Color(masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().row, masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().column);
+            pos = masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision();
+        }
+        int row = pos.row + 1;
+        if ((row <= 4))
+        {
+            activUI.SetActive(true);
+            colorChange.Color(pos.row + 1, pos.column);
+        }
+        else
+        {
+            colorChange.Color(pos.row, pos.column);
+            Debug.Log("通れない");
             activUI.SetActive(false);
         }
     }
     public void MoveWest()
     {
+        MapIndex pos = new MapIndex();
+        if (activ.GetUseSwrod())
+        {
+            pos = activ.GetoldPostion();
+        }
+        else
+        {
+            pos = masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision();
+        }
         direction = Direction.West;
-        int ascil =masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().column.ToCharArray()[0];
+        int ascil =pos.column.ToCharArray()[0];
         ascil -= 1;
         char charr = (char)ascil;
         if((ascil-65 >= 0))
         {
             Debug.Log("通る");
             activUI.SetActive(true);
-            colorChange.Color(masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().row, charr.ToString());
+            colorChange.Color(pos.row, charr.ToString());
         }
         else
         {
-            colorChange.Color(masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().row, masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().column);
+            Debug.Log("通れない");
+            colorChange.Color(pos.row, pos.column);
             activUI.SetActive(false);
         }
     }
     public void MoveEast()
     {
 
+        MapIndex pos = new MapIndex();
+        if (activ.GetUseSwrod())
+        {
+            pos = activ.GetoldPostion();
+        }
+        else
+        {
+            pos = masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision();
+        }
         direction = Direction.East;
-        int ascil = masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().column.ToCharArray()[0];
+        int ascil = pos.column.ToCharArray()[0];
         ascil += 1;
         char charr = (char)ascil;
         if ((ascil - 65 <= 4))
         {
             Debug.Log("通る");
             activUI.SetActive(true);
-            colorChange.Color(masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().row, charr.ToString());
+            colorChange.Color(pos.row, charr.ToString());
         }
         else
         {
-            colorChange.Color(masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().row, masterScriot.GetPlayer()[masterScriot.GetNowPlayer()].GetComponent<Player>().GetPotision().column);
+            Debug.Log("通れない");
+            colorChange.Color(pos.row, pos.column);
             activUI.SetActive(false);
         }
     }
