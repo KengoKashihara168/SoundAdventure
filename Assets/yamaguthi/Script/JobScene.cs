@@ -12,7 +12,7 @@ public class JobScene : MonoBehaviour
     public Text playerName;
     public AudioClip[] audio;
     public Canvas canvas;
-    public Image[] role;
+    public GameObject[] role;
     [SerializeField] Hassyakusama hassyaku;
     [SerializeField] ColorChange colorChange;
     GameObject[] Player;
@@ -31,6 +31,10 @@ public class JobScene : MonoBehaviour
         isHaunted = Random.Range(0, maxcolumn);
         Player = master.GetComponent<MasterScriot>().GetPlayer();
         playerName.text = "プレイヤー" + (nowPlayer + 1);
+        for(int i=0;i< role.Length; i++)
+        {
+            role[i].SetActive(false);
+        }
        // item = stageMap.GetItemInfo();
     }
 
@@ -61,7 +65,7 @@ public class JobScene : MonoBehaviour
     {
 
         int nowPlayer = master.GetComponent<MasterScriot>().GetNowPlayer();
-        playerName.text = "プレイヤー" + (nowPlayer + 1);
+      
         //  アイテムのポジション設定
         if (!isItem)
         {
@@ -84,13 +88,13 @@ public class JobScene : MonoBehaviour
         {
             Player[nowPlayer].GetComponent<Player>().SetHaunted(true);
             Debug.Log("つきびと" + "プレイヤー" + (nowPlayer + 1));
-            role[0].enabled = false;
-            role[1].enabled = true;
+            role[0].SetActive(false);
+            role[1].SetActive(true);
         }
         else
         {
-            role[0].enabled = true;
-            role[1].enabled = false;
+            role[0].SetActive(true);
+            role[1].SetActive(false);
         }
         Player[nowPlayer].GetComponent<Player>().SetPotision(index);
         Debug.Log(Player[nowPlayer].GetComponent<Player>().GetPotision().row + Player[nowPlayer].GetComponent<Player>().GetPotision().column + "プレイヤー" + (nowPlayer + 1));
@@ -138,16 +142,19 @@ public class JobScene : MonoBehaviour
 
     public void roleImagePlay(bool breakFlag)
     {
-        if(breakFlag == true)
+        int nowPlayer = master.GetComponent<MasterScriot>().GetNowPlayer();
+        if (breakFlag == true)
         {
-            role[0].enabled = false;
-            role[1].enabled = false;
-            role[2].enabled = true;
-            
+            role[0].SetActive(false);
+            role[1].SetActive(false);
+            role[2].SetActive(true);
+            role[3].SetActive(true);
+            playerName.text = "プレイヤー" + (nowPlayer + 1);
         }
         else
         {
-            role[2].enabled = false;
+            role[2].SetActive(false);
+            role[3].SetActive(false);
         }
     }
     public void add()
@@ -157,7 +164,7 @@ public class JobScene : MonoBehaviour
     public void playerpostion()
     {
         int nowPlayer = master.GetComponent<MasterScriot>().GetNowPlayer();
-        colorChange.Color(Player[nowPlayer].GetComponent<Player>().GetPotision());
+        colorChange.ColorCh(Player[nowPlayer].GetComponent<Player>().GetPotision());
     }
 }
 

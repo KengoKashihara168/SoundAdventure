@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Onokeiju/Scene/Title.unity
     guid: 6320e2796e1952e47837e43bc6a54eaf
   - enabled: 0
@@ -20,10 +20,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Onokeiju/Scene/Move.unity
     guid: 884bda20f5c53ac4bba223c3ad15bc4d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Kashihara/MatchingScene.unity
     guid: cbbbdc2bd44e7df4eae503b774e9f529
-  - enabled: 1
+  - enabled: 0
     path: Assets/Kashihara/GameTestScene.unity
     guid: dad25182101bf8447990ec3963cf464b
+  - enabled: 1
+    path: Assets/MainScene/MainScene.unity
+    guid: 91ba6c3b590469a43b7366a51ae53028
   m_configObjects: {}

@@ -8,6 +8,7 @@ public class PrivateResult : MonoBehaviour
     [SerializeField] private Image resultImage;
     [SerializeField] private Text deadList;
     [SerializeField] private Sprite hassyaku; // 八尺様
+    [SerializeField] private Sprite kill; // 八尺様
     [SerializeField] private Sprite exit;     // 出口
     [SerializeField] private Sprite none;     // 何もなし
     [SerializeField] private Sprite key;      // 鍵
@@ -63,7 +64,7 @@ public class PrivateResult : MonoBehaviour
         }
         if(player.IsDead())
         {
-            image.sprite = hassyaku;
+            image.sprite = kill;
             Debug.Log("死んでる");
             player.SetDropOut(true);
             return;

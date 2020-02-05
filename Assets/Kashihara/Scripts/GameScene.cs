@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Pun;
-using Photon.Realtime;
 
 public enum ScreenType
 {
@@ -16,11 +14,11 @@ public enum ScreenType
     Whole,
 }
 
-public class GameScene : MonoBehaviourPunCallbacks
+public class GameScene : MonoBehaviour
 {
     //[SerializeField] private Map map;
     //[SerializeField] private Player[] players;
-    private NetworkObject network;
+    //private NetworkObject network;
 
     [SerializeField] private GameObject soundScreen;
     [SerializeField] private GameObject moveScreen;
@@ -39,14 +37,12 @@ public class GameScene : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        PhotonNetwork.IsMessageQueueRunning = true;
-        GameObject instance = PhotonNetwork.Instantiate("NetworkObject", Vector3.zero, Quaternion.identity);
-        network = instance.GetComponent<NetworkObject>();
+      //  PhotonNetwork.IsMessageQueueRunning = true;
+      //  GameObject instance = PhotonNetwork.Instantiate("NetworkObject", Vector3.zero, Quaternion.identity);
+      //  network = instance.GetComponent<NetworkObject>();
         InitializeGame();
         DefaultScreen();
         Player = master.GetComponent<MasterScriot>().GetPlayer();
-        for (int i = 0; i < Player.Length; i++)
-          //  player[i] = gPlayer[i].GetComponent<Player>();
         nowPlayer = master.GetComponent<MasterScriot>().GetNowPlayer();
     }
 

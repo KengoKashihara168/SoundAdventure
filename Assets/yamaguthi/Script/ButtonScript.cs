@@ -40,7 +40,8 @@ public class ButtonScript : MonoBehaviour
             Debug.Log("一回だけ");
             Debug.Log(gameStart);
             gameStart = true;
-            Debug.Log(gameStart);
+         //   breakFlag = true;
+           // jobMain.GetComponent<JobScene>().roleImagePlay(breakFlag);
         }
 
 
@@ -57,14 +58,15 @@ public class ButtonScript : MonoBehaviour
         {
 
             audioUI.SetActive(false);
-            jobMain.GetComponent<JobScene>().roleImagePlay(breakFlag);
-            breakFlag = false;
-            colorChange.ColorReset();
             if (karifalg == true)
             {
                 jobMain.GetComponent<JobScene>().add();
                 karifalg = false;
             }
+            jobMain.GetComponent<JobScene>().roleImagePlay(breakFlag);
+            breakFlag = false;
+            colorChange.ColorReset();
+
         }
         else
         {

@@ -145,7 +145,7 @@ public class StageMap : MonoBehaviour
 
     public void ItemChip()
     {
-        GameObject chip = new GameObject();
+        GameObject chip;
         for(int i=0;i<map.Length;i++)
         {
             for (int j = 0; j < map[i].Count; j++)

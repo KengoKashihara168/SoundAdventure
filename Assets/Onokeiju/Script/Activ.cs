@@ -27,6 +27,9 @@ public class Activ : MonoBehaviour
     [SerializeField] Text playerName;
     [SerializeField] Move move;
     [SerializeField] GameObject myItemUI;
+    [SerializeField] GameObject EndUI;
+    [SerializeField] Image EndImage;
+    [SerializeField] Sprite[] EndImages;
     int nowPlayer;
     MasterScriot mas;
     GameObject[] player;
@@ -49,22 +52,23 @@ public class Activ : MonoBehaviour
         player = mas.GetPlayer();
         playerscr = new Player[player.Length];
         oldPlayerPos = new MapIndex();
-        for (int i=0;i<player.Length;i++)
+        for (int i = 0; i < player.Length; i++)
         {
             playerscr[i] = player[i].GetComponent<Player>();
         }
-        for(int i=0;i<nextUI.Length;i++)
+        for (int i = 0; i < nextUI.Length; i++)
         {
             nextUI[i].SetActive(false);
         }
+        EndUI.SetActive(false);
         //方角ボタンだけ表示
         SwordDecisionPush();
-       //DirectionButtonOn();
-       // playerscr[2].SetDead(true);
-       // playerscr[2].SetDropOut(true);
+        //DirectionButtonOn();
+        // playerscr[2].SetDead(true);
+        // playerscr[2].SetDropOut(true);
 
     }
-    
+
     public void MovePlay()
     {
         direction.SetActive(true);
@@ -86,9 +90,9 @@ public class Activ : MonoBehaviour
         swordDecision.SetActive(false);
     }
 
-    public bool StartMove()
+    public bool GameEnd()
     {
-        int dead =0;
+        int dead = 0;
         int goal = 0;
         for (int i = 0; i < player.Length; i++)
         {
@@ -96,13 +100,23 @@ public class Activ : MonoBehaviour
                 dead++;
             if (player[i].GetComponent<Player>().IsGoal())
                 goal++;
-            if (dead > 2 || goal > 2)
+            if (dead >= 2)
+            {
+                EndImage.sprite = EndImages[0];
+                EndUI.SetActive(true);
                 return true;
+            }
+            if (goal >= 2)
+            {
+                EndImage.sprite = EndImages[1];
+                EndUI.SetActive(true);
+                return true;
+            }
         }
         return false;
     }
-    
-    //移動の決定ボタンを押したら
+
+   //移動の決定ボタンを押したら
     public void MoveDecisionPush()
     {
         nowPlayer = mas.GetNowPlayer();
@@ -119,32 +133,24 @@ public class Activ : MonoBehaviour
                 nowPlayer = mas.GetNowPlayer();
                 if (nowPlayer >= 4 && !isItem)
                 {
-                    if(StartMove())
-                    {
-                        // ゲーム終了
 
-                    }
-                    else
-                    {
-                        Debug.Log("こっち1");
-                        mas.ResetNowPlayer();
-                        SwordDecisionPush();
-                        aggregate.AggregateON();
-                        audioUI.SetActive(false);
-                        gameScene.DeadPlayer();
-                        myItemUI.SetActive(false);
-                        nextUIOff();
-                        myJob.enabled = false;
-                        gameScene.OnScreenButton(ScreenType.Move);
-                    }
-
+                    Debug.Log("こっち1");
+                    mas.ResetNowPlayer();
+                    SwordDecisionPush();
+                    aggregate.AggregateON();
+                    audioUI.SetActive(false);
+                    gameScene.DeadPlayer();
+                    myItemUI.SetActive(false);
+                    nextUIOff();
+                    myJob.enabled = false;
+                    gameScene.OnScreenButton(ScreenType.Move);
                 }
                 else
                 {
-                    colorChange.Color(playerscr[nowPlayer].GetPotision());
+                    colorChange.ColorCh(playerscr[nowPlayer].GetPotision());
                     if (playerscr[nowPlayer].IsDropOut())
                     {
-                    
+
                         while (playerscr[nowPlayer].IsDropOut())
                         {
                             mas.AddNowPlayer();
@@ -165,15 +171,15 @@ public class Activ : MonoBehaviour
                                 break;
                             }
                         }
-                      
+
                     }
 
                     if (nowPlayer < 4 && !player[nowPlayer].GetComponent<Player>().IsDropOut())
                     {
-                        colorChange.Color(playerscr[nowPlayer].GetPotision());
+                        colorChange.ColorCh(playerscr[nowPlayer].GetPotision());
                         MoveSceneNext();
                     }
-                     
+
                 }
             }  
         }
@@ -385,7 +391,7 @@ public class Activ : MonoBehaviour
         }
         DirectionButtonOn();
         audioUI.SetActive(true);
-        colorChange.Color(player[mas.GetNowPlayer()].GetComponent<Player>().GetPotision());
+        colorChange.ColorCh(player[mas.GetNowPlayer()].GetComponent<Player>().GetPotision());
     }
     public void nextUIOff()
     {

@@ -36,12 +36,12 @@ public class Move : MonoBehaviour
         if ((row >= 0))
         {
             activUI.SetActive(true);
-            colorChange.Color(pos.row - 1, pos.column);
+            colorChange.ColorCh(pos.row - 1, pos.column);
         }
         else
         {
             Debug.Log("通れない");
-            colorChange.Color(pos.row , pos.column);
+            colorChange.ColorCh(pos.row , pos.column);
             activUI.SetActive(false);
         }
     }
@@ -64,11 +64,11 @@ public class Move : MonoBehaviour
         if ((row <= 4))
         {
             activUI.SetActive(true);
-            colorChange.Color(pos.row + 1, pos.column);
+            colorChange.ColorCh(pos.row + 1, pos.column);
         }
         else
         {
-            colorChange.Color(pos.row, pos.column);
+            colorChange.ColorCh(pos.row, pos.column);
             Debug.Log("通れない");
             activUI.SetActive(false);
         }
@@ -92,12 +92,12 @@ public class Move : MonoBehaviour
         {
             Debug.Log("通る");
             activUI.SetActive(true);
-            colorChange.Color(pos.row, charr.ToString());
+            colorChange.ColorCh(pos.row, charr.ToString());
         }
         else
         {
             Debug.Log("通れない");
-            colorChange.Color(pos.row, pos.column);
+            colorChange.ColorCh(pos.row, pos.column);
             activUI.SetActive(false);
         }
     }
@@ -121,12 +121,12 @@ public class Move : MonoBehaviour
         {
             Debug.Log("通る");
             activUI.SetActive(true);
-            colorChange.Color(pos.row, charr.ToString());
+            colorChange.ColorCh(pos.row, charr.ToString());
         }
         else
         {
             Debug.Log("通れない");
-            colorChange.Color(pos.row, pos.column);
+            colorChange.ColorCh(pos.row, pos.column);
             activUI.SetActive(false);
         }
     }

@@ -32,21 +32,40 @@ public class ResultNextButton : MonoBehaviour
         }
         else
         {
-            master.ResetNowPlayer();
-            foreach (Transform child in privateResultScreen.gameObject.transform)
+            if(!activ.GameEnd())
             {
-                child.gameObject.SetActive(false);
-                if (child.name == "NextButton")
+                master.ResetNowPlayer();
+                foreach (Transform child in privateResultScreen.gameObject.transform)
                 {
-                    foreach (Transform text in child)
+                    child.gameObject.SetActive(false);
+                    if (child.name == "NextButton")
                     {
-                        text.gameObject.SetActive(false);
+                        foreach (Transform text in child)
+                        {
+                            text.gameObject.SetActive(false);
+                        }
                     }
                 }
+                audioUI.SetActive(true);
+                gameScene.GetDeadPlayers().Clear();
+                activ.OnNextMoveUI();
             }
-            audioUI.SetActive(true);
-            gameScene.GetDeadPlayers().Clear();
-            activ.OnNextMoveUI();
+            else
+            {
+                master.ResetNowPlayer();
+                foreach (Transform child in privateResultScreen.gameObject.transform)
+                {
+                    child.gameObject.SetActive(false);
+                    if (child.name == "NextButton")
+                    {
+                        foreach (Transform text in child)
+                        {
+                            text.gameObject.SetActive(false);
+                        }
+                    }
+                }
+                gameScene.GetDeadPlayers().Clear();
+            }
         }
     }
 }
