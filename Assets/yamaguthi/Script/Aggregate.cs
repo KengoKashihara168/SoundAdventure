@@ -70,6 +70,7 @@ public class Aggregate : MonoBehaviour
                                     if ((player[i].GetItemKind() == ItemKind.Key || player[i].GetItemKind() == ItemKind.Cutter))
                                     {
                                         player[i].SetItemKind(ItemKind.None);
+                                        player[i].SetItem(false);
                                         isGoal = true;
                                         Debug.Log("開く");
                                     }
@@ -79,22 +80,25 @@ public class Aggregate : MonoBehaviour
                             }
                             else
                             {
-                                if (player[i].GetItemKind()!=ItemKind.None)
+                                if(!player[i].IsTake())
                                 {
-                                    Item item = map.GetComponent<StageMap>().CheckItem(player[i].GetItemKind());
-                                    player[i].SetItemKind(chip.GetComponent<Chip>().GetItem().GetKind());
-                                    Debug.Log("疲労");
-                                    chip.GetComponent<Chip>().SetItem(item.GetKind());
-                                    chip.GetComponent<Chip>().SetAduio(item.GetAudio());
-                                    player[i].SetItem(true);
-                                    player[i].SetTake(true);
-                                }
-                                else
-                                {
-                                    player[i].SetItem(true);
-                                    player[i].SetTake(true);
-                                    player[i].SetItemKind(chip.GetComponent<Chip>().GetItem().GetKind());
-                                    chip.GetComponent<Chip>().SetItem(ItemKind.None);
+                                    if (player[i].GetItemKind() != ItemKind.None)
+                                    {
+                                        Item item = map.GetComponent<StageMap>().CheckItem(player[i].GetItemKind());
+                                        player[i].SetItemKind(chip.GetComponent<Chip>().GetItem().GetKind());
+                                        Debug.Log(item.GetKind() + "を交換");
+                                        chip.GetComponent<Chip>().SetItem(item.GetKind());
+                                        chip.GetComponent<Chip>().SetAduio(item.GetAudio());
+                                        player[i].SetItem(true);
+                                        player[i].SetTake(true);
+                                    }
+                                    else
+                                    {
+                                        player[i].SetItem(true);
+                                        player[i].SetTake(true);
+                                        player[i].SetItemKind(chip.GetComponent<Chip>().GetItem().GetKind());
+                                        chip.GetComponent<Chip>().SetItem(ItemKind.None);
+                                    }
                                 }
                             }
                         }
@@ -145,6 +149,7 @@ public class Aggregate : MonoBehaviour
             {
                 if (player[i].GetItemKind() == ItemKind.Sword)
                 {
+                    player[i].SetItem(false);
                     player[i].SetItemKind(ItemKind.None);
                     break;
                 }

@@ -19,10 +19,14 @@ public class Activ : MonoBehaviour
     [SerializeField] GameObject audioUI;
     [SerializeField] GameObject nextMoveUI;
     [SerializeField] Aggregate aggregate;
-    [SerializeField] Sprite[] itemImages;
+    [SerializeField] Sprite[] itemTakeImages;
+    [SerializeField] Sprite[] myItemImages;
+    [SerializeField] Sprite[] myJobImages;
+    [SerializeField] Image myJob;
     [SerializeField] GameObject[] nextUI;
     [SerializeField] Text playerName;
     [SerializeField] Move move;
+    [SerializeField] GameObject myItemUI;
     int nowPlayer;
     MasterScriot mas;
     GameObject[] player;
@@ -38,6 +42,8 @@ public class Activ : MonoBehaviour
         isMove = false;
         isItem = false;
         useSword = false;
+        myItemUI.SetActive(false);
+        myJob.enabled = false;
         mas = Master.GetComponent<MasterScriot>();
         nowPlayer = mas.GetNowPlayer();
         player = mas.GetPlayer();
@@ -116,14 +122,19 @@ public class Activ : MonoBehaviour
                     if(StartMove())
                     {
                         // ゲーム終了
+
                     }
                     else
                     {
+                        Debug.Log("こっち1");
                         mas.ResetNowPlayer();
                         SwordDecisionPush();
                         aggregate.AggregateON();
                         audioUI.SetActive(false);
                         gameScene.DeadPlayer();
+                        myItemUI.SetActive(false);
+                        nextUIOff();
+                        myJob.enabled = false;
                         gameScene.OnScreenButton(ScreenType.Move);
                     }
 
@@ -133,7 +144,7 @@ public class Activ : MonoBehaviour
                     colorChange.Color(playerscr[nowPlayer].GetPotision());
                     if (playerscr[nowPlayer].IsDropOut())
                     {
-                        Debug.Log("死んでる");
+                    
                         while (playerscr[nowPlayer].IsDropOut())
                         {
                             mas.AddNowPlayer();
@@ -141,23 +152,28 @@ public class Activ : MonoBehaviour
 
                             if (nowPlayer >= 4 && !isItem)
                             {
+                                Debug.Log("死んでる");
                                 mas.ResetNowPlayer();
                                 SwordDecisionPush();
                                 aggregate.AggregateON();
                                 audioUI.SetActive(false);
                                 gameScene.DeadPlayer();
+                                myItemUI.SetActive(false);
+                                nextUIOff();
+                                myJob.enabled = false;
                                 gameScene.OnScreenButton(ScreenType.Move);
                                 break;
                             }
                         }
-                        MoveSceneNext();
+                      
                     }
-                    else
+
+                    if (nowPlayer < 4 && !player[nowPlayer].GetComponent<Player>().IsDropOut())
                     {
+                        colorChange.Color(playerscr[nowPlayer].GetPotision());
                         MoveSceneNext();
                     }
-                    if (nowPlayer <= 4 && !player[nowPlayer].GetComponent<Player>().IsDropOut())
-                        colorChange.Color(playerscr[nowPlayer].GetPotision());
+                     
                 }
             }  
         }
@@ -195,7 +211,7 @@ public class Activ : MonoBehaviour
                     else
                     {
                         int i = (int)chip.GetComponent<Chip>().GetItem().GetKind();
-                        Image.sprite = itemImages[i];
+                        Image.sprite = itemTakeImages[i];
                         playerscr[nowPlayer].SetFoot(true);
                         yesButton.SetActive(true);
                         noButton.SetActive(true);
@@ -244,8 +260,8 @@ public class Activ : MonoBehaviour
         if (useSword)   // 刀をしようする
         {
             sowrdImage.enabled = false;
-            DirectionButtonOn();
             isItem = false;
+            DirectionButtonOn();
         }
         else
         {
@@ -260,8 +276,8 @@ public class Activ : MonoBehaviour
         if(useSword)
         {
             useSword = false;
-            MoveDecisionPush();
             isItem = false;
+            MoveDecisionPush();
         }
         else
         {
@@ -313,11 +329,19 @@ public class Activ : MonoBehaviour
             yesButton.SetActive(false);
             noButton.SetActive(false);
             Image.enabled = false;
+            myItemUI.GetComponent<Image>().sprite = myItemImages[(int)playerscr[nowPlayer].GetItemKind()];
+            myItemUI.SetActive(true);
+            if (!playerscr[nowPlayer].IsHaunted())
+                myJob.sprite = myJobImages[0];
+            else
+                myJob.sprite = myJobImages[1];
+            myJob.enabled = true;
         }
     }
     public void MoveSceneNext()
     {
         nextMoveUI.SetActive(false);
+        myJob.enabled = false;
         for (int i = 0; i < nextUI.Length; i++)
         {
             nextUI[i].SetActive(true);
@@ -327,8 +351,9 @@ public class Activ : MonoBehaviour
         if(player[mas.GetNowPlayer()].GetComponent<Player>().IsDropOut())
         {
             mas.AddNowPlayer();
-            if(mas.GetNowPlayer()>3)
+            if(mas.GetNowPlayer() > 3)
             {
+                Debug.Log("あふれた");
                 mas.ResetNowPlayer();
                 SwordDecisionPush();
                 aggregate.AggregateON();
@@ -341,7 +366,9 @@ public class Activ : MonoBehaviour
                 MoveSceneNext();
             } 
         }
+
         playerName.text = "プレイヤー" + (mas.GetNowPlayer() + 1);
+        myItemUI.SetActive(false);
     }
     public void OnNextMoveUI()
     {
@@ -359,6 +386,13 @@ public class Activ : MonoBehaviour
         DirectionButtonOn();
         audioUI.SetActive(true);
         colorChange.Color(player[mas.GetNowPlayer()].GetComponent<Player>().GetPotision());
+    }
+    public void nextUIOff()
+    {
+        for (int i = 0; i < nextUI.Length; i++)
+        {
+            nextUI[i].SetActive(false);
+        }
     }
     public void Sowrd()
     {
