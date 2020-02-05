@@ -19,10 +19,11 @@ public class text : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (count <= 255)
+        if (count >= 255|| count <= 0)
         {
-            count += a;
+            a = -a;
         }
+        count += a;
         image.material.color = new Vector4(130, 130, 130,(float)count/255);
         // 左クリックされた瞬間にif文の中を実行
         if (Input.GetMouseButtonDown(0))

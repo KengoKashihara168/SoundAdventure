@@ -20,17 +20,19 @@ public class AudioUI : MonoBehaviour
         // メインのキャンバスの子のサブキャンバスから非表示にするUIを探す
         foreach (Transform child in canvas.transform)
         {
-            if (child.name == "Audiosub")
+            if (child.name == "AudioScreen")
             {
                 foreach (Transform schild in child.transform)
                 {
                     // UIの表示非表示のフラグを元に変更
                     if (master.GetActive())
                     {
+                        child.gameObject.SetActive(master.GetActive());
                         schild.gameObject.SetActive(master.GetActive());
                     }
                     else
                     {
+                        child.gameObject.SetActive(master.GetActive());
                         schild.gameObject.SetActive(master.GetActive());
                     }
                 }

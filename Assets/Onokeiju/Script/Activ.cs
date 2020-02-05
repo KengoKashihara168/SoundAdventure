@@ -10,7 +10,6 @@ public class Activ : MonoBehaviour
     [SerializeField] ColorChange colorChange;
     [SerializeField] GameObject direction;
     [SerializeField] GameObject moveDecision;
-    [SerializeField] GameObject swordDecision;
     [SerializeField] GameObject yesButton;
     [SerializeField] GameObject noButton;
     [SerializeField] Image Image;
@@ -82,12 +81,10 @@ public class Activ : MonoBehaviour
     public void SwordPlay()
     {
         direction.SetActive(true);
-        swordDecision.SetActive(true);
     }
     public void SwordHide()
     {
         direction.SetActive(false);
-        swordDecision.SetActive(false);
     }
 
     public bool GameEnd()
@@ -126,7 +123,6 @@ public class Activ : MonoBehaviour
             //移動系UIを非表示
             direction.SetActive(false);
             moveDecision.SetActive(false);
-            swordDecision.SetActive(false);
             if(!isItem)
             {
                 mas.AddNowPlayer();
@@ -188,7 +184,8 @@ public class Activ : MonoBehaviour
     //プレイヤーのポジション設定
     public void MoveDecision()
     {
-        if(useSword) // 刀を使ったら
+        audioUI.SetActive(false);
+        if (useSword) // 刀を使ったら
         {
             Sowrd();
             useSword = false;
@@ -253,7 +250,6 @@ public class Activ : MonoBehaviour
         //全て非表示
         direction.SetActive(false);
         moveDecision.SetActive(false);
-        swordDecision.SetActive(false);
         yesButton.SetActive(false);
         noButton.SetActive(false);
         Image.enabled = false;
@@ -331,7 +327,6 @@ public class Activ : MonoBehaviour
             //方角ボタンだけ表示
             direction.SetActive(true);
             moveDecision.SetActive(false);
-            swordDecision.SetActive(false);
             yesButton.SetActive(false);
             noButton.SetActive(false);
             Image.enabled = false;

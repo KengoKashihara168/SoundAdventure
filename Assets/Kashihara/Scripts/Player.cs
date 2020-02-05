@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     /*[SerializeField]*/ private bool     isDead;    // 死亡フラグ
     /*[SerializeField]*/ private bool     isHaunted; // 憑人フラグ
    /*[SerializeField]*/  private bool     isDropOut; // 脱落フラグ
+    private bool isGoalKey; // ゴール閉鎖フラグ
     private Action   action;    // プレイヤーの行動
 
     private void Awake()
@@ -220,6 +221,19 @@ public class Player : MonoBehaviour
     public void SetDropOut(bool dropOut)
     {
         isDropOut = dropOut;
+    }
+
+    /// <summary>
+    /// 閉鎖フラグの取得設定
+    /// </summary>
+    /// <returns></returns>
+    public bool IsGoalKey()
+    {
+        return isGoalKey;
+    }
+    public void SetGoalKey(bool goalKey)
+    {
+        isGoalKey = goalKey;
     }
 
     /// <summary>

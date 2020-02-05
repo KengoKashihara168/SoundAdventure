@@ -159,33 +159,37 @@ public class Aggregate : MonoBehaviour
     public void GoalPlayer()
     {
         List<MapIndex> saveIndex = map.GetComponent<StageMap>().GetItemPostion();
-        if (isGoal)
+        for (int i = 0; i < players.Length; i++)
         {
-            for (int i = 0; i < players.Length; i++)
+            if (!player[i].IsDropOut() && !player[i].IsDead())
             {
-                if (!player[i].IsHaunted())
+
+                for (int j = 0; j < saveIndex.Count; j++)
                 {
-                    if (!player[i].IsDropOut() && !player[i].IsDead())
+                    GameObject chip = GameObject.Find(saveIndex[j].row + saveIndex[j].column);
+                    if (chip.GetComponent<Chip>().GetItem().GetKind() == ItemKind.Goal)
                     {
-
-                        for (int j = 0; j < saveIndex.Count; j++)
+                        if (master.CheckPosition(player[i].GetPotision(), chip.GetComponent<Chip>().GetMapindex()))
                         {
-                            GameObject chip = GameObject.Find(saveIndex[j].row + saveIndex[j].column);
-                            if (chip.GetComponent<Chip>().GetItem().GetKind() == ItemKind.Goal)
+                            if (!isGoal || player[i].IsHaunted())
                             {
-                                if (master.CheckPosition(player[i].GetPotision(), chip.GetComponent<Chip>().GetMapindex()))
-                                {
-                                    player[i].SetGoal(true);
-                                }
+                                player[i].SetGoalKey(true);
                             }
-
+                            else
+                            {
+                                player[i].SetGoal(true);
+                            }
                         }
-
                     }
+
                 }
+
+
             }
         }
-      
+
+
+
     }
     public void ReleaseHssyaku()
     {

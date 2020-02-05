@@ -11,10 +11,12 @@ public class JobScene : MonoBehaviour
     public GameObject master;
     public Text playerName;
     public AudioClip[] audio;
-    public Canvas canvas;
+    public GameObject jobPanel;
     public GameObject[] role;
     [SerializeField] Hassyakusama hassyaku;
     [SerializeField] ColorChange colorChange;
+    [SerializeField]
+    GameObject ResultNextButton;
     GameObject[] Player;
     List<MapIndex> save = new List<MapIndex>();
     Item[] item;
@@ -35,6 +37,7 @@ public class JobScene : MonoBehaviour
         {
             role[i].SetActive(false);
         }
+        ResultNextButton.SetActive(false);
        // item = stageMap.GetItemInfo();
     }
 
@@ -48,17 +51,7 @@ public class JobScene : MonoBehaviour
     }
         public void CloseScene()
     {
-        // メインのキャンバスの子のサブキャンバスから非表示にするUIを探す
-        foreach (Transform child in canvas.transform)
-        {
-            if (child.name == "JobUI")
-            {
-                foreach (Transform schild in child.transform)
-                {
-                    schild.gameObject.SetActive(false);
-                }
-            }
-        }
+        jobPanel.SetActive(false);
     }
     // プレイヤーのポジションとアイテムのポジション設定
     public void SetinfoPos()
@@ -99,7 +92,7 @@ public class JobScene : MonoBehaviour
         Player[nowPlayer].GetComponent<Player>().SetPotision(index);
         Debug.Log(Player[nowPlayer].GetComponent<Player>().GetPotision().row + Player[nowPlayer].GetComponent<Player>().GetPotision().column + "プレイヤー" + (nowPlayer + 1));
        
-        if (master.GetComponent<MasterScriot>().GetNowPlayer() >= 3)
+        if (master.GetComponent<MasterScriot>().GetNowPlayer() > 3)
         {
             master.GetComponent<MasterScriot>().ResetNowPlayer();
             isSceneClose = true;
@@ -165,6 +158,10 @@ public class JobScene : MonoBehaviour
     {
         int nowPlayer = master.GetComponent<MasterScriot>().GetNowPlayer();
         colorChange.ColorCh(Player[nowPlayer].GetComponent<Player>().GetPotision());
+    }
+    public void SetCloseFlag(bool flag)
+    {
+        isSceneClose = flag;
     }
 }
 

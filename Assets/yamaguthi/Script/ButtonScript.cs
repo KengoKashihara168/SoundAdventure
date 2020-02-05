@@ -43,8 +43,15 @@ public class ButtonScript : MonoBehaviour
          //   breakFlag = true;
            // jobMain.GetComponent<JobScene>().roleImagePlay(breakFlag);
         }
-
-
+        if (jobMain.GetComponent<JobScene>().GetCloseFlag())
+        {
+            colorChange.ColorReset();
+            audioUI.SetActive(false);
+            jobMain.GetComponent<JobScene>().CloseScene();
+            master.ResetNowPlayer();
+            MoveUI.SetActive(true);
+            // colorChange.Color(players[master.GetNowPlayer()].GetComponent<Player>().GetPotision());
+        }
         if (!jobMain.GetComponent<JobScene>().GetCloseFlag() && breakFlag == false)
         {
             audioUI.SetActive(true);
@@ -53,6 +60,10 @@ public class ButtonScript : MonoBehaviour
             breakFlag = true;
             karifalg = true;
             jobMain.GetComponent<JobScene>().playerpostion();
+            if (master.GetComponent<MasterScriot>().GetNowPlayer() > 2)
+            {
+                jobMain.GetComponent<JobScene>().SetCloseFlag(true);
+            }
         }
         else if (!jobMain.GetComponent<JobScene>().GetCloseFlag() && breakFlag == true)
         {
@@ -68,15 +79,7 @@ public class ButtonScript : MonoBehaviour
             colorChange.ColorReset();
 
         }
-        else
-        {
-            colorChange.ColorReset();
-            audioUI.SetActive(false);
-            jobMain.GetComponent<JobScene>().CloseScene();
-            master.ResetNowPlayer();
-            MoveUI.SetActive(true);
-            // colorChange.Color(players[master.GetNowPlayer()].GetComponent<Player>().GetPotision());
-        }
+
 
     }
 }

@@ -10,6 +10,7 @@ public class PrivateResult : MonoBehaviour
     [SerializeField] private Sprite hassyaku; // 八尺様
     [SerializeField] private Sprite kill; // 八尺様
     [SerializeField] private Sprite exit;     // 出口
+    [SerializeField] private Sprite notGoal;     // 出口
     [SerializeField] private Sprite none;     // 何もなし
     [SerializeField] private Sprite key;      // 鍵
     [SerializeField] private Sprite amulet;   // 御札
@@ -69,8 +70,19 @@ public class PrivateResult : MonoBehaviour
             player.SetDropOut(true);
             return;
         }
-
-        if(player.IsGoal())
+        if (player.IsGoalKey() && player.IsHaunted())
+        {
+            image.sprite = exit;
+            player.SetGoalKey(false);
+            return;
+        }
+        if (player.IsGoalKey())
+        {
+            image.sprite = notGoal;
+            player.SetGoalKey(false);
+            return;
+        }
+        if (player.IsGoal())
         {
             image.sprite = exit;
             player.SetDropOut(true);
