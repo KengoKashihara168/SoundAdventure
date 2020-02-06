@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MasterScriot : MonoBehaviour
 {
@@ -8,10 +9,16 @@ public class MasterScriot : MonoBehaviour
     public GameObject[] Player;
     // 現在のプレイヤー
     int nowPlayer;
+    string[] texts;
     // Start is called before the first frame update
     void Start()
     {
         nowPlayer = 0;
+        texts = new string[4];
+        for (int i = 0; i < texts.Length; i++)
+        {
+            texts[i] = "";
+        }
     }
 
     // Update is called once per frame
@@ -49,5 +56,25 @@ public class MasterScriot : MonoBehaviour
             return true;
         }
         return false;
+    }
+    public void SetName(int num,string text)
+    {
+        texts[num] = text;
+    }
+    public string[] GetName()
+    {
+        return texts;
+    }
+    public bool CheckName(string str)
+    {
+        for (int i = 0; i < texts.Length; i++)
+        {
+            if(texts[i]== str)
+            {
+                Debug.Log("被った");
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -6,6 +6,11 @@ using System.Collections.Generic;
 
 public class JobScene : MonoBehaviour
 {
+    [SerializeField] Hassyakusama hassyaku;
+    [SerializeField] ColorChange colorChange;
+    [SerializeField]
+    GameObject ResultNextButton;
+    [SerializeField] GameObject nameBox;
     public GameObject map;
     [SerializeField] StageMap stageMap;
     public GameObject master;
@@ -13,10 +18,7 @@ public class JobScene : MonoBehaviour
     public AudioClip[] audio;
     public GameObject jobPanel;
     public GameObject[] role;
-    [SerializeField] Hassyakusama hassyaku;
-    [SerializeField] ColorChange colorChange;
-    [SerializeField]
-    GameObject ResultNextButton;
+
     GameObject[] Player;
     List<MapIndex> save = new List<MapIndex>();
     Item[] item;
@@ -38,6 +40,7 @@ public class JobScene : MonoBehaviour
             role[i].SetActive(false);
         }
         ResultNextButton.SetActive(false);
+        nameBox.SetActive(false);
        // item = stageMap.GetItemInfo();
     }
 

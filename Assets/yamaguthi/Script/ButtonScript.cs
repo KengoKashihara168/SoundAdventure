@@ -9,11 +9,15 @@ public class ButtonScript : MonoBehaviour
     [SerializeField] MasterScriot master;
     [SerializeField] GameObject audioUI;
     [SerializeField] GameObject MoveUI;
+    [SerializeField] GameObject createName;
+    [SerializeField] NameCreate create;
+    [SerializeField] GameObject notCreate;
     public GameObject jobMain;
     private GameObject[] players; 
     bool gameStart;
     private bool breakFlag;
     bool karifalg;
+    bool isNameCreate;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +27,7 @@ public class ButtonScript : MonoBehaviour
         audioUI.SetActive(false);
         karifalg = false;
         MoveUI.SetActive(false);
+        isNameCreate = false;
     }
 
     // Update is called once per frame
@@ -37,7 +42,7 @@ public class ButtonScript : MonoBehaviour
             jobMain.GetComponent<JobScene>().newJob();
             colorChange.SetMap();
             randomItem.Dicision();
-            Debug.Log("一回だけ");
+
             Debug.Log(gameStart);
             gameStart = true;
          //   breakFlag = true;
@@ -50,20 +55,39 @@ public class ButtonScript : MonoBehaviour
             jobMain.GetComponent<JobScene>().CloseScene();
             master.ResetNowPlayer();
             MoveUI.SetActive(true);
-            // colorChange.Color(players[master.GetNowPlayer()].GetComponent<Player>().GetPotision());
         }
         if (!jobMain.GetComponent<JobScene>().GetCloseFlag() && breakFlag == false)
         {
-            audioUI.SetActive(true);
+            Debug.Log("一回だけ");
             jobMain.GetComponent<JobScene>().roleImagePlay(breakFlag);
-            jobMain.GetComponent<JobScene>().SetinfoPos();
-            breakFlag = true;
-            karifalg = true;
-            jobMain.GetComponent<JobScene>().playerpostion();
-            if (master.GetComponent<MasterScriot>().GetNowPlayer() > 2)
+          
+            if(!isNameCreate)
             {
-                jobMain.GetComponent<JobScene>().SetCloseFlag(true);
+                if(createName.activeSelf)
+                {
+                    isNameCreate = create.ChName();
+                }
+                Debug.Log(createName.activeSelf);
+                createName.SetActive(true);
+               
+                Debug.Log(isNameCreate);
             }
+            if (isNameCreate)
+            {
+                notCreate.SetActive(false);
+                create.ResetBox();
+                createName.SetActive(false);
+                audioUI.SetActive(true);
+                jobMain.GetComponent<JobScene>().SetinfoPos();
+                breakFlag = true;
+                karifalg = true;
+                jobMain.GetComponent<JobScene>().playerpostion();
+                if (master.GetComponent<MasterScriot>().GetNowPlayer() > 2)
+                {
+                    jobMain.GetComponent<JobScene>().SetCloseFlag(true);
+                }
+            }
+
         }
         else if (!jobMain.GetComponent<JobScene>().GetCloseFlag() && breakFlag == true)
         {
@@ -76,6 +100,7 @@ public class ButtonScript : MonoBehaviour
             }
             jobMain.GetComponent<JobScene>().roleImagePlay(breakFlag);
             breakFlag = false;
+            isNameCreate = false;
             colorChange.ColorReset();
 
         }

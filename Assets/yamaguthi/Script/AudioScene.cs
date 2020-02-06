@@ -118,6 +118,16 @@ public class AudioScene : MonoBehaviour
         nowPlayer = Master.GetComponent<MasterScriot>().GetNowPlayer();
         hassyaku.SetTransPostion();
         Debug.Log(nowPlayer+"音をとる");
+        index = player[nowPlayer].GetComponent<Player>().GetPotision();
+        obj = GameObject.Find(index.row + index.column);
+        Vector2 A = new Vector2(obj.transform.position.x, obj.transform.position.y);
+        Vector2 B = new Vector2(hassyaku.GetTransPostion().position.x, hassyaku.GetTransPostion().position.y);
+        float distance2 = (A - B).magnitude;
+        Debug.Log(distance2);
+        Debug.Log("八尺");
+        oldDistance = distance2;
+        top = hassyaku.GetGameObject();
+        audio = top.GetComponent<AudioSource>();
         for (int i = 0; i < olmap.Length; i++)
         {
             for (int j = 0; j < olmap[i].Count; j++)
@@ -141,6 +151,23 @@ public class AudioScene : MonoBehaviour
                             oldDistance = distance;
                             top = obj;
                         }
+                        else
+                        {
+                            if (oldDistance == distance)
+                            {
+                                int rm = Random.Range(0, 1);
+                                switch (rm)
+                                {
+                                    case 0:
+                                        oldDistance = distance;
+                                        top = obj;
+                                        break;
+                                    case 1:
+                                        // 何もしない
+                                        break;
+                                }
+                            }
+                        }    
                     }
                     else
                     {
@@ -150,23 +177,7 @@ public class AudioScene : MonoBehaviour
                 }
             }
         }
-        index = player[nowPlayer].GetComponent<Player>().GetPotision();
-        obj = GameObject.Find(index.row + index.column);
-        Vector2 A = new Vector2(obj.transform.position.x, obj.transform.position.y);
-        Vector2 B = new Vector2(hassyaku.GetTransPostion().position.x, hassyaku.GetTransPostion().position.y);
-        float distance2 = (A - B).magnitude;
-        Debug.Log(distance2);
-        if (oldDistance > distance2)
-        {
-            Debug.Log("八尺");
-            oldDistance = distance2;
-            top = hassyaku.GetGameObject();
-            audio = top.GetComponent<AudioSource>();
-        }
-        else
-        {
-            audio = top.GetComponent<Chip>().GetAduio();
-        }
+        audio = top.GetComponent<Chip>().GetAduio();
     }
     // カメラをプレイヤーのポジションに移動させる
     public void NextPlayer()
