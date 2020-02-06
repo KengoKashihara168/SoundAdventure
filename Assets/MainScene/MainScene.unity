@@ -1881,6 +1881,12 @@ PrefabInstance:
       propertyPath: goalList
       value: 
       objectReference: {fileID: 703306559}
+    - target: {fileID: 3748727636155890181, guid: 776e4d13d4700c349b212d6531a5dd9a,
+        type: 3}
+      propertyPath: escape
+      value: 
+      objectReference: {fileID: 21300000, guid: 9ceac42dbb31c7d429d2d48ebcf5f451,
+        type: 3}
     - target: {fileID: 6110229994189460996, guid: 776e4d13d4700c349b212d6531a5dd9a,
         type: 3}
       propertyPath: m_Text
