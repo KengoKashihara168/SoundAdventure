@@ -7,6 +7,7 @@ public class PrivateResult : MonoBehaviour
 {
     [SerializeField] private Image resultImage;
     [SerializeField] private Text deadList;
+    [SerializeField] private Text goalList;
     [SerializeField] private Sprite hassyaku; // 八尺様
     [SerializeField] private Sprite kill; // 八尺様
     [SerializeField] private Sprite exit;     // 出口
@@ -36,7 +37,7 @@ public class PrivateResult : MonoBehaviour
 
     }
 
-    public void OpenScreen(Player p,List<string> deadPlayers)
+    public void OpenScreen(Player p,List<string> deadPlayers, List<string> GoalPlayers)
     {
         gameObject.SetActive(true);
         player = p;
@@ -46,7 +47,11 @@ public class PrivateResult : MonoBehaviour
 
         foreach (var name in deadPlayers)
         {
-            AddText(name + ",");
+            AddDeadText(name + ",");
+        }
+        foreach (var name in GoalPlayers)
+        {
+            AddGoalText(name + ",");
         }
     }
 
@@ -56,7 +61,7 @@ public class PrivateResult : MonoBehaviour
     /// <param name="player">プレイヤー</param>
     public void ChangeImage(Player player)
     {
-        name.text = "プレイヤー" +(nowPlayer.GetNowPlayer()+1)+ "が移動した先は";
+        name.text = nowPlayer.GetName()[nowPlayer.GetNowPlayer()]+ "が移動した先は";
         Debug.Log(player.GetPotision().row+ player.GetPotision().column);
         if(nowPlayer.CheckPosition(player.GetPotision(),hassyakuRe.GetPosition())&&player.IsHaunted())
         {
@@ -121,16 +126,25 @@ public class PrivateResult : MonoBehaviour
     /// 死亡リストにプレイヤー名を追加
     /// </summary>
     /// <param name="name">死亡したプレイヤー名</param>
-    private void AddText(string name)
+    private void AddDeadText(string name)
     {
         deadList.text += name;
     }
     /// <summary>
-    /// 死亡リストを空にする
+    /// ゴールリストにプレイヤー名を追加
+    /// </summary>
+    /// <param name="name">死亡したプレイヤー名</param>
+    private void AddGoalText(string name)
+    {
+        goalList.text += name;
+    }
+    /// <summary>
+    /// リストを空にする
     /// </summary>
     /// <param name="name">死亡したプレイヤー名</param>
     private void ResetText(string name)
     {
         deadList.text = name;
+        goalList.text = name;
     }
 }

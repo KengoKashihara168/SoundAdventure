@@ -136,6 +136,7 @@ public class Activ : MonoBehaviour
                     aggregate.AggregateON();
                     audioUI.SetActive(false);
                     gameScene.DeadPlayer();
+                    gameScene.GoalPlayer();
                     myItemUI.SetActive(false);
                     nextUIOff();
                     myJob.enabled = false;
@@ -160,6 +161,7 @@ public class Activ : MonoBehaviour
                                 aggregate.AggregateON();
                                 audioUI.SetActive(false);
                                 gameScene.DeadPlayer();
+                                gameScene.GoalPlayer();
                                 myItemUI.SetActive(false);
                                 nextUIOff();
                                 myJob.enabled = false;
@@ -360,6 +362,7 @@ public class Activ : MonoBehaviour
                 aggregate.AggregateON();
                 audioUI.SetActive(false);
                 gameScene.DeadPlayer();
+                gameScene.GoalPlayer();
                 gameScene.OnScreenButton(ScreenType.Move);
             }
             else
@@ -367,8 +370,8 @@ public class Activ : MonoBehaviour
                 MoveSceneNext();
             } 
         }
-
-        playerName.text = "プレイヤー" + (mas.GetNowPlayer() + 1);
+        
+        playerName.text = mas.GetName()[mas.GetNowPlayer()];
         myItemUI.SetActive(false);
     }
     public void OnNextMoveUI()

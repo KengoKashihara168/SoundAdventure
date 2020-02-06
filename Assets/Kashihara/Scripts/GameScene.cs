@@ -32,6 +32,7 @@ public class GameScene : MonoBehaviour
     [SerializeField] private GameObject[] nextPlayerUI;
     [SerializeField] private Text nextPlayername;
     List<string> deadPlayers = new List<string>();
+    List<string> goalPlayers = new List<string>();
     GameObject[] Player;
     int nowPlayer;
     // Start is called before the first frame update
@@ -114,7 +115,7 @@ public class GameScene : MonoBehaviour
             nextPlayerUI[i].SetActive(true);
         }
         Debug.Log(mast.GetNowPlayer());
-        nextPlayername.text = "プレイヤー" + (mast.GetNowPlayer() + 1);
+        nextPlayername.text = mast.GetName()[mast.GetNowPlayer()];
         foreach (Transform child in privateResultScreen.gameObject.transform)
         {
             child.gameObject.SetActive(false);
@@ -150,13 +151,27 @@ public class GameScene : MonoBehaviour
         {
             if (!Player[i].GetComponent<Player>().IsDropOut() && Player[i].GetComponent<Player>().IsDead())
             {
-                deadPlayers.Add(Player[i].name); Debug.Log("起動");
+                deadPlayers.Add(mast.GetName()[i]); Debug.Log("起動");
+            }
+        }
+    }
+    public void GoalPlayer()
+    {
+        for (int i = 0; i < Player.Length; i++)
+        {
+            if (!Player[i].GetComponent<Player>().IsDropOut() && Player[i].GetComponent<Player>().IsGoal())
+            {
+                goalPlayers.Add(mast.GetName()[i]); Debug.Log("起動");
             }
         }
     }
     public List<string> GetDeadPlayers()
     {
         return deadPlayers;
+    }
+    public List<string> GetGoalPlayers()
+    {
+        return goalPlayers;
     }
     public void NextButton()
     {
@@ -213,7 +228,7 @@ public class GameScene : MonoBehaviour
                     }
                 }      
             }
-            privateResultScreen.OpenScreen(Player[nowPlayer].GetComponent<Player>(), deadPlayers);
+            privateResultScreen.OpenScreen(Player[nowPlayer].GetComponent<Player>(), deadPlayers,goalPlayers);
         }
         else
         {
