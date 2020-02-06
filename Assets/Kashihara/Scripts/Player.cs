@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
    /*[SerializeField]*/  private bool     isDropOut; // 脱落フラグ
     private bool isAmuletOut; // お札フラグ
     private bool isGoalKey; // ゴール閉鎖フラグ
+    private bool isSwrodOut; // ゴール閉鎖フラグ
     private Action   action;    // プレイヤーの行動
 
     private void Awake()
@@ -263,5 +264,16 @@ public class Player : MonoBehaviour
     public void SetAmulet(bool flag)
     {
         isAmuletOut = flag;
+    }
+    /// <summary>
+    /// 刀を捨てる設定
+    /// </summary> 
+    public bool IsSword()
+    {
+        return isSwrodOut;
+    }
+    public void SetIsSword(bool flag)
+    {
+        isSwrodOut = flag;
     }
 }

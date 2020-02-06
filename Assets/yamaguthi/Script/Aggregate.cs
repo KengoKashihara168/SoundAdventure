@@ -12,11 +12,13 @@ public class Aggregate : MonoBehaviour
     MapIndex[] sordPos;
     bool isGoal;
     bool isSowrd;
+    bool isdead;
     // Start is called before the first frame update
     void Start()
     {
         isGoal = false;
         isSowrd = false;
+        isdead = false;
     }
     public void AggregateON()
     {
@@ -42,6 +44,8 @@ public class Aggregate : MonoBehaviour
         isSowrd = false;
         GetPlayerItem();
         GoalPlayer();
+        if(isdead)
+            SowrdDrop();
     }
     public void GetPlayerItem()
     {
@@ -131,7 +135,7 @@ public class Aggregate : MonoBehaviour
     }
     public void SowrdDeadPlayer()
     {
-        bool isdead = false;
+        
         for (int i = 0; i < players.Length; i++)
         {
             if (!player[i].IsDropOut() && !player[i].IsGoal() && player[i].GetItemKind() != ItemKind.Sword && !player[i].IsDead())
@@ -148,12 +152,17 @@ public class Aggregate : MonoBehaviour
         {
             for (int i = 0; i < players.Length; i++)
             {
-                if (player[i].GetItemKind() == ItemKind.Sword)
-                {
-                    player[i].SetItem(false);
-                    player[i].SetItemKind(ItemKind.None);
-                    break;
-                }
+                player[i].SetIsSword(true);
+            }
+        }
+    }
+    public void SowrdDrop()
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if(player[i].GetItemKind()==ItemKind.Sword)
+            {
+                player[i].SetItemKind(ItemKind.None);
             }
         }
     }
