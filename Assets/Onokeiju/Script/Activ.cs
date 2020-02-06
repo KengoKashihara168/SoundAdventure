@@ -29,6 +29,7 @@ public class Activ : MonoBehaviour
     [SerializeField] GameObject EndUI;
     [SerializeField] Image EndImage;
     [SerializeField] Sprite[] EndImages;
+    [SerializeField] Hassyakusama hassyaku;
     int nowPlayer;
     MasterScriot mas;
     GameObject[] player;
@@ -93,7 +94,12 @@ public class Activ : MonoBehaviour
         int goal = 0;
         for (int i = 0; i < player.Length; i++)
         {
-            if (player[i].GetComponent<Player>().IsDead())
+            if(player[i].GetComponent<Player>().IsHaunted()&& player[i].GetComponent<Player>().IsDead()&& !hassyaku.GetRelease())
+            {
+                EndUI.SetActive(true);
+                return true;
+            }
+            if (player[i].GetComponent<Player>().IsDead()&&!player[i].GetComponent<Player>().IsHaunted())
                 dead++;
             if (player[i].GetComponent<Player>().IsGoal())
                 goal++;
