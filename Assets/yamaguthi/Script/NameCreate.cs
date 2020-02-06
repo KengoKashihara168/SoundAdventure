@@ -17,9 +17,7 @@ public class NameCreate : MonoBehaviour
     {
         if (masterScript.CheckName(inputField.text))
         {
-            Debug.Log(inputField.text);
             masterScript.SetName(masterScript.GetNowPlayer(), inputField.text);
-            Debug.Log(masterScript.GetName()[0]);
             return true;
         }
         else

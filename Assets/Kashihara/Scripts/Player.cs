@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     /*[SerializeField]*/ private bool     isDead;    // 死亡フラグ
     /*[SerializeField]*/ private bool     isHaunted; // 憑人フラグ
    /*[SerializeField]*/  private bool     isDropOut; // 脱落フラグ
+    private bool isAmuletOut; // お札フラグ
     private bool isGoalKey; // ゴール閉鎖フラグ
     private Action   action;    // プレイヤーの行動
 
@@ -251,5 +252,16 @@ public class Player : MonoBehaviour
     public MapIndex GetPotision()
     {
         return position;
+    }
+    /// <summary>
+    /// お札の使用設定
+    /// </summary> 
+    public bool IsAmulet()
+    {
+        return isAmuletOut;
+    }
+    public void SetAmulet(bool flag)
+    {
+        isAmuletOut = flag;
     }
 }

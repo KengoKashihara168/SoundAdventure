@@ -110,20 +110,35 @@ public class GameScene : MonoBehaviour
     /// </summary>
     private void MoveScreen()
     {
-        for (int i = 0; i < nextPlayerUI.Length; i++)
+        if(Player[mast.GetNowPlayer()].GetComponent<Player>().IsDropOut())
         {
-            nextPlayerUI[i].SetActive(true);
-        }
-        Debug.Log(mast.GetNowPlayer());
-        nextPlayername.text = mast.GetName()[mast.GetNowPlayer()];
-        foreach (Transform child in privateResultScreen.gameObject.transform)
-        {
-            child.gameObject.SetActive(false);
-            if (child.name == "NextButton")
+            mast.AddNowPlayer();
+            if (mast.GetNowPlayer() > 3)
             {
-                foreach (Transform text in child)
+                PrivateResultScreen();
+            }
+            else
+            {
+                MoveScreen();
+            }
+        }
+        else
+        {
+            for (int i = 0; i < nextPlayerUI.Length; i++)
+            {
+                nextPlayerUI[i].SetActive(true);
+            }
+            Debug.Log(mast.GetNowPlayer());
+            nextPlayername.text = mast.GetName()[mast.GetNowPlayer()];
+            foreach (Transform child in privateResultScreen.gameObject.transform)
+            {
+                child.gameObject.SetActive(false);
+                if (child.name == "NextButton")
                 {
-                    text.gameObject.SetActive(false);
+                    foreach (Transform text in child)
+                    {
+                        text.gameObject.SetActive(false);
+                    }
                 }
             }
         }

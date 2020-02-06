@@ -446,7 +446,7 @@ public class Activ : MonoBehaviour
         char chars = (char)scolumn;
         pos.SetIndex(oldPlayerPos.row+row, chars.ToString());
         Debug.Log(chars + "刀");
-        aggregate.SetSorwd(pos);
+        aggregate.SetSorwd(pos, oldPlayerPos);
     }
     public bool GetUseSwrod()
     {

@@ -79,6 +79,12 @@ public class PrivateResult : MonoBehaviour
             player.SetDropOut(true);
             return;
         }
+        if (player.IsAmulet())
+        {
+            image.sprite = hassyaku;
+            player.SetAmulet(false);
+            return;
+        }
         if (player.IsGoalKey() && player.IsHaunted())
         {
             image.sprite = exit;
