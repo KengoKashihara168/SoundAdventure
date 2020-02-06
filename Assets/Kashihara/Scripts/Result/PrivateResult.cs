@@ -16,6 +16,8 @@ public class PrivateResult : MonoBehaviour
     [SerializeField] private Sprite amulet;   // 御札
     [SerializeField] private Sprite cutter;   // カッター
     [SerializeField] private Sprite sword;    // 刀
+    [SerializeField] private Sprite escape;    // 刀
+
     [SerializeField] private Text  name;    //
     [SerializeField] private MasterScriot nowPlayer;    //
     [SerializeField] Hassyakusama hassyakuRe;
@@ -84,7 +86,7 @@ public class PrivateResult : MonoBehaviour
         }
         if (player.IsGoal())
         {
-            image.sprite = exit;
+            image.sprite = escape;
             player.SetDropOut(true);
             return;
         }
