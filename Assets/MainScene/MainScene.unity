@@ -7051,7 +7051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1518541168
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7726,6 +7726,7 @@ MonoBehaviour:
   EndImages:
   - {fileID: 21300000, guid: cb29e7b09c6d5b443904eba02be9182a, type: 3}
   - {fileID: 21300000, guid: 226e066780d401a40b7604f51571fc8b, type: 3}
+  hassyaku: {fileID: 0}
 --- !u!1 &1643297247
 GameObject:
   m_ObjectHideFlags: 0
@@ -8634,7 +8635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1846008717
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8781,7 +8782,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1871602561
 RectTransform:
   m_ObjectHideFlags: 0
