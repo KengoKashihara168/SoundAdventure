@@ -18,7 +18,7 @@ public class PrivateResult : MonoBehaviour
     [SerializeField] private Sprite cutter;   // カッター
     [SerializeField] private Sprite sword;    // 刀
     [SerializeField] private Sprite escape;    // 刀
-
+    [SerializeField] GameObject[] text;
     [SerializeField] private Text  name;    //
     [SerializeField] private MasterScriot nowPlayer;    //
     [SerializeField] Hassyakusama hassyakuRe;
@@ -50,10 +50,12 @@ public class PrivateResult : MonoBehaviour
         foreach (var name in deadPlayers)
         {
             AddDeadText(name + ",");
+            text[0].SetActive(true);
         }
         foreach (var name in GoalPlayers)
         {
             AddGoalText(name + ",");
+            text[1].SetActive(true);
         }
     }
 
@@ -75,6 +77,12 @@ public class PrivateResult : MonoBehaviour
             image.sprite = kill;
             Debug.Log("死んでる");
             player.SetDropOut(true);
+            return;
+        }
+        if (player.IsAmulet())
+        {
+            image.sprite = hassyaku;
+            player.SetAmulet(false);
             return;
         }
         if (player.IsGoalKey() && player.IsHaunted())
@@ -148,5 +156,9 @@ public class PrivateResult : MonoBehaviour
     {
         deadList.text = name;
         goalList.text = name;
+        for(int i=0;i< text.Length;i++)
+        {
+            text[i].SetActive(false);
+        }
     }
 }

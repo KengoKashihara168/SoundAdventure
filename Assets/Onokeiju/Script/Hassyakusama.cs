@@ -118,7 +118,7 @@ public class Hassyakusama : MonoBehaviour
         }
 
         //移動回数
-        int moveNam = Random.Range(1, 3);
+        int moveNam = Random.Range(1, 4);
 
         //移動方向
         Direction col;

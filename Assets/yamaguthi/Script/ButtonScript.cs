@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ButtonScript : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class ButtonScript : MonoBehaviour
     [SerializeField] GameObject createName;
     [SerializeField] NameCreate create;
     [SerializeField] GameObject notCreate;
+    [SerializeField] Text itemAlltext;
     public GameObject jobMain;
     private GameObject[] players; 
     bool gameStart;
@@ -55,6 +57,7 @@ public class ButtonScript : MonoBehaviour
             jobMain.GetComponent<JobScene>().CloseScene();
             master.ResetNowPlayer();
             MoveUI.SetActive(true);
+            itemAlltext.text = "落ちているアイテムは残り" + 4;
         }
         if (!jobMain.GetComponent<JobScene>().GetCloseFlag() && breakFlag == false)
         {

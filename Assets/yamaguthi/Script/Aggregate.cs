@@ -9,7 +9,7 @@ public class Aggregate : MonoBehaviour
     [SerializeField] Hassyakusama hassyaku;
     GameObject[] players;
     Player[] player;
-    MapIndex sordPos;
+    MapIndex[] sordPos;
     bool isGoal;
     bool isSowrd;
     // Start is called before the first frame update
@@ -118,6 +118,7 @@ public class Aggregate : MonoBehaviour
                     if (player[i].GetItemKind()==ItemKind.Amulet)
                     {
                         player[i].SetItemKind(ItemKind.None);
+                        player[i].SetAmulet(true);
                     }
                     else
                     {
@@ -136,7 +137,7 @@ public class Aggregate : MonoBehaviour
             if (!player[i].IsDropOut() && !player[i].IsGoal() && player[i].GetItemKind() != ItemKind.Sword && !player[i].IsDead())
             {
                 Debug.Log("入る");
-                if (master.CheckPosition(player[i].GetPotision(), sordPos))
+                if (master.CheckPosition(player[i].GetPotision(), sordPos[0])|| master.CheckPosition(player[i].GetPotision(), sordPos[1]))
                 {
                     player[i].SetDead(true);
                     isdead = true;
@@ -202,10 +203,11 @@ public class Aggregate : MonoBehaviour
             }
         }
     }
-    public void SetSorwd(MapIndex pos)
+    public void SetSorwd(MapIndex pos,MapIndex oldPos)
     {
-        Debug.Log("セット"+pos.row+pos.column);
-        sordPos = pos;
+        sordPos = new MapIndex[2];
+        sordPos[0] = pos;
+        sordPos[1] = oldPos;
         isSowrd = true;
     }
 }
