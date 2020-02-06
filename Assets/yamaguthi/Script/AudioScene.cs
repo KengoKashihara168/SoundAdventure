@@ -123,8 +123,6 @@ public class AudioScene : MonoBehaviour
         Vector2 A = new Vector2(obj.transform.position.x, obj.transform.position.y);
         Vector2 B = new Vector2(hassyaku.GetTransPostion().position.x, hassyaku.GetTransPostion().position.y);
         float distance2 = (A - B).magnitude;
-        Debug.Log(distance2);
-        Debug.Log("八尺");
         oldDistance = distance2;
         top = hassyaku.GetGameObject();
         audio = top.GetComponent<AudioSource>();

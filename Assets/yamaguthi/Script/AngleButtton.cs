@@ -8,6 +8,20 @@ public class AngleButtton : MonoBehaviour
     [SerializeField]
     public GameObject master;
     [SerializeField] Text audioText;
+    public void Update()
+    {
+        if(audioText)
+        {
+            if(audioText.text== "音を聞く")
+            {
+                master.GetComponent<AudioScene>().SetActive(false);
+            }
+            else if (audioText.text == "閉じる")
+            {
+                master.GetComponent<AudioScene>().SetActive(true);
+            }
+        }
+    }
     public void Audio()
     {
         // 一番近い音のミュート ON OFF

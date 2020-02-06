@@ -30,6 +30,8 @@ public class Activ : MonoBehaviour
     [SerializeField] Image EndImage;
     [SerializeField] Sprite[] EndImages;
     [SerializeField] Hassyakusama hassyaku;
+    [SerializeField] Text takeItem;
+    [SerializeField] StageMap map;
     int nowPlayer;
     MasterScriot mas;
     GameObject[] player;
@@ -66,7 +68,6 @@ public class Activ : MonoBehaviour
         //DirectionButtonOn();
         // playerscr[2].SetDead(true);
         // playerscr[2].SetDropOut(true);
-
     }
 
     public void MovePlay()
@@ -271,6 +272,7 @@ public class Activ : MonoBehaviour
         {
             sowrdImage.enabled = false;
             isItem = false;
+            playerscr[nowPlayer].SetFoot(false);
             DirectionButtonOn();
         }
         else
@@ -287,6 +289,7 @@ public class Activ : MonoBehaviour
         {
             useSword = false;
             isItem = false;
+            playerscr[nowPlayer].SetFoot(false);
             MoveDecisionPush();
         }
         else
@@ -384,6 +387,21 @@ public class Activ : MonoBehaviour
     {
         SwordDecisionPush();
         nextMoveUI.SetActive(true);
+        int itemnum = 0;
+        Debug.Log(itemnum);
+        List<MapIndex> saveIndex = map.GetComponent<StageMap>().GetItemPostion();
+        for (int j = 0; j < saveIndex.Count; j++)
+        {
+            GameObject chip = GameObject.Find(saveIndex[j].row + saveIndex[j].column);
+            if (chip.GetComponent<Chip>().GetItem().GetKind() != ItemKind.None && chip.GetComponent<Chip>().GetItem().GetKind() != ItemKind.Goal)
+            {
+                itemnum++;
+            }
+               
+            Debug.Log(j);
+        }
+       
+        takeItem.text = "落ちているアイテムは残り " + itemnum;
         colorChange.ColorReset();
         audioUI.SetActive(false);
     }

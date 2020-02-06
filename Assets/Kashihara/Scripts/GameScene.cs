@@ -213,6 +213,7 @@ public class GameScene : MonoBehaviour
                 }
             }
             deadPlayers.Clear();
+            goalPlayers.Clear();
             activ.OnNextMoveUI();
         }else
         if (!Player[nowPlayer].GetComponent<Player>().IsDropOut())

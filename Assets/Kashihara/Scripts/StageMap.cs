@@ -145,8 +145,10 @@ public class StageMap : MonoBehaviour
 
     public void ItemChip()
     {
+        Debug.Log("一回だけ");
         GameObject chip;
-        for(int i=0;i<map.Length;i++)
+        itemPostion.Clear();
+        for (int i=0;i<map.Length;i++)
         {
             for (int j = 0; j < map[i].Count; j++)
             {
