@@ -66,7 +66,7 @@ public class StageMap : MonoBehaviour
 
                 // 各チップに値を設定
                 map[i][key].SetName(i, key);
-                Vector3 pos = new Vector3(chipDistance * j, -chipDistance * i, 0.0f);
+                Vector3 pos = new Vector3(chipDistance * j, 0.0f, -chipDistance * i);
                 value.SetPosition(pos);
             }
         }

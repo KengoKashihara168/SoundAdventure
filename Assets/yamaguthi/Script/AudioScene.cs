@@ -176,7 +176,7 @@ public class AudioScene : MonoBehaviour
         // map[0]["A"];
         // カメラをプレイヤーのポジションに移動させる
         camera.transform.position = pl.transform.position;
-        camera.transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z - 20);
+        camera.transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z);
     }
     // カメラをプレイヤーのポジションに移動させる
     public void CameraPlayer()
@@ -187,7 +187,7 @@ public class AudioScene : MonoBehaviour
         // map[0]["A"];
         // カメラをプレイヤーのポジションに移動させる
         camera.transform.position= pl.transform.position;
-        camera.transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z - 20);
+        camera.transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z);
     }
     public void BGMONOFF()
     {
