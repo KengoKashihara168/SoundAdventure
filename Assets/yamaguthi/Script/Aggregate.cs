@@ -29,7 +29,6 @@ public class Aggregate : MonoBehaviour
         {
             player[i] = players[i].GetComponent<Player>();
         }
-        GoalPlayer();
         if (!hassyaku.GetRelease())
         {
             ReleaseHssyaku();
@@ -44,7 +43,7 @@ public class Aggregate : MonoBehaviour
             SowrdDeadPlayer();
         isSowrd = false;
         GetPlayerItem();
-        
+        GoalPlayer();
         if(isdead)
             SowrdDrop();
     }
@@ -111,7 +110,6 @@ public class Aggregate : MonoBehaviour
                 }
             }
         }
-        map.GetComponent<StageMap>().ItemChip();
     }
     public void DeadPlayer()
     {
