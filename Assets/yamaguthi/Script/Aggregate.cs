@@ -34,13 +34,14 @@ public class Aggregate : MonoBehaviour
         if (!hassyaku.GetRelease())
         {
             ReleaseHssyaku();
+            DeadPlayer();
         }
         else
         {
             hassyaku.MoveDirection();
         }
         Debug.Log("八尺は" + hassyaku.GetPosition().row + hassyaku.GetPosition().column);
-        DeadPlayer();
+        
         if(isSowrd)
             SowrdDeadPlayer();
         isSowrd = false;

@@ -185,7 +185,19 @@ public class Hassyakusama : MonoBehaviour
                 Player player = master.GetPlayer()[j].GetComponent<Player>();
                 if(master.CheckPosition(player.GetPotision(),position)&& !player.IsHaunted())
                 {
-                    player.SetDead(true);
+                    if(player.GetItemKind()==ItemKind.Amulet)
+                    {
+                        if(i==moveNam)
+                        {
+                            player.SetAmulet(true);
+                        }
+                        player.SetItemKind(ItemKind.None);
+                    }
+                    else
+                    {
+                        player.SetDead(true);
+                    }
+                   
                 }
             }
 
