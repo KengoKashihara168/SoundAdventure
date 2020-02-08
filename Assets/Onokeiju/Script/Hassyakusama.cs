@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Hassyakusama : MonoBehaviour
 {
-    
+    [SerializeField]
+    MasterScriot master;
     private  MapIndex position;//八尺様のposition
 
     public Player[] player;
@@ -118,7 +119,7 @@ public class Hassyakusama : MonoBehaviour
         }
 
         //移動回数
-        int moveNam = Random.Range(1, 4);
+        int moveNam = Random.Range(1, 3);
 
         //移動方向
         Direction col;
@@ -179,7 +180,14 @@ public class Hassyakusama : MonoBehaviour
                     MoveAction(row);
                 }
             }
-
+            for(int j=0;j<master.GetPlayer().Length;j++)
+            {
+                Player player = master.GetPlayer()[j].GetComponent<Player>();
+                if(master.CheckPosition(player.GetPotision(),position))
+                {
+                    player.SetDead(true);
+                }
+            }
 
 
         }
