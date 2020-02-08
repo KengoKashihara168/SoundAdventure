@@ -48,6 +48,7 @@ public class ResultNextButton : MonoBehaviour
                 }
                 audioUI.SetActive(true);
                 gameScene.GetDeadPlayers().Clear();
+                gameScene.GetGoalPlayers().Clear();
                 activ.OnNextMoveUI();
             }
             else
@@ -65,6 +66,7 @@ public class ResultNextButton : MonoBehaviour
                     }
                 }
                 gameScene.GetDeadPlayers().Clear();
+                gameScene.GetGoalPlayers().Clear();
             }
         }
     }

@@ -46,17 +46,17 @@ public class PrivateResult : MonoBehaviour
         ChangeImage(player);
 
         ResetText("");
-
-        foreach (var name in deadPlayers)
-        {
-            AddDeadText(name + ",");
-            text[0].SetActive(true);
-        }
         foreach (var name in GoalPlayers)
         {
             AddGoalText(name + ",");
             text[1].SetActive(true);
         }
+        foreach (var name in deadPlayers)
+        {
+            AddDeadText(name + ",");
+            text[0].SetActive(true);
+        }
+
     }
 
     /// <summary>
